@@ -157,7 +157,7 @@ func _get_tile_alignment(cellv: Vector2) -> int:
 		elif _contains_bits(corner_bits, CornerNorth|CornerSouth|CornerWest):
 			corner_bits = 18
 		else:
-			emit_signal("error", "this shouldn't happen. something went wrong")
+			print_debug("something went horrible wrong here")
 
 	return corner_bits
 
