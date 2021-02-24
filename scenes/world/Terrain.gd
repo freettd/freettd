@@ -165,17 +165,17 @@ func _get_tile_alignment(cellv: Vector2) -> int:
 func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0) -> void:
 
 	# shortcut to cell data
-	var cdata = celldata[cellv]
+	var cdata: Dictionary = celldata[cellv]
 
 	# calculate index in tileset
-	var tileset_idx = (tiletype_id * TILES_PER_TYPE) + image_id
+	var tileset_idx: int = (tiletype_id * TILES_PER_TYPE) + image_id
 
 	# tiles with north corners do not align correctly so we use an offset
 	if _contains_bits(image_id, CornerNorth):
 		height += 1
 
 	# set tile on height level
-	var level = levels[height]
+	var level: TileMap = levels[height]
 	level.set_cellv(cellv, tileset_idx)
 
 	# generate unique number for tile
@@ -185,9 +185,7 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	cdata.id = tid
 	cdata.tiletype = tiletype_id
 	cdata.tileset_idx = tileset_idx
-	cdata.image_id = image_id
 	cdata.height = height
-	cdata.road = 0
 	cdata.corners = image_id
 
 # Check if bist are set
