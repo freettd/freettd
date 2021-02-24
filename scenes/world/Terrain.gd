@@ -1,3 +1,5 @@
+# inspired by https://github.com/PetePete1984/SuperTilemap
+
 extends Node2D
 
 const MAX_HEIGHT: int = 8
