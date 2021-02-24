@@ -2,7 +2,7 @@
 
 [node name="DesktopUI" type="CanvasLayer"]
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Menubar" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -142.0
@@ -13,56 +13,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menubar"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 277.0
 margin_bottom = 27.0
 
-[node name="MenuButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="MenuButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_right = 50.0
 margin_bottom = 20.0
 text = "Game"
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Menubar/HBoxContainer"]
 margin_left = 54.0
 margin_right = 58.0
 margin_bottom = 20.0
 
-[node name="RoadButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="RoadButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_left = 62.0
 margin_right = 105.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Road"
 
-[node name="RailButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="RailButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_left = 109.0
 margin_right = 144.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Rail"
 
-[node name="AirButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="AirButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_left = 148.0
 margin_right = 178.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Air"
 
-[node name="SeaButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="SeaButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_left = 182.0
 margin_right = 216.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Sea"
 
-[node name="VSeparator2" type="VSeparator" parent="PanelContainer/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="Menubar/HBoxContainer"]
 margin_left = 220.0
 margin_right = 224.0
 margin_bottom = 20.0
 
-[node name="HelpButton" type="MenuButton" parent="PanelContainer/HBoxContainer"]
+[node name="HelpButton" type="MenuButton" parent="Menubar/HBoxContainer"]
 margin_left = 228.0
 margin_right = 270.0
 margin_bottom = 20.0
