@@ -11,7 +11,7 @@ script = ExtResource( 3 )
 anchor_mode = 0
 current = true
 script = ExtResource( 1 )
-max_zoom = 4.0
+max_zoom = 8.0
 zoom_increment = 0.5
 
 [node name="Terrain" type="Node2D" parent="."]

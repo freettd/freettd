@@ -1,5 +1,6 @@
-# source: https://github.com/williambcosta/godot-touch-camera-2d
 # Copyright (c) 2020 William Batista Costa	
+# MIT License
+# source: https://github.com/williambcosta/godot-touch-camera-2d
 
 extends Camera2D
 
