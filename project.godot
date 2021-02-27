@@ -21,8 +21,13 @@ _global_script_class_icons={
 [application]
 
 config/name="FreeTTD"
+config/description="Open Source Remake of Transport Tycoon Deluxe"
 run/main_scene="res://scenes/Main.tscn"
 
 [physics]
 
 common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_clear_color=Color( 0, 0, 0, 1 )
