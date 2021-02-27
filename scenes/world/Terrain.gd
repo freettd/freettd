@@ -1,5 +1,3 @@
-# inspired by https://github.com/PetePete1984/SuperTilemap
-
 extends Node2D
 
 const MAX_HEIGHT: int = 8
@@ -17,23 +15,22 @@ var levels: Array = []
 # array of cells
 var celldata: Dictionary = {}
 
+var tparams: Dictionary
 var map_size: Vector2
 
-enum TileType {
-	grass1,
-	road_grass,
-	water
-}
 
 ## NEW TERRAIN
 
-func new_terrain(p: Dictionary, map_size: Vector2) -> void:
+func new_terrain(p: Dictionary, map_size: Vector2 = Vector2(64, 64)) -> void:
 
 	self.map_size = map_size
+	self.tparams = p
 
+	# Clear all levels
 	if not levels.empty():
 		levels.clear()
 
+	# Create tilemap for each level
 	for height in MAX_HEIGHT:
 		var instance = TileMap.new()
 		instance.set_mode(TileMap.MODE_ISOMETRIC)
@@ -44,43 +41,50 @@ func new_terrain(p: Dictionary, map_size: Vector2) -> void:
 		add_child(instance)
 		levels.append(instance)
 
-	generate_heightmap(map_size)
+	# Build terrain
+	generate_heightmap()
+
 
 ## GENERATE TERRAIN
 
-const FlatTile: int = 0
-const CornerWest: int = 8
-const CornerSouth: int = 4
-const CornerEast: int = 2
-const CornerNorth: int = 1
-const SteepSlope: int = 16
+const MASK_FLAT_TILE: int = 0
+const MASK_NORTH_CORNER: int = 1
+const MASK_EAST_CORNER: int = 2
+const MASK_SOUTH_CORNER: int = 4
+const MASK_WEST_CORNER: int = 8
+
+const MASK_NORTH_STEEP: int = 15
+const MASK_EAST_STEEP: int = 16
+const MASK_SOUTH_STEEP: int = 17
+const MASK_WEST_STEEP: int = 18
 
 var tid: int = 0
 
-const neighbours: Dictionary = {
-	Vector2.UP+Vector2.LEFT: CornerNorth,
-	Vector2.UP: CornerNorth|CornerEast,
-	Vector2.UP+Vector2.RIGHT: CornerEast,
-	Vector2.RIGHT: CornerSouth|CornerEast,
-	Vector2.DOWN+Vector2.RIGHT: CornerSouth,
-	Vector2.DOWN: CornerSouth|CornerWest,
-	Vector2.DOWN+Vector2.LEFT: CornerWest,
-	Vector2.LEFT: CornerNorth|CornerWest
+const NEIGHBOURS: Dictionary = {
+	Vector2.UP+Vector2.LEFT: MASK_NORTH_CORNER,
+	Vector2.UP: MASK_NORTH_CORNER|MASK_EAST_CORNER,
+	Vector2.UP+Vector2.RIGHT: MASK_EAST_CORNER,
+	Vector2.RIGHT: MASK_SOUTH_CORNER|MASK_EAST_CORNER,
+	Vector2.DOWN+Vector2.RIGHT: MASK_SOUTH_CORNER,
+	Vector2.DOWN: MASK_SOUTH_CORNER|MASK_WEST_CORNER,
+	Vector2.DOWN+Vector2.LEFT: MASK_WEST_CORNER,
+	Vector2.LEFT: MASK_NORTH_CORNER|MASK_WEST_CORNER
 }
 
-func generate_flatland(map_size: Vector2 = Vector2(64, 64)) -> void:
+func generate_flatland() -> void:
 
-	self.map_size = map_size
-
+	# loop through each tile
 	for x in map_size.x:
 		for y in map_size.y:
+			
 			var v = Vector2(x, y)
 			celldata[v] = {}
-			_set_tile(v, 1, TileType.water, 0)
+			_set_tile(v, 1, tparams.tindex.grass, 0)
 
-func generate_heightmap(map_size: Vector2 = Vector2(64, 64)) -> void:
+func generate_heightmap() -> void:
 
-	self.map_size = map_size
+	# inspired by https://github.com/PetePete1984/SuperTilemap
+
 	var min_noise: float = 0.0
 	var max_noise: float = 0.0
 
@@ -119,15 +123,15 @@ func generate_heightmap(map_size: Vector2 = Vector2(64, 64)) -> void:
 		var image_id = _get_tile_alignment(cellv)
 		
 		# Surrounded by 4 points so raise level
-		if _contains_bits(image_id, CornerNorth|CornerEast|CornerSouth|CornerWest):
+		if _contains_bits(image_id, MASK_NORTH_CORNER|MASK_EAST_CORNER|MASK_SOUTH_CORNER|MASK_WEST_CORNER):
 			cdata.noise += 1
 			image_id = 0
 		
 		#  if level 0 then its a shore tile
 		if cdata.noise == 0:
-			_set_tile(cellv, 0, TileType.water, image_id)
+			_set_tile(cellv, 0, tparams.tindex.water, image_id)
 		else:
-			_set_tile(cellv, cdata.noise, TileType.grass1, image_id)
+			_set_tile(cellv, cdata.noise, tparams.tindex.grass, image_id)
 
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
@@ -135,29 +139,39 @@ func _get_tile_alignment(cellv: Vector2) -> int:
 	var cdata: Dictionary = celldata[cellv]
 	var cell_height: int = celldata[cellv].noise
 	var corner_bits: int = 0
+	var steeptile: bool = false
 
 	# Check neighbours for raised cornes
-	for neighbour in neighbours:
+	for neighbour in NEIGHBOURS:
 		var ncell = cellv + neighbour
-		if is_valid_tile(ncell):
-			var nval = celldata[ncell].noise
-			if nval == cell_height + 1:
-				corner_bits |= neighbours[neighbour]
-			elif nval == cell_height + 2:
-				corner_bits |= SteepSlope
+		
+		# Skip if not a valid cell location
+		if not is_valid_tile(ncell):
+			continue
+			
+		# Get noise
+		var nval = celldata[ncell].noise
+		
+		# One level above
+		if nval == cell_height + 1:
+			corner_bits |= NEIGHBOURS[neighbour]
+			
+		# Two levels above
+		elif nval == cell_height + 2:
+			steeptile = true
 
 	# Map to steep slope images
-	if _contains_bits(corner_bits, SteepSlope):
+	if steeptile:
 
-		if _contains_bits(corner_bits, CornerEast|CornerNorth|CornerWest):
-			corner_bits = 15
+		if _contains_bits(corner_bits, MASK_EAST_CORNER|MASK_NORTH_CORNER|MASK_WEST_CORNER):
+			corner_bits = MASK_NORTH_STEEP
 			cell_height += 1
-		elif _contains_bits(corner_bits, CornerSouth|CornerEast|CornerNorth):
-			corner_bits = 16
-		elif _contains_bits(corner_bits, CornerWest|CornerSouth|CornerEast):
-			corner_bits = 17
-		elif _contains_bits(corner_bits, CornerNorth|CornerSouth|CornerWest):
-			corner_bits = 18
+		elif _contains_bits(corner_bits, MASK_SOUTH_CORNER|MASK_EAST_CORNER|MASK_NORTH_CORNER):
+			corner_bits = MASK_EAST_STEEP
+		elif _contains_bits(corner_bits, MASK_WEST_CORNER|MASK_SOUTH_CORNER|MASK_EAST_CORNER):
+			corner_bits = MASK_SOUTH_STEEP
+		elif _contains_bits(corner_bits, MASK_NORTH_CORNER|MASK_SOUTH_CORNER|MASK_WEST_CORNER):
+			corner_bits = MASK_WEST_STEEP
 		else:
 			print_debug("something went horrible wrong here")
 
@@ -170,10 +184,10 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	var cdata: Dictionary = celldata[cellv]
 
 	# calculate index in tileset
-	var tileset_idx: int = (tiletype_id * TILES_PER_TYPE) + image_id
+	var tileset_idx: int = tiletype_id + image_id
 
 	# tiles with north corners do not align correctly so we use an offset
-	if _contains_bits(image_id, CornerNorth):
+	if _contains_bits(image_id, MASK_NORTH_CORNER):
 		height += 1
 
 	# set tile on height level
@@ -185,10 +199,6 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 
 	# save tile data
 	cdata.id = tid
-	cdata.tiletype = tiletype_id
-	cdata.tileset_idx = tileset_idx
-	cdata.height = height
-	cdata.corners = image_id
 
 # Check if bist are set
 func _contains_bits(bitmask: int, mask: int) -> bool:
