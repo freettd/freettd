@@ -1,6 +1,5 @@
-extends Node2D
+extends "res://scenes/world/LayedTilemap.gd"
 
-const MAX_HEIGHT: int = 8
 const NOISE_OCTAVES: int = 4
 const NOISE_PERIOD: float = 20.0 # wavey
 const NOISE_PERSISTENCE: float = 0.5 # smoothness
@@ -9,37 +8,19 @@ const SEALEVEL: int = 1
 
 const TILES_PER_TYPE: int = 19
 
-# array of tilemaps
-var levels: Array = []
-
 # array of cells
-var celldata: Dictionary = {}
 
-var tparams: Dictionary
-var map_size: Vector2
+var world_config: Dictionary
+var tilemap_config: Dictionary
 
+var celldata = {}
 
 ## NEW TERRAIN
 
-func new_terrain(p: Dictionary, map_size: Vector2 = Vector2(64, 64)) -> void:
+func new_world(wcfg: Dictionary, tcfg: Dictionary) -> void:
 
-	self.map_size = map_size
-	self.tparams = p
-
-	# Clear all levels
-	if not levels.empty():
-		levels.clear()
-
-	# Create tilemap for each level
-	for height in MAX_HEIGHT:
-		var instance = TileMap.new()
-		instance.set_mode(TileMap.MODE_ISOMETRIC)
-		instance.set_cell_size(p.cell_size)
-		instance.set_tileset(load(p.tileset))
-		instance.set_position(p.height_offset * height)
-
-		add_child(instance)
-		levels.append(instance)
+	self.world_config = wcfg	
+	self.tilemap_config = tcfg
 
 	# Build terrain
 	generate_heightmap()
@@ -73,17 +54,23 @@ const NEIGHBOURS: Dictionary = {
 
 func generate_flatland() -> void:
 
+	var map_size: Vector2 = world_config.map_size
+	var tindex: Dictionary = tilemap_config.tindex
+
 	# loop through each tile
 	for x in map_size.x:
 		for y in map_size.y:
 			
 			var v = Vector2(x, y)
 			celldata[v] = {}
-			_set_tile(v, 1, tparams.tindex.grass, 0)
+			_set_tile(v, 1, tindex.grass, 0)
 
 func generate_heightmap() -> void:
 
 	# inspired by https://github.com/PetePete1984/SuperTilemap
+
+	var map_size: Vector2 = world_config.map_size
+	var tindex: Dictionary = tilemap_config.tindex
 
 	var min_noise: float = 0.0
 	var max_noise: float = 0.0
@@ -101,6 +88,7 @@ func generate_heightmap() -> void:
 	# Generate Noise
 	for x in map_size.x:
 		for y in map_size.y:
+			
 			var noise_value: float = noise.get_noise_2d(NOISE_FREQUENCY * x, NOISE_FREQUENCY * y)
 			min_noise = min(min_noise, noise_value)
 			max_noise = max(max_noise, noise_value)
@@ -111,7 +99,7 @@ func generate_heightmap() -> void:
 
 	# Smooth Noise
 	for cellv in celldata:
-		var gridval: int = int(round(range_lerp(celldata[cellv].noise, min_noise, max_noise, 0, levels.size()-1)))
+		var gridval: int = int(round(range_lerp(celldata[cellv].noise, min_noise, max_noise, 0, max_height)))
 		celldata[cellv].noise = max(0, gridval - SEALEVEL)
 
 	# Set Tile Images
@@ -129,9 +117,9 @@ func generate_heightmap() -> void:
 		
 		#  if level 0 then its a shore tile
 		if cdata.noise == 0:
-			_set_tile(cellv, 0, tparams.tindex.water, image_id)
+			_set_tile(cellv, 0, tindex.water, image_id)
 		else:
-			_set_tile(cellv, cdata.noise, tparams.tindex.grass, image_id)
+			_set_tile(cellv, cdata.noise, tindex.grass, image_id)
 
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
@@ -191,8 +179,8 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 		height += 1
 
 	# set tile on height level
-	var level: TileMap = levels[height]
-	level.set_cellv(cellv, tileset_idx)
+	set_cellv_height(cellv, height)
+	set_cellv(cellv, tileset_idx)
 
 	# generate unique number for tile
 	tid = tid + 1
@@ -206,4 +194,5 @@ func _contains_bits(bitmask: int, mask: int) -> bool:
 
 # Is tile valid
 func is_valid_tile(cellv: Vector2) -> bool:
+	var map_size: Vector2 = world_config.map_size
 	return cellv.x >= 0 and cellv.x < map_size.x and cellv.y >= 0 and cellv.y < map_size.y

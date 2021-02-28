@@ -17,6 +17,11 @@ func _ready() -> void:
 	popup = game_button.get_popup()
 	popup.add_item("Exit", Global.OpCode.EXIT_GAME)
 	popup.connect("id_pressed", self, "_on_item_pressed")
+	
+	# Game Menu
+	popup = help_button.get_popup()
+	popup.add_item("Query", Global.OpCode.TILE_QUERY)
+	popup.connect("id_pressed", self, "_on_item_pressed")	
 
 func _on_item_pressed(id: int) -> void:
 	emit_signal("command_issued", {
