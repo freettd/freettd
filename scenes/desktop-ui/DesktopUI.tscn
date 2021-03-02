@@ -9,9 +9,9 @@ script = ExtResource( 2 )
 [node name="Toolbar" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -142.0
+margin_left = -190.5
 margin_top = 10.0
-margin_right = 142.0
+margin_right = 190.5
 margin_bottom = 34.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -21,7 +21,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="Toolbar"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 277.0
+margin_right = 374.0
 margin_bottom = 27.0
 
 [node name="GameButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
@@ -34,42 +34,49 @@ margin_left = 54.0
 margin_right = 58.0
 margin_bottom = 20.0
 
-[node name="RoadButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
+[node name="ConstructionButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
 margin_left = 62.0
-margin_right = 105.0
+margin_right = 155.0
+margin_bottom = 20.0
+focus_mode = 2
+text = "Construction"
+
+[node name="RoadButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
+margin_left = 159.0
+margin_right = 202.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Road"
 
 [node name="RailButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 109.0
-margin_right = 144.0
+margin_left = 206.0
+margin_right = 241.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Rail"
 
 [node name="AirButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 148.0
-margin_right = 178.0
+margin_left = 245.0
+margin_right = 275.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Air"
 
 [node name="SeaButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 182.0
-margin_right = 216.0
+margin_left = 279.0
+margin_right = 313.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Sea"
 
 [node name="VSeparator2" type="VSeparator" parent="Toolbar/HBoxContainer"]
-margin_left = 220.0
-margin_right = 224.0
+margin_left = 317.0
+margin_right = 321.0
 margin_bottom = 20.0
 
 [node name="HelpButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 228.0
-margin_right = 270.0
+margin_left = 325.0
+margin_right = 367.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Help"

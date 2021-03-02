@@ -23,7 +23,9 @@ func _ready() -> void:
 func set_tileset(tileset: Resource) -> void:
 	for layer in layers:
 		layer.set_tileset(tileset)
-		
+
+func set_tiledata(data) -> void:
+	pass
 
 func clear() -> void:
 	for layer in layers:

@@ -6,24 +6,19 @@ const NOISE_PERSISTENCE: float = 0.5 # smoothness
 const NOISE_FREQUENCY: float = 0.05
 const SEALEVEL: int = 1
 
-const TILES_PER_TYPE: int = 19
-
 # array of cells
 
-var world_config: Dictionary
-var tilemap_config: Dictionary
-
+var config: Dictionary
 var celldata = {}
 
 ## NEW TERRAIN
 
-func new_world(wcfg: Dictionary, tcfg: Dictionary) -> void:
+func new_world(cfg: Dictionary) -> void:
 
-	self.world_config = wcfg	
-	self.tilemap_config = tcfg
+	self.config = cfg	
 
 	# Build terrain
-	generate_heightmap()
+	generate_flatland()
 
 
 ## GENERATE TERRAIN
@@ -54,8 +49,8 @@ const NEIGHBOURS: Dictionary = {
 
 func generate_flatland() -> void:
 
-	var map_size: Vector2 = world_config.map_size
-	var tindex: Dictionary = tilemap_config.tindex
+	var map_size: Vector2 = config.map_size
+	var tindex: Dictionary = config.tindex
 
 	# loop through each tile
 	for x in map_size.x:
@@ -69,8 +64,8 @@ func generate_heightmap() -> void:
 
 	# inspired by https://github.com/PetePete1984/SuperTilemap
 
-	var map_size: Vector2 = world_config.map_size
-	var tindex: Dictionary = tilemap_config.tindex
+	var map_size: Vector2 = config.map_size
+	var tindex: Dictionary = config.tindex
 
 	var min_noise: float = 0.0
 	var max_noise: float = 0.0
@@ -187,6 +182,8 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 
 	# save tile data
 	cdata.id = tid
+	cdata.height = height
+	cdata.corners = image_id
 
 # Check if bist are set
 func _contains_bits(bitmask: int, mask: int) -> bool:
@@ -194,5 +191,8 @@ func _contains_bits(bitmask: int, mask: int) -> bool:
 
 # Is tile valid
 func is_valid_tile(cellv: Vector2) -> bool:
-	var map_size: Vector2 = world_config.map_size
+	var map_size: Vector2 = config.map_size
 	return cellv.x >= 0 and cellv.x < map_size.x and cellv.y >= 0 and cellv.y < map_size.y
+
+func get_tile_data(cellv: Vector2) -> Dictionary:
+	return celldata[cellv]

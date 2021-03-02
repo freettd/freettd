@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/selector.png-fbe9f5cac81fe556ef5a6e9b1516c234.stex"
+path="res://.import/selector.png-c9cc193ed080da6d484b24336b22e482.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/zbase/selector/selector.png"
-dest_files=[ "res://.import/selector.png-fbe9f5cac81fe556ef5a6e9b1516c234.stex" ]
+source_file="res://resources/zbase/assets/tilemap/selector.png"
+dest_files=[ "res://.import/selector.png-c9cc193ed080da6d484b24336b22e482.stex" ]
 
 [params]
 
