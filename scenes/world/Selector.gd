@@ -176,8 +176,8 @@ func _draw_angle45_path() -> void:
 			
 		# draw main line
 		_draw_diaganal_line(start, end, increment)
-		
-		# draw extra line
+		_draw_diaganal_line(start + Vector2(1, 0), end - Vector2(0, 1), increment)
+
 		
 func _draw_diaganal_line(start, end, increment) -> void:
 	
