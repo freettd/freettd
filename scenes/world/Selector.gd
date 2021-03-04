@@ -170,7 +170,7 @@ func _draw_direct_path() -> void:
 			
 		# draw lines
 		_draw_diaganal_line(start_tile, end_tile, increment)
-		_draw_diaganal_line(start_tile + Vector2(1, 0), end_tile + Vector2(0, -1), increment)
+		#draw_diaganal_line(start_tile + Vector2(1, 0), end_tile + Vector2(0, -1), increment)
 
 	
 # draw selection tiles			
@@ -210,26 +210,38 @@ func _draw_diaganal_line(start, end, increment: int) -> void:
 
 	var tileset_idx: int = 0
 
-	if path_angle == PathAngle.ANGLE_45:
-		tileset_idx = 2
-	elif path_angle == PathAngle.ANGLE_135:
-		tileset_idx = 3
-
-	var step: int = 0
-
-	for x in range(start.x, end.x):
-
-		var cellv: Vector2 = Vector2(x, start.y + step)
+	# draw 2 lines
+	for i in range(0, 2):
 		
-		if not terrain.is_valid_tile(cellv):
-			continue
-					
-		# get cell data
-		var tdata: Dictionary = terrain.get_tile_data(cellv)
+		if path_angle == PathAngle.ANGLE_45:
+			if i == 0:
+				tileset_idx = 2
+			else:
+				tileset_idx = 4
+		elif path_angle == PathAngle.ANGLE_135:
+			if i == 0:
+				tileset_idx = 3
+			else:
+				tileset_idx = 5
 		
-		# draw boxen
-		set_cellv_height(cellv, tdata.height)
-		set_cellv(cellv, tileset_type + tileset_idx)
+		var step: int = 0
 		
-		step += increment
+		var s2 = start + Vector2(i, 0)
+		var e2 = end + Vector2(0, -i)
+
+		for x in range(s2.x, e2.x):
+
+			var cellv: Vector2 = Vector2(x, s2.y + step)
+			
+			if not terrain.is_valid_tile(cellv):
+				continue
+						
+			# get cell data
+			var tdata: Dictionary = terrain.get_tile_data(cellv)
+			
+			# draw boxen
+			set_cellv_height(cellv, tdata.height)
+			set_cellv(cellv, tileset_type + tileset_idx)
+			
+			step += increment
 
