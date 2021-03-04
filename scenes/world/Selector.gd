@@ -16,10 +16,16 @@ var selected_tile: Vector2 = Vector2.INF
 var command: Dictionary
 var config: Dictionary
 
-var tparams: Dictionary
+var wcfg: Dictionary
 
-func new_world(world_cfg: Dictionary) -> void:
-	self.tparams = world_cfg
+var start_tile: Vector2
+var end_tile: Vector2
+var tileset_idx: int
+
+
+func new_world(cfg: Dictionary) -> void:
+	self.wcfg = cfg
+	tileset_idx = cfg.tindex.railtile
 
 func activate(command: Dictionary, config: Dictionary) -> void:
 	deactivate()
@@ -107,17 +113,51 @@ func _handle_mouse_move() -> void:
 		Global.SelectMode.DRAG:
 			_draw_boxed_area()
 
-		Global.SelectMode.ANGLE45:
+		Global.SelectMode.LINE45, Global.SelectMode.LINE90:
 			if drag_enabled:
-				_draw_angle45_path()
+				_draw_direct_path()
 			else:
 				_draw_boxed_area()
+				
+# draw path with 45 angles
+func _draw_direct_path() -> void:
+
+	# draw 90 degree
+	if box.size.x != box.size.y:
+
+		# east-west or north-south
+		if (box.size.x < box.size.y):
+			start_tile = Vector2(selected_tile.x, box.position.y)
+			end_tile = Vector2(selected_tile.x, box.end.y - 1)
+		else:
+			start_tile = Vector2(box.position.x, selected_tile.y)
+			end_tile = Vector2(box.end.x - 1, selected_tile.y)
 			
-		Global.SelectMode.ANGLE90:
-			if drag_enabled:
-				_draw_angle90_path()
-			else:
-				_draw_boxed_area()
+		box = Rect2(start_tile, (end_tile - start_tile) + Vector2.ONE)
+		
+		_draw_boxed_area()	
+	
+	# draw 45 angle
+	elif config.mode == Global.SelectMode.LINE45:
+	
+		var increment: int
+
+		# start in top-left and increment each direction by 1
+		if current_tile == box.position or selected_tile == box.position:
+			start_tile = box.position  # top left
+			end_tile = box.end # bottom right
+			increment = 1
+			
+		# start in bottom-left and increment x by and y by -1
+		else:
+			start_tile = Vector2(box.position.x, box.end.y - 1)  # bottom left
+			end_tile = Vector2(box.end.x, box.position.y) # top right
+			increment = -1
+			
+		# draw lines
+		_draw_diaganal_line(start_tile, end_tile, increment)
+		_draw_diaganal_line(start_tile + Vector2(1, 0), end_tile + Vector2(0, -1), increment)
+
 	
 # draw selection tiles			
 func _draw_boxed_area() -> void:
@@ -143,49 +183,15 @@ func _draw_boxed_area() -> void:
 			
 			# draw boxen
 			set_cellv_height(cellv, tdata.height)
-			set_cellv(cellv, tdata.corners)
-
-
-# draw path with 45 angles
-func _draw_angle45_path() -> void:
-
-	# draw 90 degree path if not a square area
-	if box.size.x != box.size.y:
-		_draw_angle90_path()	
-	
-	# draw corner to corner
-	else:
-	
-		var start
-		var end
-		var increment
-
-		# start in top-left and increment each direction by 1
-		if current_tile == box.position or selected_tile == box.position:
-			start = box.position  # top left
-			end = box.end # bottom right
-			increment = 1
-			print("top left")
-			
-		# start in bottom-left and increment x by and y by -1
-		else:
-			start = Vector2(box.position.x, box.end.y - 1)  # bottom left
-			end = Vector2(box.end.x, box.position.y) # top right
-			increment = -1
-			print("botom left")
-			
-		# draw main line
-		_draw_diaganal_line(start, end, increment)
-		_draw_diaganal_line(start + Vector2(1, 0), end - Vector2(0, 1), increment)
-
+			set_cellv(cellv, tileset_idx + tdata.corners)
 		
-func _draw_diaganal_line(start, end, increment) -> void:
-	
-	var step = 0
+func _draw_diaganal_line(start, end, increment: int) -> void:
 
-	for x in range(start.x, end.x, 1):
+	var step: int = 0
 
-		var cellv = Vector2(x, start.y + step)
+	for x in range(start.x, end.x):
+
+		var cellv: Vector2 = Vector2(x, start.y + step)
 		
 		if not terrain.is_valid_tile(cellv):
 			continue
@@ -195,26 +201,7 @@ func _draw_diaganal_line(start, end, increment) -> void:
 		
 		# draw boxen
 		set_cellv_height(cellv, tdata.height)
-		set_cellv(cellv, tdata.corners)
+		set_cellv(cellv, tileset_idx + tdata.corners)
 		
 		step += increment
 
-
-# draw path with 90 angles
-func _draw_angle90_path() -> void:
-
-	var start_tile: Vector2
-	var end_tile: Vector2
-
-	# east-west or north-south
-	if (box.size.x < box.size.y):
-		start_tile = Vector2(selected_tile.x, box.position.y)
-		end_tile = Vector2(selected_tile.x, box.end.y - 1)
-	else:
-		start_tile = Vector2(box.position.x, selected_tile.y)
-		end_tile = Vector2(box.end.x - 1, selected_tile.y)
-		
-	box = Rect2(start_tile, (end_tile - start_tile) + Vector2.ONE)
-	
-	_draw_boxed_area()
-	

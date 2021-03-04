@@ -10,6 +10,10 @@ var tilemap = {
 		src = "res://resources/zbase/terrain/terrain.res",
 	},
 	selector = {
+		tindex = {
+			railtile = 0,
+			fulltile = 18
+		},
 		src = "res://resources/zbase/selector/selector.res"
 	}
 }

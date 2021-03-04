@@ -12,15 +12,19 @@ func new_world(pckfile) -> void:
 	
 	# Terrain
 	terrain.set_tileset(load(tilemap_cfg.terrain.src))
-	
-	# Selector
-	selector.set_tileset(load(tilemap_cfg.selector.src))
-	
-	# New world
 	terrain.new_world({
 		tindex = tilemap_cfg.terrain.tindex,
 		map_size = map_size
 	})
+	
+	# Selector
+	selector.set_tileset(load(tilemap_cfg.selector.src))
+	selector.new_world({
+		tindex = tilemap_cfg.selector.tindex
+	})
+	
+	# New world
+
 	
 
 func process_local_command(command: Dictionary) -> void:

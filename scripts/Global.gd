@@ -20,12 +20,10 @@ enum SelectMode {
 	DRAG,
 	
 	# rail
-	ANGLE45,
-	PATH45,
+	LINE45,
 	
-	# road, canals, etc.
-	ANGLE90,
-	PATH90,
+	# road, canal
+	LINE90,
 	
 }
 
@@ -41,7 +39,7 @@ const SelectorConfig: Dictionary = {
 	
 	OpCode.BUILD_ROAD: {
 		dimension = Vector2.ONE,
-		mode = SelectMode.ANGLE90,
+		mode = SelectMode.LINE90,
 		repeat = true,
 		on_water = false,
 		on_slope = true,
@@ -49,7 +47,7 @@ const SelectorConfig: Dictionary = {
 	
 	OpCode.BUILD_RAIL: {
 		dimension = Vector2.ONE,
-		mode = SelectMode.ANGLE45,
+		mode = SelectMode.LINE45,
 		repeat = true,
 		on_water = false,
 		on_slope = true,

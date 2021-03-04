@@ -28,6 +28,10 @@ run/main_scene="res://scenes/Main.tscn"
 
 settings/fps/force_fps=60
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/codeandweb.texturepacker/plugin.cfg" )
+
 [physics]
 
 common/enable_pause_aware_picking=true
