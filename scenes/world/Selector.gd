@@ -214,16 +214,10 @@ func _draw_diaganal_line(start, end, increment: int) -> void:
 	for i in range(0, 2):
 		
 		if path_angle == PathAngle.ANGLE_45:
-			if i == 0:
-				tileset_idx = 2
-			else:
-				tileset_idx = 4
+			tileset_idx = 2 + (2 * i)
 		elif path_angle == PathAngle.ANGLE_135:
-			if i == 0:
-				tileset_idx = 3
-			else:
-				tileset_idx = 5
-		
+			tileset_idx = 3 + (2 * i)
+
 		var step: int = 0
 		
 		var s2 = start + Vector2(i, 0)
