@@ -1,0 +1,873 @@
+{
+	"textures": [
+		{
+			"image": "terrain.png",
+			"size": {
+				"w": 390,
+				"h": 1470
+			},
+			"sprites": [
+				{
+					"filename": "grass1/0.png",
+					"region": {
+						"x": 1,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/1.png",
+					"region": {
+						"x": 131,
+						"y": 1,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/2.png",
+					"region": {
+						"x": 261,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/3.png",
+					"region": {
+						"x": 1,
+						"y": 84,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/4.png",
+					"region": {
+						"x": 131,
+						"y": 84,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/5.png",
+					"region": {
+						"x": 261,
+						"y": 84,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/6.png",
+					"region": {
+						"x": 1,
+						"y": 167,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/7.png",
+					"region": {
+						"x": 131,
+						"y": 167,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/8.png",
+					"region": {
+						"x": 261,
+						"y": 167,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/9.png",
+					"region": {
+						"x": 1,
+						"y": 235,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/10.png",
+					"region": {
+						"x": 131,
+						"y": 235,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/11.png",
+					"region": {
+						"x": 261,
+						"y": 235,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/12.png",
+					"region": {
+						"x": 1,
+						"y": 318,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/13.png",
+					"region": {
+						"x": 131,
+						"y": 318,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/14.png",
+					"region": {
+						"x": 261,
+						"y": 318,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/128_0021.png",
+					"region": {
+						"x": 1,
+						"y": 386,
+						"w": 128,
+						"h": 97
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/128_0022.png",
+					"region": {
+						"x": 131,
+						"y": 386,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/128_0023.png",
+					"region": {
+						"x": 261,
+						"y": 386,
+						"w": 128,
+						"h": 34
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "grass1/128_0024.png",
+					"region": {
+						"x": 1,
+						"y": 485,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/1.png",
+					"region": {
+						"x": 131,
+						"y": 485,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/2.png",
+					"region": {
+						"x": 261,
+						"y": 485,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/3.png",
+					"region": {
+						"x": 1,
+						"y": 553,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/4.png",
+					"region": {
+						"x": 131,
+						"y": 553,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/5.png",
+					"region": {
+						"x": 261,
+						"y": 553,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/6.png",
+					"region": {
+						"x": 1,
+						"y": 620,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/7.png",
+					"region": {
+						"x": 131,
+						"y": 620,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/8.png",
+					"region": {
+						"x": 261,
+						"y": 620,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/9.png",
+					"region": {
+						"x": 1,
+						"y": 687,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/10.png",
+					"region": {
+						"x": 131,
+						"y": 687,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/11.png",
+					"region": {
+						"x": 261,
+						"y": 687,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/12.png",
+					"region": {
+						"x": 1,
+						"y": 754,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/13.png",
+					"region": {
+						"x": 131,
+						"y": 754,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/14.png",
+					"region": {
+						"x": 261,
+						"y": 754,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/15.png",
+					"region": {
+						"x": 1,
+						"y": 821,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/128_0021.png",
+					"region": {
+						"x": 131,
+						"y": 821,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/128_0022.png",
+					"region": {
+						"x": 261,
+						"y": 821,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/128_0023.png",
+					"region": {
+						"x": 1,
+						"y": 904,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "road_grass/128_0024.png",
+					"region": {
+						"x": 131,
+						"y": 904,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/0.png",
+					"region": {
+						"x": 261,
+						"y": 904,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/1.png",
+					"region": {
+						"x": 1,
+						"y": 987,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/2.png",
+					"region": {
+						"x": 131,
+						"y": 987,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/3.png",
+					"region": {
+						"x": 261,
+						"y": 987,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/4.png",
+					"region": {
+						"x": 1,
+						"y": 1070,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/5.png",
+					"region": {
+						"x": 131,
+						"y": 1070,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/6.png",
+					"region": {
+						"x": 261,
+						"y": 1070,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/7.png",
+					"region": {
+						"x": 1,
+						"y": 1138,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/8.png",
+					"region": {
+						"x": 131,
+						"y": 1138,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/9.png",
+					"region": {
+						"x": 261,
+						"y": 1138,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/10.png",
+					"region": {
+						"x": 1,
+						"y": 1221,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/11.png",
+					"region": {
+						"x": 131,
+						"y": 1221,
+						"w": 128,
+						"h": 81
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/12.png",
+					"region": {
+						"x": 261,
+						"y": 1221,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/13.png",
+					"region": {
+						"x": 1,
+						"y": 1304,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/14.png",
+					"region": {
+						"x": 131,
+						"y": 1304,
+						"w": 128,
+						"h": 50
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/128_0165.png",
+					"region": {
+						"x": 261,
+						"y": 1304,
+						"w": 128,
+						"h": 97
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/128_0166.png",
+					"region": {
+						"x": 1,
+						"y": 1403,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/128_0167.png",
+					"region": {
+						"x": 131,
+						"y": 1403,
+						"w": 128,
+						"h": 34
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "water/128_0168.png",
+					"region": {
+						"x": 261,
+						"y": 1403,
+						"w": 128,
+						"h": 66
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:1d2e96b216759045d4ef04d820c42851:95a9fa027f169bc868e6fc9a0b7055dc:8c8ca5c7fdd24b5296dd137ab89d169c$"
+	}
+}

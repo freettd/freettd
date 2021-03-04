@@ -20,12 +20,19 @@ var wcfg: Dictionary
 
 var start_tile: Vector2
 var end_tile: Vector2
-var tileset_idx: int
 
+var path_angle: int
+var tileset_type: int
+
+enum PathAngle {
+	ANGLE_0, 
+	ANGLE_45,
+	ANGLE_90,
+	ANGLE_135
+}
 
 func new_world(cfg: Dictionary) -> void:
 	self.wcfg = cfg
-	tileset_idx = cfg.tindex.railtile
 
 func activate(command: Dictionary, config: Dictionary) -> void:
 	deactivate()
@@ -35,13 +42,11 @@ func activate(command: Dictionary, config: Dictionary) -> void:
 
 func deactivate() -> void:
 	reset()
-	clear()
 	visible = false
 		
 func reset() -> void:
-	
-	# clear tilemaps
 	clear()
+	path_angle = PathAngle.ANGLE_0
 
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -103,6 +108,9 @@ func _handle_mouse_move() -> void:
 		box.size = box.size + Vector2.ONE
 	else:
 		box = Rect2(current_tile, config.dimension)
+		
+	# default tile type
+	tileset_type = wcfg.tindex.fulltile
 	
 	# use selection mode
 	match config.mode:
@@ -115,9 +123,11 @@ func _handle_mouse_move() -> void:
 
 		Global.SelectMode.LINE45, Global.SelectMode.LINE90:
 			if drag_enabled:
+				tileset_type = wcfg.tindex.railtile
 				_draw_direct_path()
 			else:
 				_draw_boxed_area()
+
 				
 # draw path with 45 angles
 func _draw_direct_path() -> void:
@@ -129,9 +139,11 @@ func _draw_direct_path() -> void:
 		if (box.size.x < box.size.y):
 			start_tile = Vector2(selected_tile.x, box.position.y)
 			end_tile = Vector2(selected_tile.x, box.end.y - 1)
+			path_angle = PathAngle.ANGLE_0
 		else:
 			start_tile = Vector2(box.position.x, selected_tile.y)
 			end_tile = Vector2(box.end.x - 1, selected_tile.y)
+			path_angle = PathAngle.ANGLE_90
 			
 		box = Rect2(start_tile, (end_tile - start_tile) + Vector2.ONE)
 		
@@ -147,12 +159,14 @@ func _draw_direct_path() -> void:
 			start_tile = box.position  # top left
 			end_tile = box.end # bottom right
 			increment = 1
+			path_angle = PathAngle.ANGLE_45
 			
 		# start in bottom-left and increment x by and y by -1
 		else:
 			start_tile = Vector2(box.position.x, box.end.y - 1)  # bottom left
 			end_tile = Vector2(box.end.x, box.position.y) # top right
 			increment = -1
+			path_angle = PathAngle.ANGLE_135
 			
 		# draw lines
 		_draw_diaganal_line(start_tile, end_tile, increment)
@@ -161,6 +175,13 @@ func _draw_direct_path() -> void:
 	
 # draw selection tiles			
 func _draw_boxed_area() -> void:
+	
+	var tileset_idx: int = 0
+
+	if path_angle == PathAngle.ANGLE_0:
+		tileset_idx = 0
+	elif path_angle == PathAngle.ANGLE_90:
+		tileset_idx = 1
 	
 	for x in range(box.position.x, box.end.x):
 		for y in range(box.position.y, box.end.y):
@@ -183,9 +204,16 @@ func _draw_boxed_area() -> void:
 			
 			# draw boxen
 			set_cellv_height(cellv, tdata.height)
-			set_cellv(cellv, tileset_idx + tdata.corners)
+			set_cellv(cellv, tileset_type + tileset_idx)
 		
 func _draw_diaganal_line(start, end, increment: int) -> void:
+
+	var tileset_idx: int = 0
+
+	if path_angle == PathAngle.ANGLE_45:
+		tileset_idx = 2
+	elif path_angle == PathAngle.ANGLE_135:
+		tileset_idx = 3
 
 	var step: int = 0
 
@@ -201,7 +229,7 @@ func _draw_diaganal_line(start, end, increment: int) -> void:
 		
 		# draw boxen
 		set_cellv_height(cellv, tdata.height)
-		set_cellv(cellv, tileset_idx + tdata.corners)
+		set_cellv(cellv, tileset_type + tileset_idx)
 		
 		step += increment
 
