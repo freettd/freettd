@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/world/MainCamera.gd" type="Script" id=1]
-[ext_resource path="res://scenes/world/Terrain.gd" type="Script" id=2]
-[ext_resource path="res://scenes/world/World.gd" type="Script" id=3]
-[ext_resource path="res://scenes/world/Selector.gd" type="Script" id=4]
+[ext_resource path="res://src/world/MainCamera.gd" type="Script" id=1]
+[ext_resource path="res://src/world/Selector.gd" type="Script" id=2]
+[ext_resource path="res://src/world/World.gd" type="Script" id=3]
+[ext_resource path="res://src/world/Terrain.gd" type="Script" id=4]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -17,11 +17,11 @@ max_zoom = 8.0
 mouse_zoom_increment = 0.5
 
 [node name="Terrain" type="Node2D" parent="."]
-script = ExtResource( 2 )
+script = ExtResource( 4 )
 
 [node name="Selector" type="Node2D" parent="."]
 visible = false
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 world_terrain = NodePath("../Terrain")
 
 [connection signal="tile_selected" from="Selector" to="." method="_on_Selector_tile_selected"]

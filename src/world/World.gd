@@ -7,7 +7,7 @@ onready var selector = $Selector
 
 func new_world(pckfile) -> void:
 	
-	var map_size: Vector2 = Vector2(32, 32)
+	var map_size: Vector2 = Vector2(128, 128)
 	var tilemap_cfg = pckfile.tilemap
 	
 	# Terrain

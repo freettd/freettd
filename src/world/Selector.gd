@@ -1,4 +1,4 @@
-extends "res://scenes/world/LayedTilemap.gd"
+extends "res://src/world/LayedTilemap.gd"
 
 signal tile_selected(command)
 signal error(msg)	
@@ -6,11 +6,16 @@ signal error(msg)
 export (NodePath) var world_terrain
 onready var terrain: Node2D = get_node(world_terrain)
 
+const DEFAULT_SELECTOR_COLOR = Color.white
+const ERROR_SELECTOR_COLOR = Color.red
+
 # drag values
 var drag_enabled: bool = false
 var box: Rect2 = Rect2()
 var current_tile: Vector2 = Vector2.INF
 var selected_tile: Vector2 = Vector2.INF
+
+var selection_error: bool = false
 
 # command config
 var command: Dictionary
@@ -25,11 +30,13 @@ var path_angle: int
 var tileset_type: int
 
 enum PathAngle {
+	NONE,
 	ANGLE_0, 
 	ANGLE_45,
 	ANGLE_90,
 	ANGLE_135
 }
+
 
 func new_world(cfg: Dictionary) -> void:
 	self.wcfg = cfg
@@ -46,7 +53,11 @@ func deactivate() -> void:
 		
 func reset() -> void:
 	clear()
-	path_angle = PathAngle.ANGLE_0
+	path_angle = PathAngle.NONE
+	
+	# reset errors
+	modulate = DEFAULT_SELECTOR_COLOR
+	selection_error = false
 
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -149,7 +160,7 @@ func _draw_direct_path() -> void:
 		
 		_draw_boxed_area()	
 	
-	# draw 45 angle
+	# draw 45 angle if selection mode allows it
 	elif config.mode == Global.SelectMode.LINE45:
 	
 		var increment: int
@@ -170,68 +181,78 @@ func _draw_direct_path() -> void:
 			
 		# draw lines
 		_draw_diaganal_line(start_tile, end_tile, increment)
-		#draw_diaganal_line(start_tile + Vector2(1, 0), end_tile + Vector2(0, -1), increment)
 
 	
 # draw selection tiles			
 func _draw_boxed_area() -> void:
 	
-	var tileset_idx: int = 0
-
-	if path_angle == PathAngle.ANGLE_0:
-		tileset_idx = 0
-	elif path_angle == PathAngle.ANGLE_90:
-		tileset_idx = 1
+	var tileset_idx: int	
+	var cellv: Vector2
+	var tdata: Dictionary 
 	
+	# for each cell in the selected area
 	for x in range(box.position.x, box.end.x):
 		for y in range(box.position.y, box.end.y):
 			
-			var cellv = Vector2(x, y)
+			cellv = Vector2(x, y)
 			
-			if not terrain.is_valid_tile(cellv):
+			# validate tile
+			if not terrain.is_valid_tile(cellv) or validate_tile_selection(cellv):
 				continue
 			
-			# check if allowed on water
-			#if not config.on_water and terrain.is_water(cellv):
-				#pass
-				
-			# check is allowed on slope
-			#if not config.on_slope and terrain.is_slope(cellv):
-				#pass 	
-			
 			# get cell data
-			var tdata: Dictionary = terrain.get_tile_data(cellv)
+			tdata = terrain.get_tile_data(cellv)
 			
+			# tile index
+			
+			if path_angle == PathAngle.NONE:
+				tileset_idx = tileset_type + tdata.corners
+			elif path_angle == PathAngle.ANGLE_0:
+				tileset_idx = tileset_type + 0
+			elif path_angle == PathAngle.ANGLE_90:
+				tileset_idx = tileset_type + 1
+				
 			# draw boxen
 			set_cellv_height(cellv, tdata.height)
-			set_cellv(cellv, tileset_type + tileset_idx)
-		
-func _draw_diaganal_line(start, end, increment: int) -> void:
+			set_cellv(cellv, tileset_idx)
 
-	var tileset_idx: int = 0
 
+func _draw_diaganal_line(start_cellv, end_cellv, increment: int) -> void:
+
+	var tileset_idx: int
+	var tdata: Dictionary
+	var cellv: Vector2
+	
+	var start_tile_with_offset: Vector2
+	var end_tile_with_offset: Vector2
+	
+	var step: int
+	
 	# draw 2 lines
 	for i in range(0, 2):
+		
+		step = 0
 		
 		if path_angle == PathAngle.ANGLE_45:
 			tileset_idx = 2 + (2 * i)
 		elif path_angle == PathAngle.ANGLE_135:
-			tileset_idx = 3 + (2 * i)
-
-		var step: int = 0
+			tileset_idx = 3 + (2 * i)			
 		
-		var s2 = start + Vector2(i, 0)
-		var e2 = end + Vector2(0, -i)
+		start_tile_with_offset = start_cellv + Vector2(i, 0)
+		end_tile_with_offset = end_cellv + Vector2(0, -i)
 
-		for x in range(s2.x, e2.x):
+		for x in range(start_tile_with_offset.x, end_tile_with_offset.x):
 
-			var cellv: Vector2 = Vector2(x, s2.y + step)
+			cellv = Vector2(x, start_tile_with_offset.y + step)
 			
 			if not terrain.is_valid_tile(cellv):
 				continue
+				
+			# validate tile
+			validate_tile_selection(cellv)
 						
 			# get cell data
-			var tdata: Dictionary = terrain.get_tile_data(cellv)
+			tdata = terrain.get_tile_data(cellv)
 			
 			# draw boxen
 			set_cellv_height(cellv, tdata.height)
@@ -239,3 +260,13 @@ func _draw_diaganal_line(start, end, increment: int) -> void:
 			
 			step += increment
 
+func validate_tile_selection(cellv: Vector2) -> void:
+
+	# check if allowed on water
+	if not config.on_water and terrain.is_water(cellv):
+		modulate = ERROR_SELECTOR_COLOR
+		
+	# check is allowed on slope
+	if not config.on_slope and terrain.is_slope(cellv):
+		modulate = ERROR_SELECTOR_COLOR
+		

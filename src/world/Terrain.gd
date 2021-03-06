@@ -1,4 +1,4 @@
-extends "res://scenes/world/LayedTilemap.gd"
+extends "res://src/world/LayedTilemap.gd"
 
 const NOISE_OCTAVES: int = 4
 const NOISE_PERIOD: float = 20.0 # wavey
@@ -18,7 +18,7 @@ func new_world(cfg: Dictionary) -> void:
 	self.config = cfg	
 
 	# Build terrain
-	generate_flatland()
+	generate_heightmap()
 
 
 ## GENERATE TERRAIN
@@ -119,7 +119,6 @@ func generate_heightmap() -> void:
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
 
-	var cdata: Dictionary = celldata[cellv]
 	var cell_height: int = celldata[cellv].noise
 	var corner_bits: int = 0
 	var steeptile: bool = false
@@ -196,3 +195,11 @@ func is_valid_tile(cellv: Vector2) -> bool:
 
 func get_tile_data(cellv: Vector2) -> Dictionary:
 	return celldata[cellv]
+	
+# HELPER TILE FUNCTIONS
+
+func is_water(cellv: Vector2) -> bool:
+	return get_cellv_height(cellv) == 0
+
+func is_slope(cellv: Vector2) -> bool:
+	return celldata.get(cellv).corners != 0
