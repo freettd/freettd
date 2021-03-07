@@ -24,4 +24,5 @@ visible = false
 script = ExtResource( 2 )
 world_terrain = NodePath("../Terrain")
 
+[connection signal="error" from="Selector" to="." method="_on_Selector_error"]
 [connection signal="tile_selected" from="Selector" to="." method="_on_Selector_tile_selected"]

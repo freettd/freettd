@@ -87,21 +87,27 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _handle_button_click(event) -> void:
 	
+	# button clicked
 	if event.pressed:
 				
 		if config.mode != Global.SelectMode.FIXED:
 			drag_enabled = true
 			selected_tile = current_tile
-		
+			
 	else:
-	
+
 		drag_enabled = false
 		
-		command.selection = {
-			start_tile = box.position,
-			dimension = box.size
-		}
-		emit_signal("tile_selected", command)
+		if selection_error:
+			emit_signal("error", "invalid tile selection")
+		else:
+			
+			command.selection = {
+				position = box.position,
+				dimension = box.size
+			}
+			
+			emit_signal("tile_selected", command)
 		
 		reset()
 			
@@ -264,9 +270,11 @@ func validate_tile_selection(cellv: Vector2) -> void:
 
 	# check if allowed on water
 	if not config.on_water and terrain.is_water(cellv):
+		selection_error = true
 		modulate = ERROR_SELECTOR_COLOR
 		
 	# check is allowed on slope
 	if not config.on_slope and terrain.is_slope(cellv):
+		selection_error = true
 		modulate = ERROR_SELECTOR_COLOR
 		
