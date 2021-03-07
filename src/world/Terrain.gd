@@ -36,15 +36,27 @@ const MASK_WEST_STEEP: int = 18
 
 var tid: int = 0
 
+# Directions
+const DIRECTION: Dictionary = {
+	NORTH_WEST = Vector2.LEFT,
+	NORTH = Vector2.UP + Vector2.LEFT,
+	NORTH_EAST = Vector2.UP,
+	EAST = Vector2.UP + Vector2.RIGHT,
+	SOUTH_EAST = Vector2.RIGHT,
+	SOUTH = Vector2.DOWN + Vector2.RIGHT,
+	SOUTH_WEST = Vector2.DOWN,
+	WEST =Vector2.DOWN + Vector2.LEFT
+}
+
 const NEIGHBOURS: Dictionary = {
-	Vector2.UP+Vector2.LEFT: MASK_NORTH_CORNER,
-	Vector2.UP: MASK_NORTH_CORNER|MASK_EAST_CORNER,
-	Vector2.UP+Vector2.RIGHT: MASK_EAST_CORNER,
-	Vector2.RIGHT: MASK_SOUTH_CORNER|MASK_EAST_CORNER,
-	Vector2.DOWN+Vector2.RIGHT: MASK_SOUTH_CORNER,
-	Vector2.DOWN: MASK_SOUTH_CORNER|MASK_WEST_CORNER,
-	Vector2.DOWN+Vector2.LEFT: MASK_WEST_CORNER,
-	Vector2.LEFT: MASK_NORTH_CORNER|MASK_WEST_CORNER
+	DIRECTION.NORTH: MASK_NORTH_CORNER,
+	DIRECTION.NORTH_EAST: MASK_NORTH_CORNER|MASK_EAST_CORNER,
+	DIRECTION.EAST: MASK_EAST_CORNER,
+	DIRECTION.SOUTH_EAST: MASK_SOUTH_CORNER|MASK_EAST_CORNER,
+	DIRECTION.SOUTH: MASK_SOUTH_CORNER,
+	DIRECTION.SOUTH_WEST: MASK_SOUTH_CORNER|MASK_WEST_CORNER,
+	DIRECTION.WEST: MASK_WEST_CORNER,
+	DIRECTION.NORTH_WEST: MASK_NORTH_CORNER|MASK_WEST_CORNER
 }
 
 func generate_flatland() -> void:
@@ -124,7 +136,7 @@ func _get_tile_alignment(cellv: Vector2) -> int:
 	var steeptile: bool = false
 
 	# Check neighbours for raised cornes
-	for neighbour in NEIGHBOURS:
+	for neighbour in DIRECTION.values():
 		var ncell = cellv + neighbour
 		
 		# Skip if not a valid cell location
@@ -183,6 +195,7 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	cdata.id = tid
 	cdata.height = height
 	cdata.corners = image_id
+	cdata.tile_idx = image_id
 
 # Check if bist are set
 func _contains_bits(bitmask: int, mask: int) -> bool:
@@ -203,3 +216,130 @@ func is_water(cellv: Vector2) -> bool:
 
 func is_slope(cellv: Vector2) -> bool:
 	return celldata.get(cellv).corners != 0
+
+
+
+## ROAD FUNCTIONS
+
+const DEFAULT_NAV_WEIGHT: int = 1
+
+const ROAD_CONNECTION_UP: int = 0x1
+const ROAD_CONNECTION_RIGHT: int = 0x2
+const ROAD_CONNECTION_DOWN: int = 0x4
+const ROAD_CONNECTION_LEFT: int = 0x8
+
+const ROAD_SLOPE_NORTHEAST = 16
+const ROAD_SLOPE_SOUTHEAST = 17
+const ROAD_SLOPE_SOUTHWEST = 18
+const ROAD_SLOPE_NORTHWEST = 19
+
+var connectors = {
+	DIRECTION.NORTH_EAST: ROAD_CONNECTION_UP,
+	DIRECTION.SOUTH_EAST : ROAD_CONNECTION_RIGHT,
+	DIRECTION.SOUTH_WEST: ROAD_CONNECTION_DOWN,
+	DIRECTION.NORTH_WEST: ROAD_CONNECTION_LEFT
+}
+
+func build_road(command: Dictionary, roadnav: AStar2D) -> void:
+
+	var tindex: Dictionary = config.tindex
+
+	# fixme?
+	var box = Rect2(command.selection.position, command.selection.dimension)
+
+	var start_tile: int = 0
+	var end_tile: int = 0
+
+	# this gives the road nice endings
+	if box.size.x < box.size.y:
+		start_tile = ROAD_CONNECTION_DOWN
+		end_tile = ROAD_CONNECTION_UP
+	else:
+		start_tile = ROAD_CONNECTION_RIGHT
+		end_tile = ROAD_CONNECTION_LEFT
+
+	# default tile will have both connections
+	var default_tile: int = start_tile|end_tile
+
+	# variables used inside loop
+	var road_tile: int
+	var tile_idx: int
+	var cellv: Vector2
+	var cdata: Dictionary
+	var ntile: Dictionary
+
+	# paint tiles
+	for x in range(box.position.x, box.end.x ):
+		for y in range(box.position.y, box.end.y):
+
+			road_tile = 0
+
+			# current tile
+			cellv = Vector2(x, y)
+
+			# Update Road Navigation
+			cdata = celldata[cellv]
+			tile_idx = cdata.tile_idx
+
+			# add point to astar with default weight
+			roadnav.add_point(cdata.id, cellv, DEFAULT_NAV_WEIGHT)
+
+			# set termainals at each end
+			if cellv == box.position:
+				road_tile = start_tile
+			elif cellv == box.end - Vector2.ONE:
+				road_tile = end_tile
+			else:
+				road_tile = default_tile
+
+			# slopes have no connections
+			if cdata.tile_idx != 0:
+
+				var id = 0
+				var height_adjust = 0
+
+				if _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_EAST]):
+					id = ROAD_SLOPE_NORTHEAST
+					height_adjust = 1
+				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_EAST]):
+					id = ROAD_SLOPE_SOUTHEAST
+				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_WEST]):
+					id = ROAD_SLOPE_SOUTHWEST
+				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_WEST]):
+					id = ROAD_SLOPE_NORTHWEST
+					height_adjust = 1
+
+				road_tile = id
+				
+				# save connection data
+				cdata.road = default_tile
+
+			# flat tiles have connections
+			else:
+
+				for n in connectors.keys():
+
+					# skip if not on map
+					if not is_valid_tile(cellv + n):
+						continue
+
+					# get neighbour tile properties
+					ntile = celldata[cellv + n]
+
+					# find incomming connections
+					if ntile.has("road") and _contains_bits(ntile.road, connectors[-n]):
+
+						# connect this current tile to neighbour
+						roadnav.connect_points(cdata.id, ntile.id)
+
+						# set bit
+						road_tile |= connectors[n]
+						
+					# save connection data
+					cdata.road = road_tile
+			
+			# get road tile index
+			var tileset_idx: int = tindex.road_grass + road_tile - 1
+			
+			# set road tile
+			set_cellv(cellv, tileset_idx)
