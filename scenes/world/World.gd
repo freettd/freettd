@@ -1,29 +1,18 @@
 extends Node
 
-export var max_height: int = 8
-
 onready var terrain = $Terrain
 onready var selector = $Selector
 
 # Navigation Objects
 var roadnav: AStar2D = AStar2D.new()
 
-func new_world(pckfile) -> void:
+func new_world() -> void:
 	
 	var map_size: Vector2 = Vector2(128, 128)
-	var tilemap_cfg = pckfile.tilemap
 	
 	# Terrain
-	terrain.set_tileset(load(tilemap_cfg.terrain.src))
 	terrain.new_world({
-		tindex = tilemap_cfg.terrain.tindex,
 		map_size = map_size
-	})
-	
-	# Selector
-	selector.set_tileset(load(tilemap_cfg.selector.src))
-	selector.new_world({
-		tindex = tilemap_cfg.selector.tindex
 	})
 	
 	# New world

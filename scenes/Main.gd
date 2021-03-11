@@ -5,11 +5,8 @@ onready var ui = $DesktopUI
 
 func _ready() -> void:
 	
-	# todo: load this from external pck file
-	var pck = preload("res://resources/zbase/Resource.gd").new()
-	
 	# Create New World
-	world.new_world(pck)
+	world.new_world()
 	
 	
 

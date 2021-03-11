@@ -1,0 +1,15 @@
+[remap]
+
+importer="codeandweb.texturepacker_import_tileset"
+type="Resource"
+path="res://.import/selector.tpset-a4e31375527d57d0692f0dc567e0746d.res"
+
+[deps]
+
+files=[ "selector.png", "res://assets/tilemap/selector.res" ]
+
+source_file="res://assets/tilemap/selector.tpset"
+dest_files=[ "res://.import/selector.tpset-a4e31375527d57d0692f0dc567e0746d.res", "selector.png", "res://assets/tilemap/selector.res" ]
+
+[params]
+

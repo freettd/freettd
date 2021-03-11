@@ -1,5 +1,6 @@
 extends Node2D
 
+export var tileset: TileSet
 export var cell_size: Vector2 = Vector2(128, 64)
 export var max_height: int = 8
 export var height_offset: Vector2 = Vector2(0, -16)
@@ -15,14 +16,11 @@ func _ready() -> void:
 		var instance = TileMap.new()
 		instance.set_mode(TileMap.MODE_ISOMETRIC)
 		instance.set_cell_size(cell_size)
+		instance.set_tileset(tileset)
 		instance.set_position(height_offset * height)
 
 		add_child(instance)
 		layers.append(instance)
-
-func set_tileset(tileset: Resource) -> void:
-	for layer in layers:
-		layer.set_tileset(tileset)
 
 func set_tiledata(data) -> void:
 	pass

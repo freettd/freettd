@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/terrain.png-30af610f9a287a75f51a9f80f2eb6759.stex"
+path="res://.import/selector.png-ab3693b8388e9f05a1e34b63b1b1fc53.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/zbase/assets/tilemap/terrain.png"
-dest_files=[ "res://.import/terrain.png-30af610f9a287a75f51a9f80f2eb6759.stex" ]
+source_file="res://assets/tilemap/selector.png"
+dest_files=[ "res://.import/selector.png-ab3693b8388e9f05a1e34b63b1b1fc53.stex" ]
 
 [params]
 

@@ -1,4 +1,4 @@
-extends "res://src/world/LayedTilemap.gd"
+extends "res://scenes/world/LayeredTilemap.gd"
 
 signal tile_selected(command)
 signal error(msg)	
@@ -8,6 +8,9 @@ onready var terrain: Node2D = get_node(world_terrain)
 
 const DEFAULT_SELECTOR_COLOR = Color.white
 const ERROR_SELECTOR_COLOR = Color.red
+
+const TIDX_RAILTILE = 0
+const TIDX_FULLTILE = 18
 
 # drag values
 var drag_enabled: bool = false
@@ -37,14 +40,10 @@ enum PathAngle {
 	ANGLE_135
 }
 
-
-func new_world(cfg: Dictionary) -> void:
-	self.wcfg = cfg
-
-func activate(command: Dictionary, config: Dictionary) -> void:
+func activate(cmd: Dictionary, cfg: Dictionary) -> void:
 	deactivate()
-	self.command = command
-	self.config = config
+	self.command = cmd
+	self.config = cfg
 	visible = true
 
 func deactivate() -> void:
@@ -127,7 +126,7 @@ func _handle_mouse_move() -> void:
 		box = Rect2(current_tile, config.dimension)
 		
 	# default tile type
-	tileset_type = wcfg.tindex.fulltile
+	tileset_type = TIDX_FULLTILE
 	
 	# use selection mode
 	match config.mode:
@@ -140,7 +139,7 @@ func _handle_mouse_move() -> void:
 
 		Global.SelectMode.LINE45, Global.SelectMode.LINE90:
 			if drag_enabled:
-				tileset_type = wcfg.tindex.railtile
+				tileset_type = TIDX_RAILTILE
 				_draw_direct_path()
 			else:
 				_draw_boxed_area()

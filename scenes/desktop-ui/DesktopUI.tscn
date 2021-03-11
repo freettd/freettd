@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/desktop-ui/Menubar.gd" type="Script" id=1]
-[ext_resource path="res://src/desktop-ui/DesktopUI.gd" type="Script" id=2]
+[ext_resource path="res://scenes/desktop-ui/Menubar.gd" type="Script" id=1]
+[ext_resource path="res://scenes/desktop-ui/DesktopUI.gd" type="Script" id=2]
 
 [node name="DesktopUI" type="CanvasLayer"]
 script = ExtResource( 2 )

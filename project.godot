@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Global",
 "language": "GDScript",
-"path": "res://src/Global.gd"
+"path": "res://scenes/Global.gd"
 } ]
 _global_script_class_icons={
 "Global": ""
@@ -22,7 +22,7 @@ _global_script_class_icons={
 
 config/name="FreeTTD"
 config/description="Open Source Remake of Transport Tycoon Deluxe"
-run/main_scene="res://src/Main.tscn"
+run/main_scene="res://scenes/Main.tscn"
 
 [debug]
 

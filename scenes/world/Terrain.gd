@@ -1,10 +1,14 @@
-extends "res://src/world/LayedTilemap.gd"
+extends "res://scenes/world/LayeredTilemap.gd"
 
 const NOISE_OCTAVES: int = 4
 const NOISE_PERIOD: float = 20.0 # wavey
 const NOISE_PERSISTENCE: float = 0.5 # smoothness
 const NOISE_FREQUENCY: float = 0.05
 const SEALEVEL: int = 1
+
+const TIDX_GRASS = 0
+const TIDX_ROAD_GRASS = 19
+const TIDX_WATER = 38
 
 # array of cells
 
@@ -15,7 +19,7 @@ var celldata = {}
 
 func new_world(cfg: Dictionary) -> void:
 
-	self.config = cfg	
+	self.config = cfg
 
 	# Build terrain
 	generate_heightmap()
@@ -77,7 +81,6 @@ func generate_heightmap() -> void:
 	# inspired by https://github.com/PetePete1984/SuperTilemap
 
 	var map_size: Vector2 = config.map_size
-	var tindex: Dictionary = config.tindex
 
 	var min_noise: float = 0.0
 	var max_noise: float = 0.0
@@ -124,9 +127,9 @@ func generate_heightmap() -> void:
 		
 		#  if level 0 then its a shore tile
 		if cdata.noise == 0:
-			_set_tile(cellv, 0, tindex.water, image_id)
+			_set_tile(cellv, 0, TIDX_WATER, image_id)
 		else:
-			_set_tile(cellv, cdata.noise, tindex.grass, image_id)
+			_set_tile(cellv, cdata.noise, TIDX_GRASS, image_id)
 
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
@@ -242,8 +245,6 @@ var connectors = {
 
 func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 
-	var tindex: Dictionary = config.tindex
-
 	# fixme?
 	var box = Rect2(command.selection.position, command.selection.dimension)
 
@@ -296,18 +297,15 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 			if cdata.tile_idx != 0:
 
 				var id = 0
-				var height_adjust = 0
 
 				if _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_EAST]):
 					id = ROAD_SLOPE_NORTHEAST
-					height_adjust = 1
 				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_EAST]):
 					id = ROAD_SLOPE_SOUTHEAST
 				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_WEST]):
 					id = ROAD_SLOPE_SOUTHWEST
 				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_WEST]):
 					id = ROAD_SLOPE_NORTHWEST
-					height_adjust = 1
 
 				road_tile = id
 				
@@ -339,7 +337,7 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 					cdata.road = road_tile
 			
 			# get road tile index
-			var tileset_idx: int = tindex.road_grass + road_tile - 1
+			var tileset_idx: int = TIDX_ROAD_GRASS + road_tile - 1
 			
 			# set road tile
 			set_cellv(cellv, tileset_idx)
