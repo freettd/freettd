@@ -21,7 +21,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="Toolbar"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 374.0
+margin_right = 457.0
 margin_bottom = 27.0
 
 [node name="GameButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
@@ -34,49 +34,61 @@ margin_left = 54.0
 margin_right = 58.0
 margin_bottom = 20.0
 
-[node name="ConstructionButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
+[node name="CompanyButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
 margin_left = 62.0
-margin_right = 155.0
+margin_right = 133.0
+margin_bottom = 20.0
+focus_mode = 2
+text = "Company"
+
+[node name="VSeparator3" type="VSeparator" parent="Toolbar/HBoxContainer"]
+margin_left = 137.0
+margin_right = 141.0
+margin_bottom = 20.0
+
+[node name="ConstructionButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
+margin_left = 145.0
+margin_right = 238.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Construction"
 
 [node name="RoadButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 159.0
-margin_right = 202.0
+margin_left = 242.0
+margin_right = 285.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Road"
 
 [node name="RailButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 206.0
-margin_right = 241.0
+margin_left = 289.0
+margin_right = 324.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Rail"
 
 [node name="AirButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 245.0
-margin_right = 275.0
+margin_left = 328.0
+margin_right = 358.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Air"
 
 [node name="SeaButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 279.0
-margin_right = 313.0
+margin_left = 362.0
+margin_right = 396.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Sea"
 
 [node name="VSeparator2" type="VSeparator" parent="Toolbar/HBoxContainer"]
-margin_left = 317.0
-margin_right = 321.0
+margin_left = 400.0
+margin_right = 404.0
 margin_bottom = 20.0
 
 [node name="HelpButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 325.0
-margin_right = 367.0
+margin_left = 408.0
+margin_right = 450.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Help"
@@ -129,5 +141,3 @@ margin_left = 918.0
 margin_right = 990.0
 margin_bottom = 14.0
 text = "$1,000,000"
-
-[connection signal="command_issued" from="Toolbar" to="." method="_on_Toolbar_command_issued"]
