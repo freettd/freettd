@@ -31,3 +31,7 @@ func _on_World_hq_selected(company: Company):
 
 func _on_World_error(msg):
 	ui.show_error(msg)
+
+
+func _on_World_local_company_updated(company):
+	ui.update_local_company_info(company)

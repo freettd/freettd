@@ -13,4 +13,5 @@ script = ExtResource( 3 )
 
 [connection signal="error" from="World" to="." method="_on_World_error"]
 [connection signal="hq_selected" from="World" to="." method="_on_World_hq_selected"]
+[connection signal="local_company_updated" from="World" to="." method="_on_World_local_company_updated"]
 [connection signal="command_issued" from="DesktopUI" to="." method="_on_DesktopUI_command_issued"]
