@@ -31,6 +31,8 @@ world_terrain = NodePath("../Terrain")
 
 [node name="WorldObjects" type="YSort" parent="."]
 script = ExtResource( 7 )
+world_terrain = NodePath("../Terrain")
 
 [connection signal="error" from="Selector" to="." method="_on_Selector_error"]
 [connection signal="tile_selected" from="Selector" to="." method="_on_Selector_tile_selected"]
+[connection signal="hq_selected" from="WorldObjects" to="." method="_on_WorldObjects_hq_selected"]

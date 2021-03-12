@@ -10,12 +10,24 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "Company",
+"language": "GDScript",
+"path": "res://scenes/world/player/Company.gd"
+}, {
+"base": "Reference",
 "class": "Global",
 "language": "GDScript",
 "path": "res://scenes/Global.gd"
+}, {
+"base": "Reference",
+"class": "Resources",
+"language": "GDScript",
+"path": "res://resources/Resource.gd"
 } ]
 _global_script_class_icons={
-"Global": ""
+"Company": "",
+"Global": "",
+"Resources": ""
 }
 
 [application]

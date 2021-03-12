@@ -8,7 +8,8 @@ func _ready() -> void:
 	# Create New World
 	world.new_world()
 	
-	
+
+# UI EVENTS
 
 func _on_DesktopUI_command_issued(command: Dictionary) -> void:
 	
@@ -20,3 +21,13 @@ func _on_DesktopUI_command_issued(command: Dictionary) -> void:
 
 	# Else send opcodes to World
 	world.process_local_command(command)	
+
+
+# WORLD EVENTS
+
+func _on_World_hq_selected(company: Company):
+	ui.show_company_profile(company)
+
+
+func _on_World_error(msg):
+	ui.show_error(msg)

@@ -6,6 +6,7 @@ enum OpCode {
 	
 	BUILD_ROAD,
 	BUILD_RAIL,
+	BUILD_COMPANY_HQ,
 	
 	CLEAR_LAND,
 	
@@ -51,6 +52,14 @@ const SelectorConfig: Dictionary = {
 		repeat = true,
 		on_water = false,
 		on_slope = true,
+	},
+	
+	OpCode.BUILD_COMPANY_HQ: {
+		dimension = Vector2(2, 2),
+		mode = SelectMode.FIXED,
+		repeat = false,
+		on_water = false,
+		on_slope = false,
 	},
 	
 	OpCode.CLEAR_LAND: {

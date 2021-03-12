@@ -41,9 +41,13 @@ enum PathAngle {
 }
 
 func activate(cmd: Dictionary, cfg: Dictionary) -> void:
-	deactivate()
+	
+	# reset everything
+	reset()
 	self.command = cmd
 	self.config = cfg
+	
+	# show
 	visible = true
 
 func deactivate() -> void:

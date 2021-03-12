@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/desktop-ui/Menubar.gd" type="Script" id=1]
 [ext_resource path="res://scenes/desktop-ui/DesktopUI.gd" type="Script" id=2]
+[ext_resource path="res://scenes/desktop-ui/Windows.gd" type="Script" id=3]
 
 [node name="DesktopUI" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -9,9 +10,9 @@ script = ExtResource( 2 )
 [node name="Toolbar" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -190.5
+margin_left = -232.0
 margin_top = 10.0
-margin_right = 190.5
+margin_right = 232.0
 margin_bottom = 34.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -93,6 +94,9 @@ margin_bottom = 20.0
 focus_mode = 2
 text = "Help"
 
+[node name="Windows" type="Node" parent="."]
+script = ExtResource( 3 )
+
 [node name="Statusbar" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
@@ -141,3 +145,5 @@ margin_left = 918.0
 margin_right = 990.0
 margin_bottom = 14.0
 text = "$1,000,000"
+
+[connection signal="command_issued" from="Toolbar" to="." method="_on_Toolbar_command_issued"]

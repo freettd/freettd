@@ -11,4 +11,6 @@ script = ExtResource( 3 )
 
 [node name="DesktopUI" parent="." instance=ExtResource( 2 )]
 
+[connection signal="error" from="World" to="." method="_on_World_error"]
+[connection signal="hq_selected" from="World" to="." method="_on_World_hq_selected"]
 [connection signal="command_issued" from="DesktopUI" to="." method="_on_DesktopUI_command_issued"]
