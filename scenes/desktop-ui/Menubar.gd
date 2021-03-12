@@ -3,6 +3,7 @@ extends PanelContainer
 signal command_issued(command)
 
 onready var game_button = $HBoxContainer/GameButton
+onready var company_button = $HBoxContainer/CompanyButton
 onready var road_button = $HBoxContainer/RoadButton
 onready var construct_button = $HBoxContainer/ConstructionButton
 onready var rail_button = $HBoxContainer/RailButton
@@ -18,6 +19,11 @@ func _ready() -> void:
 	popup = game_button.get_popup()
 	popup.add_item("Exit", Global.OpCode.EXIT_GAME)
 	popup.connect("id_pressed", self, "_on_item_pressed")
+	
+	# Company Menu
+	popup = company_button.get_popup()
+	popup.add_item("Build HQ", Global.OpCode.BUILD_COMPANY_HQ)
+	popup.connect("id_pressed", self, "_on_item_pressed")	
 
 	# Construction Menu
 	popup = construct_button.get_popup()

@@ -41,9 +41,13 @@ enum PathAngle {
 }
 
 func activate(cmd: Dictionary, cfg: Dictionary) -> void:
-	deactivate()
+	
+	# reset everything
+	reset()
 	self.command = cmd
 	self.config = cfg
+	
+	# show
 	visible = true
 
 func deactivate() -> void:
@@ -99,17 +103,17 @@ func _handle_button_click(event) -> void:
 		
 		if selection_error:
 			emit_signal("error", "invalid tile selection")
-		else:
+			return
 			
-			command.selection = {
-				position = box.position,
-				dimension = box.size
-			}
-			
-			emit_signal("tile_selected", command)
+		command.selection = {
+			position = box.position,
+			dimension = box.size
+		}
 		
+		emit_signal("tile_selected", command)
+	
 		reset()
-			
+		
 		if not config.repeat:
 			visible = false
 
