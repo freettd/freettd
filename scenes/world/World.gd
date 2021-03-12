@@ -1,11 +1,10 @@
 extends Node
 
 signal hq_selected(company)
-
 signal local_company_updated(company)
-
 signal error(msg)
 
+# World components
 onready var terrain = $Terrain
 onready var selector = $Selector
 onready var world_objects = $WorldObjects
@@ -47,15 +46,23 @@ func process_local_command(command: Dictionary) -> void:
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary):
 	
+	var tm_resources = Resources.tilemaps
+	var bld_resources = Resources.buildings
+	var dimension = command.selection.dimension
+	
 	match command.opcode:
 		
 		Global.OpCode.BUILD_ROAD:
-			local_company.add_expense(100)
+			var cost: int = tm_resources.road.cost * (dimension.x * dimension.y)
+			local_company.add_expense(cost)
 			terrain.build_road(command, roadnav)
 		
 		Global.OpCode.BUILD_COMPANY_HQ:
-			local_company.add_expense(200)
+			var cost: int = bld_resources.company_hq_large.cost
+			local_company.add_expense(cost)
 			world_objects.add_hq(Resources.buildings.company_hq_large, command.selection.position, local_company)
+			
+	
 			
 	emit_signal("local_company_updated", local_company)
 

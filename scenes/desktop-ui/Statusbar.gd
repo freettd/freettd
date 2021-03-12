@@ -1,6 +1,6 @@
 extends PanelContainer
 
-const current_symbol = "$"
+const current_symbol = "#"
 
 onready var money_label = $HBoxContainer/MoneyLabel
 
@@ -11,7 +11,7 @@ func update_balance(value: int) -> void:
 	else:
 		money_label.set("custom_colors/font_color", Color.red)
 	
-	money_label.text = str(current_symbol, _comma_sep(abs(value)))
+	money_label.text = str(current_symbol, _comma_sep(int(abs(value))))
 
 
 func _comma_sep(number: int) -> String:

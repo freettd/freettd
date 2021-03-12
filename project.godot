@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Resources",
 "language": "GDScript",
-"path": "res://resources/Resource.gd"
+"path": "res://resources/Resources.gd"
 } ]
 _global_script_class_icons={
 "Company": "",
