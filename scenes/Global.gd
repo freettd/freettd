@@ -1,6 +1,11 @@
 class_name Global
 
 enum OpCode {
+	
+	NEW_GAME,
+	LOAD_GAME,
+	SAVE_GAME,
+	
 	EXIT_GAME,
 	TILE_QUERY,
 	

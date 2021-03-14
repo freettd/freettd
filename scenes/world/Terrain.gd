@@ -23,6 +23,21 @@ func new_world(cfg: Dictionary) -> void:
 
 	# Build terrain
 	generate_heightmap()
+	
+
+func load_world() -> void:
+	pass
+	
+func get_save_data() -> Dictionary:
+	
+	var data: Dictionary = {}
+	
+	for cellv in celldata:
+		data[cellv] = {
+			
+		}
+		
+	return data
 
 
 ## GENERATE TERRAIN

@@ -1,8 +1,18 @@
 extends Node
 
+# game signals
+signal newgame_progress(status, percentage)
+signal savegame_progress(status, percentage)
+signal loadgame_progress(status, percentage)
+
 signal hq_selected(company)
 signal local_company_updated(company)
+
+# error signal
 signal error(msg)
+
+const AUTOSAVE_FILENAME: String = "autosave.sav"
+
 
 # World components
 onready var terrain = $Terrain
@@ -16,8 +26,12 @@ var roadnav: AStar2D = AStar2D.new()
 var local_company: Company
 var company_register: Array = []
 
+
+# BASIC WORLD FUNCTIONS
+
 func new_world() -> void:
 	
+	emit_signal("newgame_progress", "creating new game", 0)
 	var map_size: Vector2 = Vector2(128, 128)
 	
 	# Terrain
@@ -28,6 +42,54 @@ func new_world() -> void:
 	# New Company
 	local_company = Company.new()
 	company_register.append(local_company)
+	
+	# complete
+	emit_signal("newgame_progress", "new game complete", 100)
+	
+func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
+	
+	# start loading game
+	emit_signal("loadgame_progress", "loading", 0)
+	var file: File = File.new()
+	file.open("user://" + filename, File.READ)
+	
+	# read
+	var data = str2var(file.get_as_text())
+	
+	if data.has("tilemap"):
+		terrain.load_world(data.tilemap)
+	
+	# signal completion
+	file.close()	
+	emit_signal("loadgame_progress", "loaded", 100)	
+
+
+func save_game(filename: String = AUTOSAVE_FILENAME) -> void:
+	
+	# start saving game
+	emit_signal("savegame_progress", "saving", 0)
+	var file: File = File.new()
+	file.open("user://" + filename, File.WRITE)
+	
+	# data structure
+	var data: Dictionary
+	
+	# tiemap
+	data.tilemap = terrain.get_save_data()
+	
+	# save company data
+	data.companies = []
+	for company in company_register:
+		data.companies.append(company.get_save_data())
+	
+	# write file
+	file.store_string(var2str(data))
+	
+	# signal completion
+	file.close()	
+	emit_signal("savegame_progress", "saved", 100)
+
+
 
 
 # LOCAL COMMANDS
