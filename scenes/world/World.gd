@@ -51,13 +51,25 @@ func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# start loading game
 	emit_signal("loadgame_progress", "loading", 0)
 	var file: File = File.new()
-	file.open("user://" + filename, File.READ)
+	file.open_compressed("user://" + filename, File.READ, File.COMPRESSION_ZSTD)
 	
 	# read
 	var data = str2var(file.get_as_text())
 	
-	if data.has("tilemap"):
-		terrain.load_world(data.tilemap)
+	
+	# load company data
+	for company_data in data.companies:
+		
+		var new_company = Company.new()
+		new_company.load_data(company_data)
+		
+		if new_company.company_type == Company.CompanyType.LOCAL:
+			local_company = new_company
+			emit_signal("local_company_updated", local_company)
+		
+		
+	# load terrain data
+	terrain.load_world(data.tilemap)
 	
 	# signal completion
 	file.close()	
@@ -69,7 +81,7 @@ func save_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# start saving game
 	emit_signal("savegame_progress", "saving", 0)
 	var file: File = File.new()
-	file.open("user://" + filename, File.WRITE)
+	file.open_compressed("user://" + filename, File.WRITE, File.COMPRESSION_ZSTD)
 	
 	# data structure
 	var data: Dictionary

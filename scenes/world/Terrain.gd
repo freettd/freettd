@@ -19,25 +19,29 @@ var celldata = {}
 
 func new_world(cfg: Dictionary) -> void:
 
-	self.config = cfg
+	config = cfg
 
 	# Build terrain
 	generate_heightmap()
 	
 
-func load_world() -> void:
-	pass
+func load_world(data: Dictionary) -> void:
 	
-func get_save_data() -> Dictionary:
+	# get data from savefile
+	config = data.config
+	celldata = data.celldata
 	
-	var data: Dictionary = {}
-	
+	# refresh map
 	for cellv in celldata:
-		data[cellv] = {
-			
-		}
+		_update_cell(cellv)
 		
-	return data
+	
+# return data to be saved
+func get_save_data() -> Dictionary:
+	return {
+		config = config,
+		celldata = celldata,
+	}
 
 
 ## GENERATE TERRAIN
@@ -202,10 +206,6 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	if _contains_bits(image_id, MASK_NORTH_CORNER):
 		height += 1
 
-	# set tile on height level
-	set_cellv_height(cellv, height)
-	set_cellv(cellv, tileset_idx)
-
 	# generate unique number for tile
 	tid = tid + 1
 
@@ -213,7 +213,16 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	cdata.id = tid
 	cdata.height = height
 	cdata.corners = image_id
-	cdata.tile_idx = image_id
+	cdata.tile_idx = tileset_idx
+	
+	_update_cell(cellv)
+	
+func _update_cell(cellv: Vector2) -> void:
+	
+	var cdata = celldata[cellv]
+	
+	set_cellv_height(cellv, cdata.height)
+	set_cellv(cellv, cdata.tile_idx)	
 
 # Check if bist are set
 func _contains_bits(bitmask: int, mask: int) -> bool:
