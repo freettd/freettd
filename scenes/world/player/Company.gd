@@ -28,7 +28,7 @@ func add_expense(cost: int, expense_type: int = ExpenseType.OTHER) -> void:
 func get_save_data() -> Dictionary:
 	return {
 		company_type = company_type,
-		bank_balance = bank_balance
+		bank_balance = bank_balance,
 	}
 
 # load company from savefile

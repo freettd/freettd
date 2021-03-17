@@ -15,6 +15,7 @@ const AUTOSAVE_FILENAME: String = "autosave.sav"
 
 
 # World components
+onready var camera = $MainCamera
 onready var terrain = $Terrain
 onready var selector = $Selector
 onready var world_objects = $WorldObjects
@@ -41,6 +42,7 @@ func new_world() -> void:
 	
 	# New Company
 	local_company = Company.new()
+	local_company.company_type = Company.CompanyType.LOCAL
 	company_register.append(local_company)
 	
 	# complete
@@ -56,20 +58,26 @@ func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# read
 	var data = str2var(file.get_as_text())
 	
-	
 	# load company data
 	for company_data in data.companies:
 		
 		var new_company = Company.new()
 		new_company.load_data(company_data)
+		company_register.append(new_company)
 		
 		if new_company.company_type == Company.CompanyType.LOCAL:
 			local_company = new_company
 			emit_signal("local_company_updated", local_company)
 		
-		
 	# load terrain data
 	terrain.load_world(data.tilemap)
+	
+	# load world objects
+	world_objects.load_data(data.world_objects)
+	
+	# load camera
+	camera.position = data.camera.position
+	camera.zoom = data.camera.zoom
 	
 	# signal completion
 	file.close()	
@@ -84,15 +92,24 @@ func save_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	file.open_compressed("user://" + filename, File.WRITE, File.COMPRESSION_ZSTD)
 	
 	# data structure
-	var data: Dictionary
+	var data: Dictionary = {}
 	
 	# tiemap
 	data.tilemap = terrain.get_save_data()
 	
-	# save company data
+	# company data
 	data.companies = []
 	for company in company_register:
 		data.companies.append(company.get_save_data())
+		
+	# game objects
+	data.world_objects = world_objects.get_save_data()
+	
+	# camera
+	data.camera = {
+		position = camera.position,
+		zoom = camera.zoom
+	}	
 	
 	# write file
 	file.store_string(var2str(data))
@@ -134,7 +151,7 @@ func _on_Selector_tile_selected(command: Dictionary):
 		Global.OpCode.BUILD_COMPANY_HQ:
 			var cost: int = bld_resources.company_hq_large.cost
 			local_company.add_expense(cost)
-			world_objects.add_hq(Resources.buildings.company_hq_large, command.selection.position, local_company)
+			world_objects.add_hq("company_hq_large", command.selection.position, local_company)
 			
 	
 			
