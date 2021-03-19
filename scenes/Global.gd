@@ -1,11 +1,18 @@
 class_name Global
 
 enum OpCode {
+	
+	NEW_GAME,
+	LOAD_GAME,
+	SAVE_GAME,
+	
 	EXIT_GAME,
 	TILE_QUERY,
 	
 	BUILD_ROAD,
 	BUILD_RAIL,
+	BUILD_WORLD_OBJECT,
+	
 	BUILD_COMPANY_HQ,
 	
 	CLEAR_LAND,

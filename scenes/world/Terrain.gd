@@ -15,16 +15,40 @@ const TIDX_WATER = 38
 var config: Dictionary
 var celldata = {}
 
+################################################################################
 ## NEW TERRAIN
 
 func new_world(cfg: Dictionary) -> void:
 
-	self.config = cfg
+	config = cfg
 
 	# Build terrain
 	generate_heightmap()
+	
+	
+################################################################################
+## Save & Load Data
+
+func load_world(data: Dictionary) -> void:
+	
+	# get data from savefile
+	config = data.config
+	celldata = data.celldata
+	
+	# refresh map
+	for cellv in celldata:
+		_update_cell(cellv)
+		
+	
+# return data to be saved
+func get_save_data() -> Dictionary:
+	return {
+		config = config,
+		celldata = celldata,
+	}
 
 
+################################################################################
 ## GENERATE TERRAIN
 
 const MASK_FLAT_TILE: int = 0
@@ -187,10 +211,6 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	if _contains_bits(image_id, MASK_NORTH_CORNER):
 		height += 1
 
-	# set tile on height level
-	set_cellv_height(cellv, height)
-	set_cellv(cellv, tileset_idx)
-
 	# generate unique number for tile
 	tid = tid + 1
 
@@ -198,7 +218,16 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	cdata.id = tid
 	cdata.height = height
 	cdata.corners = image_id
-	cdata.tile_idx = image_id
+	cdata.tile_idx = tileset_idx
+	
+	_update_cell(cellv)
+	
+func _update_cell(cellv: Vector2) -> void:
+	
+	var cdata = celldata[cellv]
+	
+	set_cellv_height(cellv, cdata.height)
+	set_cellv(cellv, cdata.tile_idx)	
 
 # Check if bist are set
 func _contains_bits(bitmask: int, mask: int) -> bool:
@@ -212,6 +241,7 @@ func is_valid_tile(cellv: Vector2) -> bool:
 func get_tile_data(cellv: Vector2) -> Dictionary:
 	return celldata[cellv]
 	
+	
 # HELPER TILE FUNCTIONS
 
 func is_water(cellv: Vector2) -> bool:
@@ -221,7 +251,7 @@ func is_slope(cellv: Vector2) -> bool:
 	return celldata.get(cellv).corners != 0
 
 
-
+################################################################################
 ## ROAD FUNCTIONS
 
 const DEFAULT_NAV_WEIGHT: int = 1
@@ -264,7 +294,7 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 
 	# variables used inside loop
 	var road_tile: int
-	var tile_idx: int
+	var corners: int
 	var cellv: Vector2
 	var cdata: Dictionary
 	var ntile: Dictionary
@@ -280,7 +310,7 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 
 			# Update Road Navigation
 			cdata = celldata[cellv]
-			tile_idx = cdata.tile_idx
+			corners = cdata.corners
 
 			# add point to astar with default weight
 			roadnav.add_point(cdata.id, cellv, DEFAULT_NAV_WEIGHT)
@@ -294,23 +324,23 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 				road_tile = default_tile
 
 			# slopes have no connections
-			if cdata.tile_idx != 0:
+			if corners != 0:
 
 				var id = 0
 
-				if _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_EAST]):
+				if _contains_bits(corners, NEIGHBOURS[DIRECTION.NORTH_EAST]):
 					id = ROAD_SLOPE_NORTHEAST
-				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_EAST]):
+				elif _contains_bits(corners, NEIGHBOURS[DIRECTION.SOUTH_EAST]):
 					id = ROAD_SLOPE_SOUTHEAST
-				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.SOUTH_WEST]):
+				elif _contains_bits(corners, NEIGHBOURS[DIRECTION.SOUTH_WEST]):
 					id = ROAD_SLOPE_SOUTHWEST
-				elif _contains_bits(tile_idx, NEIGHBOURS[DIRECTION.NORTH_WEST]):
+				elif _contains_bits(corners, NEIGHBOURS[DIRECTION.NORTH_WEST]):
 					id = ROAD_SLOPE_NORTHWEST
 
 				road_tile = id
 				
 				# save connection data
-				cdata.road = default_tile
+				cdata.road_connections = road_tile
 
 			# flat tiles have connections
 			else:
@@ -325,7 +355,7 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 					ntile = celldata[cellv + n]
 
 					# find incomming connections
-					if ntile.has("road") and _contains_bits(ntile.road, connectors[-n]):
+					if ntile.has("road_connections") and _contains_bits(ntile.road_connections, connectors[-n]):
 
 						# connect this current tile to neighbour
 						roadnav.connect_points(cdata.id, ntile.id)
@@ -334,10 +364,9 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 						road_tile |= connectors[n]
 						
 					# save connection data
-					cdata.road = road_tile
-			
-			# get road tile index
-			var tileset_idx: int = TIDX_ROAD_GRASS + road_tile - 1
+					cdata.road_connections = road_tile
 			
 			# set road tile
-			set_cellv(cellv, tileset_idx)
+			celldata[cellv].tile_idx = TIDX_ROAD_GRASS + (road_tile - 1)
+			
+			_update_cell(cellv)
