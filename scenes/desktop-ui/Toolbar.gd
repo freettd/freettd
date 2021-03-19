@@ -17,11 +17,15 @@ func _ready() -> void:
 	
 	# Game Menu
 	popup = game_button.get_popup()
-	popup.add_item("New", Global.OpCode.NEW_GAME)
+	popup.add_item("New Game", Global.OpCode.NEW_GAME)
+	popup.add_item("New Scenario", Global.OpCode.NEW_SCENARIO)
+	popup.add_separator()
 	popup.add_item("Load", Global.OpCode.LOAD_GAME)
+	popup.add_separator()
 	popup.add_item("Save", Global.OpCode.SAVE_GAME)
 	popup.add_separator()
-	popup.add_item("Exit", Global.OpCode.EXIT_GAME)
+	popup.add_item("Exit Game", Global.OpCode.EXIT_GAME)
+	popup.add_item("Exit App", Global.OpCode.EXIT_APP)
 	popup.connect("id_pressed", self, "_on_item_pressed")
 	
 	# Company Menu

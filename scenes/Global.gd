@@ -3,10 +3,15 @@ class_name Global
 enum OpCode {
 	
 	NEW_GAME,
+	NEW_SCENARIO,
+	
 	LOAD_GAME,
 	SAVE_GAME,
 	
+	EXIT_APP,
 	EXIT_GAME,
+	
+	
 	TILE_QUERY,
 	
 	BUILD_ROAD,

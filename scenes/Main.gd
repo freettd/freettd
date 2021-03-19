@@ -4,7 +4,13 @@ onready var world = $World
 onready var ui = $DesktopUI
 
 func _ready() -> void:
-	pass	
+	
+	# show start menu
+	ui.set_start_ui()
+	
+	# load demo game
+	# todo
+
 
 # UI EVENTS
 
@@ -14,7 +20,12 @@ func _on_DesktopUI_command_issued(command: Dictionary) -> void:
 	match command.opcode:
 		
 		Global.OpCode.NEW_GAME:
-			world.new_world()
+			ui.set_game_ui()
+			world.new_game(command)
+			
+		Global.OpCode.NEW_SCENARIO:
+			ui.set_scenario_ui()
+			world.new_scenario(command)
 			
 		Global.OpCode.SAVE_GAME:
 			world.save_game()
@@ -23,6 +34,10 @@ func _on_DesktopUI_command_issued(command: Dictionary) -> void:
 			world.load_game()
 			
 		Global.OpCode.EXIT_GAME:
+			world.reset()
+			ui.set_start_ui()
+			
+		Global.OpCode.EXIT_APP:
 			get_tree().quit()
 
 	# Else send opcodes to World

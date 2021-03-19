@@ -31,10 +31,20 @@ var company_register: Array = []
 ################################################################################
 ## NEW WORLD
 
-func new_world() -> void:
+func new_scenario(command: Dictionary) -> void:
+	
+	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
+	
+	# Terrain
+	terrain.new_world({
+		map_size = map_size
+	})	
+	
+
+func new_game(command: Dictionary) -> void:
 	
 	emit_signal("newgame_progress", "creating new game", 0)
-	var map_size: Vector2 = Vector2(128, 128)
+	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
 	
 	# Terrain
 	terrain.new_world({
@@ -50,6 +60,19 @@ func new_world() -> void:
 	# complete
 	emit_signal("newgame_progress", "new game complete", 100)
 
+func reset() -> void:
+	
+	# deactivate selector
+	selector.deactivate()
+	
+	# remove companies
+	company_register.clear()
+	
+	# clear terrain
+	terrain.reset()
+	
+	# remove world objects
+	world_objects.reset()
 
 ################################################################################
 ## LOCAL COMMANDS
