@@ -15,6 +15,7 @@ const TIDX_WATER = 38
 var config: Dictionary
 var celldata = {}
 
+################################################################################
 ## NEW TERRAIN
 
 func new_world(cfg: Dictionary) -> void:
@@ -24,6 +25,9 @@ func new_world(cfg: Dictionary) -> void:
 	# Build terrain
 	generate_heightmap()
 	
+	
+################################################################################
+## Save & Load Data
 
 func load_world(data: Dictionary) -> void:
 	
@@ -44,6 +48,7 @@ func get_save_data() -> Dictionary:
 	}
 
 
+################################################################################
 ## GENERATE TERRAIN
 
 const MASK_FLAT_TILE: int = 0
@@ -246,7 +251,7 @@ func is_slope(cellv: Vector2) -> bool:
 	return celldata.get(cellv).corners != 0
 
 
-
+################################################################################
 ## ROAD FUNCTIONS
 
 const DEFAULT_NAV_WEIGHT: int = 1

@@ -13,6 +13,8 @@ enum ExpenseType {
 	OTHER
 }
 
+var company_id: int
+
 var bank_balance: int = 0
 var company_type: int
 

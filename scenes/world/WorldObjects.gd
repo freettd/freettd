@@ -6,19 +6,29 @@ signal hq_selected(company)
 export (NodePath) var world_terrain
 onready var terrain: Node2D = get_node(world_terrain)
 
-var objects: Array = []
+var company_register: Array
 
-## SAVE & LOAD
+var objects: Dictionary = {
+	hq = [],
+	buildings = [],
+	vehicles = [],
+	trees = []
+}
 
-func get_save_data() -> Array:
+################################################################################
+## SAVE & LOAD DATA
+
+func get_save_data() -> Dictionary:
 	return objects
 	
-func load_data(data: Array) -> void:
-	for scene in data:
-		_add_object(scene.key, scene.cellv)
+func load_data(data: Dictionary) -> void:
+	
+	# add HQs
+	for hq in data.hq:
+		add_hq(hq.key, hq.cellv, hq.company)
 
 
-
+################################################################################
 ## ADD OBJECTS TO WORLD
 
 # add company HQ to the world
