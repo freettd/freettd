@@ -111,6 +111,8 @@ func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# read
 	var data = str2var(file.get_as_text())
 	
+	print(data.keys())
+	
 	# load company data
 	for company_data in data.companies:
 		
@@ -126,7 +128,7 @@ func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	terrain.load_world(data.tilemap)
 	
 	# load world objects
-	world_objects.load_data(data.world_objects)
+	world_objects.load_data(data.world_objects, company_register)
 	
 	# load camera
 	camera.position = data.camera.position

@@ -32,7 +32,7 @@ func _ready() -> void:
 	# Construction Menu
 	popup = construct_button.get_popup()
 	popup.add_item("Bulldoze", Global.OpCode.CLEAR_LAND)
-	popup.connect("id_pressed", self, "_on_item_pressed")		
+	popup.connect("id_pressed", self, "_on_item_pressed")	
 	
 	# Road Menu
 	popup = road_button.get_popup()

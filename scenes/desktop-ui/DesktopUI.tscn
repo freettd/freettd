@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/desktop-ui/Menubar.gd" type="Script" id=1]
+[ext_resource path="res://scenes/desktop-ui/Toolbar.gd" type="Script" id=1]
 [ext_resource path="res://scenes/desktop-ui/DesktopUI.gd" type="Script" id=2]
 [ext_resource path="res://scenes/desktop-ui/Windows.gd" type="Script" id=3]
 [ext_resource path="res://scenes/desktop-ui/Statusbar.gd" type="Script" id=4]

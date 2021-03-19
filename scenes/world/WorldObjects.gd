@@ -21,11 +21,11 @@ var objects: Dictionary = {
 func get_save_data() -> Dictionary:
 	return objects
 	
-func load_data(data: Dictionary) -> void:
+func load_data(data: Dictionary, company_register: Array) -> void:
 	
 	# add HQs
 	for hq in data.hq:
-		add_hq(hq.key, hq.cellv, hq.company)
+		add_hq(hq.key, hq.cellv, company_register[hq.company])
 
 
 ################################################################################
@@ -39,6 +39,12 @@ func add_hq(res_key: String, cellv: Vector2, company: Company) -> void:
 	
 	# connect signal	
 	scene.connect("selected", self, "_on_hq_selected", [company])
+	
+	objects.hq.append({
+		key = res_key,
+		cellv = cellv,
+		company = company.company_id
+	})	
 	
 	
 # when the company HQ is selected
@@ -57,11 +63,6 @@ func _add_object(res_key: String, cellv: Vector2) -> Node2D:
 	
 	# set position
 	scene.position = terrain.map_to_world(cellv)
-	
-	objects.append({
-		key = res_key,
-		cellv = cellv
-	})
 	
 	# add scene to world
 	add_child(scene)
