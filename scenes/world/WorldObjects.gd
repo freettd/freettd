@@ -15,6 +15,14 @@ var objects: Dictionary = {
 	trees = []
 }
 
+
+func reset() -> void:
+	
+
+	# free children
+	for c in get_children():
+		c.queue_free()	
+
 ################################################################################
 ## SAVE & LOAD DATA
 

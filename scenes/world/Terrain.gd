@@ -25,6 +25,18 @@ func new_world(cfg: Dictionary) -> void:
 	# Build terrain
 	generate_heightmap()
 	
+func reset() -> void:
+	 
+	# clear config
+	config = {}
+	
+	# clear all tiles
+	for cellv in celldata:
+		set_cellv(cellv, -1)	
+
+	# clear data
+	celldata = {}
+	
 	
 ################################################################################
 ## Save & Load Data
@@ -73,7 +85,7 @@ const DIRECTION: Dictionary = {
 	SOUTH_EAST = Vector2.RIGHT,
 	SOUTH = Vector2.DOWN + Vector2.RIGHT,
 	SOUTH_WEST = Vector2.DOWN,
-	WEST =Vector2.DOWN + Vector2.LEFT
+	WEST = Vector2.DOWN + Vector2.LEFT
 }
 
 const NEIGHBOURS: Dictionary = {

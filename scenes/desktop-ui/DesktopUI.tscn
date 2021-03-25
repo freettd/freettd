@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/desktop-ui/Toolbar.gd" type="Script" id=1]
 [ext_resource path="res://scenes/desktop-ui/DesktopUI.gd" type="Script" id=2]
 [ext_resource path="res://scenes/desktop-ui/Windows.gd" type="Script" id=3]
 [ext_resource path="res://scenes/desktop-ui/Statusbar.gd" type="Script" id=4]
+[ext_resource path="res://scenes/desktop-ui/windows/StartMenu.tscn" type="PackedScene" id=5]
 
 [node name="DesktopUI" type="CanvasLayer"]
 script = ExtResource( 2 )
 
 [node name="Toolbar" type="PanelContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -232.0
@@ -95,10 +97,14 @@ margin_bottom = 20.0
 focus_mode = 2
 text = "Help"
 
+[node name="StartMenu" parent="." instance=ExtResource( 5 )]
+
 [node name="Windows" type="Node" parent="."]
 script = ExtResource( 3 )
+company_profile_window = ExtResource( 5 )
 
 [node name="Statusbar" type="PanelContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -149,3 +155,4 @@ margin_bottom = 14.0
 text = "$1,000,000"
 
 [connection signal="command_issued" from="Toolbar" to="." method="_on_Toolbar_command_issued"]
+[connection signal="command_issued" from="StartMenu" to="." method="_on_StartMenu_command_issued"]

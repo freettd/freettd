@@ -13,6 +13,9 @@ signal error(msg)
 
 const AUTOSAVE_FILENAME: String = "autosave.sav"
 
+enum EditorMode { PLAY, EDIT, VIEW }
+var editor_mode: int = EditorMode.VIEW
+
 
 # World components
 onready var camera = $MainCamera
@@ -31,10 +34,24 @@ var company_register: Array = []
 ################################################################################
 ## NEW WORLD
 
-func new_world() -> void:
+func new_scenario(command: Dictionary) -> void:
+	
+	editor_mode = EditorMode.EDIT
+	
+	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
+	
+	# Terrain
+	terrain.new_world({
+		map_size = map_size
+	})	
+	
+
+func new_game(command: Dictionary) -> void:
+	
+	editor_mode = EditorMode.PLAY
 	
 	emit_signal("newgame_progress", "creating new game", 0)
-	var map_size: Vector2 = Vector2(128, 128)
+	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
 	
 	# Terrain
 	terrain.new_world({
@@ -50,6 +67,19 @@ func new_world() -> void:
 	# complete
 	emit_signal("newgame_progress", "new game complete", 100)
 
+func reset() -> void:
+	
+	# deactivate selector
+	selector.deactivate()
+	
+	# remove companies
+	company_register.clear()
+	
+	# clear terrain
+	terrain.reset()
+	
+	# remove world objects
+	world_objects.reset()
 
 ################################################################################
 ## LOCAL COMMANDS
@@ -68,25 +98,28 @@ func process_local_command(command: Dictionary) -> void:
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary):
 	
-	var tm_resources = Resources.tilemaps
-	var bld_resources = Resources.buildings
-	var dimension = command.selection.dimension
+	var tm_resources: Dictionary = Resources.tilemaps
+	var bld_resources: Dictionary = Resources.buildings
+	var dimension: Vector2 = command.selection.dimension
+	
+	var expense: int = 0
 	
 	match command.opcode:
 		
 		Global.OpCode.BUILD_ROAD:
-			var cost: int = tm_resources.road.cost * (dimension.x * dimension.y)
-			local_company.add_expense(cost)
+			var cost: int = tm_resources.road.cost * (dimension.x * dimension.y)		
 			terrain.build_road(command, roadnav)
+			expense = cost
 		
 		Global.OpCode.BUILD_COMPANY_HQ:
 			var cost: int = bld_resources.company_hq_large.cost
-			local_company.add_expense(cost)
 			world_objects.add_hq("company_hq_large", command.selection.position, local_company)
+			expense = cost
 			
-	
-			
-	emit_signal("local_company_updated", local_company)
+	# if in play mode then update company
+	if editor_mode == EditorMode.PLAY:
+		local_company.add_expense(expense)
+		emit_signal("local_company_updated", local_company)
 
 
 func _on_Selector_error(msg):
