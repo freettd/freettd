@@ -101,6 +101,7 @@ text = "Help"
 
 [node name="Windows" type="Node" parent="."]
 script = ExtResource( 3 )
+company_profile_window = ExtResource( 5 )
 
 [node name="Statusbar" type="PanelContainer" parent="."]
 visible = false

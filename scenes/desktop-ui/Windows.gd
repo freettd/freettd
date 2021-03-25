@@ -2,7 +2,7 @@ extends Node
 
 var windows: Dictionary = {}
 
-onready var company_profile_window = load("res://scenes/desktop-ui/windows/CompanyWindow.tscn")
+export var company_profile_window: Resource
 
 func show_error(msg) -> void:
 	pass
