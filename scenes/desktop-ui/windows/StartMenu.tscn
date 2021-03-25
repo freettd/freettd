@@ -3,7 +3,6 @@
 [ext_resource path="res://scenes/desktop-ui/windows/StartMenu.gd" type="Script" id=1]
 
 [node name="StartMenu" type="WindowDialog"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -38,10 +37,10 @@ margin_bottom = 24.0
 [node name="XParam" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
 margin_right = 74.0
 margin_bottom = 24.0
-min_value = 32.0
+min_value = 64.0
 max_value = 512.0
-step = 32.0
-value = 32.0
+step = 64.0
+value = 64.0
 rounded = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -51,10 +50,10 @@ __meta__ = {
 margin_left = 78.0
 margin_right = 152.0
 margin_bottom = 24.0
-min_value = 32.0
+min_value = 64.0
 max_value = 512.0
-step = 32.0
-value = 32.0
+step = 64.0
+value = 64.0
 rounded = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
