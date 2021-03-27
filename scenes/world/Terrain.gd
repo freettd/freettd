@@ -18,12 +18,15 @@ var celldata = {}
 ################################################################################
 ## NEW TERRAIN
 
-func new_world(cfg: Dictionary) -> void:
+func new_world(parameters: Dictionary) -> void:
 
-	config = cfg
+	config = parameters
 
 	# Build terrain
-	generate_heightmap()
+	if parameters.generate_land:
+		generate_heightmap()
+	else:
+		generate_flatland()
 	
 func reset() -> void:
 	 
@@ -102,15 +105,14 @@ const NEIGHBOURS: Dictionary = {
 func generate_flatland() -> void:
 
 	var map_size: Vector2 = config.map_size
-	var tindex: Dictionary = config.tindex
 
 	# loop through each tile
 	for x in map_size.x:
 		for y in map_size.y:
 			
-			var v = Vector2(x, y)
-			celldata[v] = {}
-			_set_tile(v, 1, tindex.grass, 0)
+			var cellv = Vector2(x, y)
+			celldata[cellv] = {}
+			_set_tile(cellv, 1, TIDX_GRASS, 0)
 
 func generate_heightmap() -> void:
 

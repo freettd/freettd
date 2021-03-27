@@ -33,9 +33,11 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 192.0
 margin_bottom = 24.0
+alignment = 1
 
 [node name="XParam" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
-margin_right = 74.0
+margin_left = 20.0
+margin_right = 94.0
 margin_bottom = 24.0
 min_value = 64.0
 max_value = 512.0
@@ -47,8 +49,8 @@ __meta__ = {
 }
 
 [node name="YParam" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
-margin_left = 78.0
-margin_right = 152.0
+margin_left = 98.0
+margin_right = 172.0
 margin_bottom = 24.0
 min_value = 64.0
 max_value = 512.0
@@ -56,10 +58,17 @@ step = 64.0
 value = 64.0
 rounded = true
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="GenerateLandToggle" type="CheckBox" parent="VBoxContainer"]
 margin_top = 28.0
 margin_right = 192.0
-margin_bottom = 50.0
+margin_bottom = 52.0
+text = "Generate Land"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 56.0
+margin_right = 192.0
+margin_bottom = 78.0
+alignment = 1
 
 [node name="NewScenarioButton" type="ToolButton" parent="VBoxContainer/HBoxContainer2"]
 margin_right = 98.0

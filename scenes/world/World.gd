@@ -11,6 +11,7 @@ signal local_company_updated(company)
 # error signal
 signal error(msg)
 
+# Default autosave filename
 const AUTOSAVE_FILENAME: String = "autosave.sav"
 
 enum EditorMode { PLAY, EDIT, VIEW }
@@ -34,38 +35,30 @@ var company_register: Array = []
 ################################################################################
 ## NEW WORLD
 
-func new_scenario(command: Dictionary) -> void:
+func new_game(parameters: Dictionary) -> void:
+	new_world(EditorMode.PLAY, parameters)
 	
-	editor_mode = EditorMode.EDIT
-	
-	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
-	
-	# Terrain
-	terrain.new_world({
-		map_size = map_size
-	})	
-	
+func new_editor(parameters: Dictionary) -> void:
+	new_world(EditorMode.EDIT, parameters)
 
-func new_game(command: Dictionary) -> void:
+func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	
-	editor_mode = EditorMode.PLAY
+	self.editor_mode = editor_mode
 	
-	emit_signal("newgame_progress", "creating new game", 0)
-	var map_size: Vector2 = Vector2(command.parameters.x, command.parameters.y)
+	emit_signal("newgame_progress", "creating new world", 0)
 	
 	# Terrain
-	terrain.new_world({
-		map_size = map_size
-	})
+	terrain.new_world(parameters)
 	
 	# New Company
-	local_company = Company.new()
-	local_company.company_id = company_register.size()
-	local_company.company_type = Company.CompanyType.LOCAL
-	company_register.append(local_company)
-	
+	if editor_mode == EditorMode.PLAY:
+		local_company = Company.new()
+		local_company.company_id = company_register.size()
+		local_company.company_type = Company.CompanyType.LOCAL
+		company_register.append(local_company)
+		
 	# complete
-	emit_signal("newgame_progress", "new game complete", 100)
+	emit_signal("newgame_progress", "new world complete", 100)
 
 func reset() -> void:
 	

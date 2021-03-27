@@ -21,11 +21,11 @@ func _on_DesktopUI_command_issued(command: Dictionary) -> void:
 		
 		Global.OpCode.NEW_GAME:
 			ui.set_game_ui()
-			world.new_game(command)
+			world.new_game(command.parameters)
 			
 		Global.OpCode.NEW_SCENARIO:
 			ui.set_scenario_ui()
-			world.new_scenario(command)
+			world.new_editor(command.parameters)
 			
 		Global.OpCode.SAVE_GAME:
 			world.save_game()
