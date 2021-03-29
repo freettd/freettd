@@ -20,11 +20,6 @@ _global_script_classes=[ {
 "path": "res://scenes/Global.gd"
 }, {
 "base": "Reference",
-"class": "ObjectPool",
-"language": "GDScript",
-"path": "res://scripts/ObjectPool.gd"
-}, {
-"base": "Reference",
 "class": "Resources",
 "language": "GDScript",
 "path": "res://resources/Resources.gd"
@@ -32,7 +27,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Company": "",
 "Global": "",
-"ObjectPool": "",
 "Resources": ""
 }
 

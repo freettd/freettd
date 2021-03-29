@@ -55,7 +55,7 @@ func _on_World_error(msg):
 func _on_World_local_company_updated(company):
 	ui.update_local_company_info(company)
 
-func _on_World_newgame_progress(status, percentage):
+func _on_World_newworld_progress(status, percentage):
 	printt("main", status, percentage)
 
 func _on_World_loadgame_progress(status, percentage):

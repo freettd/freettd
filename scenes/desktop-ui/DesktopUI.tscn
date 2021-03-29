@@ -10,12 +10,11 @@
 script = ExtResource( 2 )
 
 [node name="Toolbar" type="PanelContainer" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -232.0
+margin_left = -265.5
 margin_top = 10.0
-margin_right = 232.0
+margin_right = 265.5
 margin_bottom = 34.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -25,7 +24,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="Toolbar"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 457.0
+margin_right = 524.0
 margin_bottom = 27.0
 
 [node name="GameButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
@@ -33,66 +32,73 @@ margin_right = 50.0
 margin_bottom = 20.0
 text = "Game"
 
-[node name="VSeparator" type="VSeparator" parent="Toolbar/HBoxContainer"]
+[node name="OptionsButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
 margin_left = 54.0
-margin_right = 58.0
+margin_right = 117.0
+margin_bottom = 20.0
+focus_mode = 2
+text = "Options"
+
+[node name="VSeparator" type="VSeparator" parent="Toolbar/HBoxContainer"]
+margin_left = 121.0
+margin_right = 125.0
 margin_bottom = 20.0
 
 [node name="CompanyButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 62.0
-margin_right = 133.0
+margin_left = 129.0
+margin_right = 200.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Company"
 
 [node name="VSeparator3" type="VSeparator" parent="Toolbar/HBoxContainer"]
-margin_left = 137.0
-margin_right = 141.0
+margin_left = 204.0
+margin_right = 208.0
 margin_bottom = 20.0
 
 [node name="ConstructionButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 145.0
-margin_right = 238.0
+margin_left = 212.0
+margin_right = 305.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Construction"
 
 [node name="RoadButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 242.0
-margin_right = 285.0
+margin_left = 309.0
+margin_right = 352.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Road"
 
 [node name="RailButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 289.0
-margin_right = 324.0
+margin_left = 356.0
+margin_right = 391.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Rail"
 
 [node name="AirButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 328.0
-margin_right = 358.0
+margin_left = 395.0
+margin_right = 425.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Air"
 
 [node name="SeaButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 362.0
-margin_right = 396.0
+margin_left = 429.0
+margin_right = 463.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Sea"
 
 [node name="VSeparator2" type="VSeparator" parent="Toolbar/HBoxContainer"]
-margin_left = 400.0
-margin_right = 404.0
+margin_left = 467.0
+margin_right = 471.0
 margin_bottom = 20.0
 
 [node name="HelpButton" type="MenuButton" parent="Toolbar/HBoxContainer"]
-margin_left = 408.0
-margin_right = 450.0
+margin_left = 475.0
+margin_right = 517.0
 margin_bottom = 20.0
 focus_mode = 2
 text = "Help"

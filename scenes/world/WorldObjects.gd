@@ -3,6 +3,9 @@ extends YSort
 # Signal when company HQ is selected
 signal hq_selected(company)
 
+const COLOR_HALF_TRANSPARENT = Color( 1, 1, 1, 0.5 )
+const COLOR_NO_TRANSPARENT = Color( 1, 1, 1, 1 )
+
 export (NodePath) var world_terrain
 onready var terrain: Node2D = get_node(world_terrain)
 
@@ -11,7 +14,6 @@ var company_register: Array
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	
 	rng.randomize()
 
 
@@ -49,10 +51,10 @@ func reset() -> void:
 func get_save_data() -> Dictionary:
 	return land_registry
 
-func load_data(data: Dictionary, company_register: Array) -> void:
+func load_data(load_data: Dictionary, company_register: Array) -> void:
 
 	# add HQs
-	for hq in data.hq:
+	for hq in load_data.hq:
 		add_hq(hq.key, hq.cellv, company_register[hq.company])
 
 ################################################################################
@@ -124,7 +126,7 @@ func plant_tree(area: Rect2, options: Dictionary = {}) -> void:
 	var scattered: int = options.get("scattered", 10)
 
 	var trees: Array = []
-	for tree_scn in Resources.trees.temperate:
+	for tree_scn in Resources.trees.src.temperate:
 		trees.append(load(tree_scn))
 	
 	# loop vars
@@ -177,3 +179,9 @@ func plant_tree(area: Rect2, options: Dictionary = {}) -> void:
 
 				# add object to world
 				_add_object_to_world(cellv, tree)
+
+func set_trees_transparent() -> void:
+	
+	for tree in get_tree().get_nodes_in_group("tree"):
+		tree.modulate = COLOR_HALF_TRANSPARENT
+

@@ -1,7 +1,7 @@
 extends Node
 
 # game signals
-signal newgame_progress(status, percentage)
+signal newworld_progress(status, percentage)
 signal savegame_progress(status, percentage)
 signal loadgame_progress(status, percentage)
 
@@ -31,7 +31,6 @@ var roadnav: AStar2D = AStar2D.new()
 var local_company: Company
 
 # regsiters
-var land_register: Dictionary = {}
 var company_register: Array = []
 
 
@@ -50,7 +49,7 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	
 	var mapsize = parameters.map_size
 	
-	emit_signal("newgame_progress", "creating new world", 0)
+	emit_signal("newworld_progress", "creating new world", 0)
 	
 	# Terrain
 	terrain.new_world(parameters)
@@ -62,16 +61,17 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 		local_company.company_type = Company.CompanyType.LOCAL
 		company_register.append(local_company)
 	
-	# place random trees	
+	# place random trees	 across map
+	emit_signal("newworld_progress", "planting trees", 50)
 	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
 		min_density = 0, 
 		max_density = 3, 
 		start_frame = -1,
-		scattered = 3
+		scattered = 8
 	})
 		
 	# complete
-	emit_signal("newgame_progress", "new world complete", 100)
+	emit_signal("newworld_progress", "new world complete", 100)
 
 func reset() -> void:
 	
@@ -96,25 +96,36 @@ func process_local_command(command: Dictionary) -> void:
 	# local command is for local company
 	command.company = local_company
 	
-	var opcode: int = command.opcode
+	if Global.ConfigCommands.has(command.opcode):
+		_process_local_config(command)
 	
-	if Global.SelectorConfig.has(opcode):
-		selector.activate(command, Global.SelectorConfig.get(opcode))
+	elif Global.SelectorConfig.has(command.opcode):
+		selector.activate(command, Global.SelectorConfig.get(command.opcode))
+		
+# process local config commands
+func _process_local_config(command: Dictionary) -> void:
+	
+	match command.opcode:
+		
+		Global.OpCode.CONFIG_TRANSPARENT_TREES:
+			world_objects.set_trees_transparent()	
 	
 # process commands after tiles selected
-func _on_Selector_tile_selected(command: Dictionary):
+func _on_Selector_tile_selected(command: Dictionary) -> void:
 	
 	var tm_resources: Dictionary = Resources.tilemaps
 	var bld_resources: Dictionary = Resources.buildings
+	var tree_res: Dictionary = Resources.trees
 
 	var dimension: Vector2 = command.selection.dimension
+	var box: Rect2 = command.selection.box
 	
 	var expense: int = 0
 	
 	match command.opcode:
 		
 		Global.OpCode.BUILD_ROAD:
-			expense = tm_resources.road.cost * (dimension.x * dimension.y)	
+			expense = tm_resources.road.cost * box.get_area()
 			world_objects.clear_land(command.selection.box)	
 			terrain.build_road(command, roadnav)
 		
@@ -123,10 +134,11 @@ func _on_Selector_tile_selected(command: Dictionary):
 			world_objects.add_hq("company_hq_large", command.selection.position, local_company)
 
 		Global.OpCode.CLEAR_LAND:
+			expense = 10 * box.get_area()
 			world_objects.clear_land(command.selection.box)
 
 		Global.OpCode.PLANT_TREE:
-			expense = 10
+			expense = tree_res.cost * box.get_area()
 			world_objects.plant_tree(command.selection.box)
 		
 			
@@ -136,7 +148,7 @@ func _on_Selector_tile_selected(command: Dictionary):
 		emit_signal("local_company_updated", local_company)
 
 
-func _on_Selector_error(msg):
+func _on_Selector_error(msg) -> void:
 	emit_signal("error", msg)
 
 
@@ -157,8 +169,6 @@ func load_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	
 	# read
 	var data = str2var(file.get_as_text())
-	
-	print(data.keys())
 	
 	# load company data
 	for company_data in data.companies:
@@ -219,7 +229,4 @@ func save_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# signal completion
 	file.close()	
 	emit_signal("savegame_progress", "saved", 100)
-
-
-
 

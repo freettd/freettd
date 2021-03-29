@@ -25,7 +25,11 @@ enum OpCode {
 	CLEAR_LAND,
 	PLANT_TREE,
 	
+	CONFIG_TRANSPARENT_TREES
+	
 }
+
+const ConfigCommands: Array = [ OpCode.CONFIG_TRANSPARENT_TREES ]
 
 enum SelectMode {
 	

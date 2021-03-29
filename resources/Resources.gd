@@ -14,12 +14,17 @@ const buildings = {
 }
 
 const trees = {
-	temperate = [
-		"res://resources/trees/TempTree1.tscn",
-		"res://resources/trees/TempTree2.tscn",
-		"res://resources/trees/TempTree3.tscn",
-		"res://resources/trees/TempTree4.tscn",
-		"res://resources/trees/TempTree5.tscn",
-		"res://resources/trees/TempTree6.tscn",
-	]
+	cost = 10,
+	src = {
+		temperate = [
+			"res://resources/trees/temperate/TempTree1.tscn",
+			"res://resources/trees/temperate/TempTree2.tscn",
+			"res://resources/trees/temperate/TempTree3.tscn",
+			"res://resources/trees/temperate/TempTree4.tscn",
+			"res://resources/trees/temperate/TempTree5.tscn",
+			"res://resources/trees/temperate/TempTree6.tscn",
+			"res://resources/trees/temperate/TempTree7.tscn",
+			"res://resources/trees/temperate/TempTree8.tscn",
+		]
+	}
 }
