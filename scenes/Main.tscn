@@ -15,6 +15,6 @@ script = ExtResource( 3 )
 [connection signal="hq_selected" from="World" to="." method="_on_World_hq_selected"]
 [connection signal="loadgame_progress" from="World" to="." method="_on_World_loadgame_progress"]
 [connection signal="local_company_updated" from="World" to="." method="_on_World_local_company_updated"]
-[connection signal="newgame_progress" from="World" to="." method="_on_World_newgame_progress"]
+[connection signal="newworld_progress" from="World" to="." method="_on_World_newworld_progress"]
 [connection signal="savegame_progress" from="World" to="." method="_on_World_savegame_progress"]
 [connection signal="command_issued" from="DesktopUI" to="." method="_on_DesktopUI_command_issued"]

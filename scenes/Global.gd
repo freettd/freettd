@@ -1,5 +1,7 @@
 class_name Global
 
+const GROUP_TREE: String = "GROUP_TREE"
+
 enum OpCode {
 	
 	NEW_GAME,
@@ -21,8 +23,13 @@ enum OpCode {
 	BUILD_COMPANY_HQ,
 	
 	CLEAR_LAND,
+	PLANT_TREE,
+	
+	CONFIG_TRANSPARENT_TREES
 	
 }
+
+const ConfigCommands: Array = [ OpCode.CONFIG_TRANSPARENT_TREES ]
 
 enum SelectMode {
 	
@@ -80,6 +87,14 @@ const SelectorConfig: Dictionary = {
 		repeat = true,
 		on_water = true,
 		on_slope = true,	
-	}
+	},
+	
+	OpCode.PLANT_TREE: {
+		dimension = Vector2.ONE,
+		mode = SelectMode.DRAG,
+		repeat = true,
+		on_water = false,
+		on_slope = true,	
+	}	
 	
 }

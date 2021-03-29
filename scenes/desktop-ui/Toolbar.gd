@@ -3,12 +3,16 @@ extends PanelContainer
 signal command_issued(command)
 
 onready var game_button = $HBoxContainer/GameButton
+onready var options_button = $HBoxContainer/OptionsButton
+
 onready var company_button = $HBoxContainer/CompanyButton
+
 onready var road_button = $HBoxContainer/RoadButton
 onready var construct_button = $HBoxContainer/ConstructionButton
 onready var rail_button = $HBoxContainer/RailButton
 onready var air_button = $HBoxContainer/AirButton
 onready var sea_button = $HBoxContainer/SeaButton
+
 onready var help_button = $HBoxContainer/HelpButton
 
 func _ready() -> void:
@@ -27,6 +31,11 @@ func _ready() -> void:
 	popup.add_item("Exit Game", Global.OpCode.EXIT_GAME)
 	popup.add_item("Exit App", Global.OpCode.EXIT_APP)
 	popup.connect("id_pressed", self, "_on_item_pressed")
+
+	# Company Menu
+	popup = options_button.get_popup()
+	popup.add_item("Transparent Trees", Global.OpCode.CONFIG_TRANSPARENT_TREES)
+	popup.connect("id_pressed", self, "_on_item_pressed")	
 	
 	# Company Menu
 	popup = company_button.get_popup()
@@ -36,6 +45,8 @@ func _ready() -> void:
 	# Construction Menu
 	popup = construct_button.get_popup()
 	popup.add_item("Bulldoze", Global.OpCode.CLEAR_LAND)
+	popup.add_separator()
+	popup.add_item("Plant Tree", Global.OpCode.PLANT_TREE)
 	popup.connect("id_pressed", self, "_on_item_pressed")	
 	
 	# Road Menu

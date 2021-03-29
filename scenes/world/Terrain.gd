@@ -1,11 +1,5 @@
 extends "res://scenes/world/LayeredTilemap.gd"
 
-const NOISE_OCTAVES: int = 4
-const NOISE_PERIOD: float = 20.0 # wavey
-const NOISE_PERSISTENCE: float = 0.5 # smoothness
-const NOISE_FREQUENCY: float = 0.05
-const SEALEVEL: int = 1
-
 const TIDX_GRASS = 0
 const TIDX_ROAD_GRASS = 19
 const TIDX_WATER = 38
@@ -65,6 +59,13 @@ func get_save_data() -> Dictionary:
 
 ################################################################################
 ## GENERATE TERRAIN
+
+const NOISE_OCTAVES: int = 4
+const NOISE_PERIOD: float = 20.0 # wavey
+const NOISE_PERSISTENCE: float = 0.5 # smoothness
+const NOISE_FREQUENCY: float = 0.05
+
+const SEALEVEL: int = 1
 
 const MASK_FLAT_TILE: int = 0
 const MASK_NORTH_CORNER: int = 1
@@ -247,23 +248,6 @@ func _update_cell(cellv: Vector2) -> void:
 func _contains_bits(bitmask: int, mask: int) -> bool:
 	return (bitmask & mask) == mask
 
-# Is tile valid
-func is_valid_tile(cellv: Vector2) -> bool:
-	var map_size: Vector2 = config.map_size
-	return cellv.x >= 0 and cellv.x < map_size.x and cellv.y >= 0 and cellv.y < map_size.y
-
-func get_tile_data(cellv: Vector2) -> Dictionary:
-	return celldata[cellv]
-	
-	
-# HELPER TILE FUNCTIONS
-
-func is_water(cellv: Vector2) -> bool:
-	return get_cellv_height(cellv) == 0
-
-func is_slope(cellv: Vector2) -> bool:
-	return celldata.get(cellv).corners != 0
-
 
 ################################################################################
 ## ROAD FUNCTIONS
@@ -384,3 +368,27 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 			celldata[cellv].tile_idx = TIDX_ROAD_GRASS + (road_tile - 1)
 			
 			_update_cell(cellv)
+
+
+################################################################################	
+## HELPER TILE FUNCTIONS
+
+# Is tile valid
+func is_valid_tile(cellv: Vector2) -> bool:
+	var map_size: Vector2 = config.map_size
+	return cellv.x >= 0 and cellv.x < map_size.x and cellv.y >= 0 and cellv.y < map_size.y
+
+func get_tile_data(cellv: Vector2) -> Dictionary:
+	return celldata[cellv]
+
+func is_water(cellv: Vector2) -> bool:
+	return get_cellv_height(cellv) == 0
+
+func is_slope(cellv: Vector2) -> bool:
+	return celldata[cellv].corners != 0
+	
+func has_road(cellv: Vector2) -> bool:
+	return celldata[cellv].get("road_connections", 0) != 0 
+	
+func is_free_land(cellv: Vector2) -> bool:
+	return !has_road(cellv) && !is_water(cellv)
