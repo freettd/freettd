@@ -69,8 +69,6 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 		start_frame = -1,
 		scattered = 3
 	})
-	
-	print(get_tree().get_nodes_in_group("tree").size())
 		
 	# complete
 	emit_signal("newgame_progress", "new world complete", 100)
