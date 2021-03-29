@@ -29,6 +29,9 @@ var roadnav: AStar2D = AStar2D.new()
 
 # Company Register
 var local_company: Company
+
+# regsiters
+var land_register: Dictionary = {}
 var company_register: Array = []
 
 
@@ -45,6 +48,8 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	
 	self.editor_mode = editor_mode
 	
+	var mapsize = parameters.map_size
+	
 	emit_signal("newgame_progress", "creating new world", 0)
 	
 	# Terrain
@@ -56,6 +61,16 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 		local_company.company_id = company_register.size()
 		local_company.company_type = Company.CompanyType.LOCAL
 		company_register.append(local_company)
+	
+	# place random trees	
+	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
+		min_density = 0, 
+		max_density = 3, 
+		start_frame = -1,
+		scattered = 3
+	})
+	
+	print(get_tree().get_nodes_in_group("tree").size())
 		
 	# complete
 	emit_signal("newgame_progress", "new world complete", 100)
@@ -93,6 +108,7 @@ func _on_Selector_tile_selected(command: Dictionary):
 	
 	var tm_resources: Dictionary = Resources.tilemaps
 	var bld_resources: Dictionary = Resources.buildings
+
 	var dimension: Vector2 = command.selection.dimension
 	
 	var expense: int = 0
@@ -100,14 +116,21 @@ func _on_Selector_tile_selected(command: Dictionary):
 	match command.opcode:
 		
 		Global.OpCode.BUILD_ROAD:
-			var cost: int = tm_resources.road.cost * (dimension.x * dimension.y)		
+			expense = tm_resources.road.cost * (dimension.x * dimension.y)	
+			world_objects.clear_land(command.selection.box)	
 			terrain.build_road(command, roadnav)
-			expense = cost
 		
 		Global.OpCode.BUILD_COMPANY_HQ:
-			var cost: int = bld_resources.company_hq_large.cost
+			expense = bld_resources.company_hq_large.cost
 			world_objects.add_hq("company_hq_large", command.selection.position, local_company)
-			expense = cost
+
+		Global.OpCode.CLEAR_LAND:
+			world_objects.clear_land(command.selection.box)
+
+		Global.OpCode.PLANT_TREE:
+			expense = 10
+			world_objects.plant_tree(command.selection.box)
+		
 			
 	# if in play mode then update company
 	if editor_mode == EditorMode.PLAY:

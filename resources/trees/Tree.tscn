@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="Tree" type="AnimatedSprite"]
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]

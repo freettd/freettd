@@ -107,7 +107,8 @@ func _handle_button_click(event) -> void:
 			
 		command.selection = {
 			position = box.position,
-			dimension = box.size
+			dimension = box.size,
+			box = box
 		}
 		
 		emit_signal("tile_selected", command)

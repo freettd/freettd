@@ -1,0 +1,27 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://resources/trees/Tree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/trees/temp1/128_0004.png" type="Texture" id=2]
+[ext_resource path="res://assets/trees/temp1/128_0001.png" type="Texture" id=3]
+[ext_resource path="res://assets/trees/temp1/128_0002.png" type="Texture" id=4]
+[ext_resource path="res://assets/trees/temp1/128_0005.png" type="Texture" id=5]
+[ext_resource path="res://assets/trees/temp1/128_0006.png" type="Texture" id=6]
+[ext_resource path="res://assets/trees/temp1/128_0007.png" type="Texture" id=7]
+[ext_resource path="res://assets/trees/temp1/128_0003.png" type="Texture" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "grow",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "season",
+"speed": 1.0
+} ]
+
+[node name="Tree1" instance=ExtResource( 1 )]
+frames = SubResource( 1 )
+animation = "grow"
