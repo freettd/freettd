@@ -46,6 +46,10 @@ func _ready() -> void:
 	popup = construct_button.get_popup()
 	popup.add_item("Bulldoze", Global.OpCode.CLEAR_LAND)
 	popup.add_separator()
+	popup.add_item("Up", Global.OpCode.TERRAFORM_UP)
+	popup.add_item("Level", Global.OpCode.TERRAFORM_LEVEL)
+	popup.add_item("Down", Global.OpCode.TERRAFORM_DOWN)
+	popup.add_separator()
 	popup.add_item("Plant Tree", Global.OpCode.PLANT_TREE)
 	popup.connect("id_pressed", self, "_on_item_pressed")	
 	

@@ -149,7 +149,7 @@ func generate_heightmap() -> void:
 	# Smooth Noise
 	for cellv in celldata:
 		var gridval: int = int(round(range_lerp(celldata[cellv].noise, min_noise, max_noise, 0, max_height)))
-		celldata[cellv].noise = max(0, gridval - SEALEVEL)
+		celldata[cellv].height = max(0, gridval - SEALEVEL)
 
 	# Set Tile Images
 	for cellv in celldata:
@@ -173,7 +173,7 @@ func generate_heightmap() -> void:
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
 
-	var cell_height: int = celldata[cellv].noise
+	var cell_height: int = celldata[cellv].height
 	var corner_bits: int = 0
 	var steeptile: bool = false
 
@@ -186,7 +186,7 @@ func _get_tile_alignment(cellv: Vector2) -> int:
 			continue
 			
 		# Get noise
-		var nval = celldata[ncell].noise
+		var nval = celldata[ncell].height
 		
 		# One level above
 		if nval == cell_height + 1:
@@ -369,6 +369,51 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 			
 			_update_cell(cellv)
 
+
+################################################################################
+## TERRAFORM
+
+func terraform_up(area: Rect2) -> void:
+	_terraform(area, 1)
+
+func terraform_down(area: Rect2) -> void:
+	_terraform(area, -1)
+	
+func terraform_level(area: Rect2) -> void:
+	_terraform(area, 0)
+	
+func _terraform(area: Rect2, height_adjust: int) -> void:
+	
+	# adjust height of area
+	for x in range(area.position.x, area.end.x):
+		for y in range(area.position.y, area.end.y):
+			
+			var cellv = Vector2(x, y)
+			
+			# clear existing tile
+			set_cellv(cellv, -1)
+			
+			# set new tile
+			_set_tile(cellv, celldata[cellv].height + height_adjust, TIDX_GRASS, 0)
+			
+	# adjust neighbour tiles
+	var nhood = Rect2(area.position - Vector2.ONE, area.size + Vector2.ONE)
+
+	# check boundaries of box
+	for x in range(nhood.position.x, nhood.end.x + 1):
+		for y in range(nhood.position.y, nhood.end.y + 1):
+
+			var cellv = Vector2(x, y)
+
+			# check if tile is not off the map
+			if not is_valid_tile(cellv):
+				continue
+
+			var cdata = celldata[cellv]
+
+			# if diagnal neighbour
+			if (x == nhood.position.x or x == nhood.end.x) or (y == nhood.position.y or y == nhood.end.y):
+				set_cellv(cellv, _get_tile_alignment(cellv))	
 
 ################################################################################	
 ## HELPER TILE FUNCTIONS

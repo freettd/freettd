@@ -25,6 +25,10 @@ enum OpCode {
 	CLEAR_LAND,
 	PLANT_TREE,
 	
+	TERRAFORM_UP,
+	TERRAFORM_DOWN,
+	TERRAFORM_LEVEL
+	
 	CONFIG_TRANSPARENT_TREES
 	
 }
@@ -45,6 +49,14 @@ enum SelectMode {
 	# road, canal
 	LINE90,
 	
+}
+
+const SIMPLE_DRAG = {
+	dimension = Vector2.ONE,
+	mode = SelectMode.DRAG,
+	repeat = true,
+	on_water = true,
+	on_slope = true,	
 }
 
 const SelectorConfig: Dictionary = {
@@ -81,20 +93,17 @@ const SelectorConfig: Dictionary = {
 		on_slope = false,
 	},
 	
-	OpCode.CLEAR_LAND: {
-		dimension = Vector2.ONE,
-		mode = SelectMode.DRAG,
-		repeat = true,
-		on_water = true,
-		on_slope = true,	
-	},
-	
 	OpCode.PLANT_TREE: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.DRAG,
 		repeat = true,
 		on_water = false,
 		on_slope = true,	
-	}	
+	},
+	
+	OpCode.CLEAR_LAND: SIMPLE_DRAG,
+	OpCode.TERRAFORM_UP: SIMPLE_DRAG,
+	OpCode.TERRAFORM_DOWN: SIMPLE_DRAG,
+	OpCode.TERRAFORM_LEVEL: SIMPLE_DRAG	
 	
 }

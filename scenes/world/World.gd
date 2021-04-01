@@ -63,12 +63,12 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	
 	# place random trees	 across map
 	emit_signal("newworld_progress", "planting trees", 50)
-	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
-		min_density = 0, 
-		max_density = 3, 
-		start_frame = -1,
-		scattered = 8
-	})
+#	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
+#		min_density = 0, 
+#		max_density = 3, 
+#		start_frame = -1,
+#		scattered = 8
+#	})
 		
 	# complete
 	emit_signal("newworld_progress", "new world complete", 100)
@@ -126,8 +126,8 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 		
 		Global.OpCode.BUILD_ROAD:
 			expense = tm_resources.road.cost * box.get_area()
-			world_objects.clear_land(command.selection.box)	
-			terrain.build_road(command, roadnav)
+			world_objects.clear_land(box)	
+			terrain.build_road(box, roadnav)
 		
 		Global.OpCode.BUILD_COMPANY_HQ:
 			expense = bld_resources.company_hq_large.cost
@@ -136,6 +136,15 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 		Global.OpCode.CLEAR_LAND:
 			expense = 10 * box.get_area()
 			world_objects.clear_land(command.selection.box)
+			
+		Global.OpCode.TERRAFORM_UP:
+			terrain.terraform_up(box)
+			
+		Global.OpCode.TERRAFORM_DOWN:
+			terrain.terraform_down(box)
+			
+		Global.OpCode.TERRAFORM_LEVEL:
+			terrain.terraform_level(box)
 
 		Global.OpCode.PLANT_TREE:
 			expense = tree_res.cost * box.get_area()

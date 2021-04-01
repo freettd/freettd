@@ -54,6 +54,9 @@ func map_to_world(cellv: Vector2) -> Vector2:
 func set_cellv_height(cellv: Vector2, height: int) -> void:
 	heightmap[cellv] = height
 	
+func adjust_cellv_height(cellv: Vector2, adjustment: int) -> void:
+	heightmap[cellv] += adjustment
+	
 func set_cellv(cellv: Vector2, tileset_idx) -> void:
 	var layer = layers[heightmap[cellv]]
 	layer.set_cellv(cellv, tileset_idx)
