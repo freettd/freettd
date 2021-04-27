@@ -1,8 +1,12 @@
 extends "res://scenes/world/LayeredTilemap.gd"
 
-const TIDX_GRASS = 0
-const TIDX_ROAD_GRASS = 19
-const TIDX_WATER = 38
+const ITEMS_PER_GROUP = 19
+
+enum TileType {
+	GROUND1, GROUND2, GROUND3, GROUND4,
+	ROAD_GREEN, ROAD_SNOW, ROAD_FROST, ROAD_CONCRETE
+	WATER
+}
 
 # array of cells
 
@@ -113,7 +117,7 @@ func generate_flatland() -> void:
 			
 			var cellv = Vector2(x, y)
 			celldata[cellv] = {}
-			_set_tile(cellv, 1, TIDX_GRASS, 0)
+			_set_tile(cellv, 1, TileType.GROUND1, 0)
 
 func generate_heightmap() -> void:
 
@@ -166,9 +170,9 @@ func generate_heightmap() -> void:
 		
 		#  if level 0 then its a shore tile
 		if cdata.noise == 0:
-			_set_tile(cellv, 0, TIDX_WATER, image_id)
+			_set_tile(cellv, 0, TileType.WATER, image_id)
 		else:
-			_set_tile(cellv, cdata.noise, TIDX_GRASS, image_id)
+			_set_tile(cellv, cdata.noise, TileType.GROUND1, image_id)
 
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:
@@ -220,7 +224,7 @@ func _set_tile(cellv: Vector2, height: int, tiletype_id: int, image_id: int = 0)
 	var cdata: Dictionary = celldata[cellv]
 
 	# calculate index in tileset
-	var tileset_idx: int = tiletype_id + image_id
+	var tileset_idx: int = get_tile_idx(tiletype_id, image_id)
 
 	# tiles with north corners do not align correctly so we use an offset
 	if _contains_bits(image_id, MASK_NORTH_CORNER):
@@ -365,13 +369,16 @@ func build_road(command: Dictionary, roadnav: AStar2D) -> void:
 					cdata.road_connections = road_tile
 			
 			# set road tile
-			celldata[cellv].tile_idx = TIDX_ROAD_GRASS + (road_tile - 1)
+			celldata[cellv].tile_idx = get_tile_idx(TileType.ROAD_GREEN, road_tile - 1)
 			
 			_update_cell(cellv)
 
 
 ################################################################################	
 ## HELPER TILE FUNCTIONS
+
+func get_tile_idx(tiletype_id, image_id) -> int:
+	return (tiletype_id * ITEMS_PER_GROUP) + image_id
 
 # Is tile valid
 func is_valid_tile(cellv: Vector2) -> bool:

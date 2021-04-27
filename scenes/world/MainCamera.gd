@@ -1,4 +1,5 @@
 # Copyright (c) 2020 William Batista Costa	
+# Copyright (c) 2021 Peter Richmond
 # MIT License
 # source: https://github.com/williambcosta/godot-touch-camera-2d
 
