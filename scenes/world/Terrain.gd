@@ -1,6 +1,7 @@
 extends "res://scenes/world/LayeredTilemap.gd"
 
 const ITEMS_PER_GROUP = 19
+const SNOWLINE = 7
 
 enum TileType {
 	GROUND1, GROUND2, GROUND3, GROUND4,
@@ -167,12 +168,23 @@ func generate_heightmap() -> void:
 		if _contains_bits(image_id, MASK_NORTH_CORNER|MASK_EAST_CORNER|MASK_SOUTH_CORNER|MASK_WEST_CORNER):
 			cdata.noise += 1
 			image_id = 0
+			
+		var tile_type = TileType.GROUND1
+		
+		if cdata.noise >= SNOWLINE:
+			tile_type = TileType.GROUND4
+		elif cdata.noise == SNOWLINE-1:
+			tile_type = TileType.GROUND3
+		elif cdata.noise == SNOWLINE-2:
+			tile_type = TileType.GROUND2
+		else:
+			tile_type = TileType.GROUND1
 		
 		#  if level 0 then its a shore tile
 		if cdata.noise == 0:
 			_set_tile(cellv, 0, TileType.WATER, image_id)
 		else:
-			_set_tile(cellv, cdata.noise, TileType.GROUND1, image_id)
+			_set_tile(cellv, cdata.noise, tile_type, image_id)
 
 # calculate tile direction based on neighbouring tiles
 func _get_tile_alignment(cellv: Vector2) -> int:

@@ -65,9 +65,9 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	emit_signal("newworld_progress", "planting trees", 50)
 	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
 		min_density = 0, 
-		max_density = 3, 
+		max_density = 1, 
 		start_frame = -1,
-		scattered = 8
+		scattered = 2
 	})
 		
 	# complete
