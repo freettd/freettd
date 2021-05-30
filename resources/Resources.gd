@@ -9,7 +9,7 @@ const tilemaps = {
 const buildings = {
 	company_hq_large = {
 		cost = 1000000,
-		src = "res://resources/hq/LargeHQ.tscn"
+		src = "res://resources/hq/CompanyHQ.tscn"
 	}
 }
 

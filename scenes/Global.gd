@@ -4,6 +4,8 @@ const GROUP_TREE: String = "GROUP_TREE"
 
 enum OpCode {
 	
+	START_APP,
+	
 	NEW_GAME,
 	NEW_SCENARIO,
 	

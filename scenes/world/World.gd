@@ -33,6 +33,34 @@ var local_company: Company
 # regsiters
 var company_register: Array = []
 
+func _ready() -> void:
+	
+	EventBus.connect("command_issued", self, "_process_command")
+
+
+# process local commands from UI
+func _process_command(command: Dictionary) -> void:
+	
+	match (command.opcode):
+		
+		Global.OpCode.NEW_GAME:
+			new_game(command.parameters)
+
+		Global.OpCode.NEW_SCENARIO:
+			new_editor(command.parameters)
+
+		
+		Global.OpCode.CONFIG_TRANSPARENT_TREES:
+			world_objects.set_trees_transparent()	
+			
+
+	if Global.SelectorConfig.has(command.opcode):
+		selector.activate(command, Global.SelectorConfig.get(command.opcode))
+		
+
+		
+
+
 
 ################################################################################
 ## NEW WORLD
@@ -90,25 +118,7 @@ func reset() -> void:
 ################################################################################
 ## LOCAL COMMANDS
 
-# process local commands from UI
-func process_local_command(command: Dictionary) -> void:
-	
-	# local command is for local company
-	command.company = local_company
-	
-	if Global.ConfigCommands.has(command.opcode):
-		_process_local_config(command)
-	
-	elif Global.SelectorConfig.has(command.opcode):
-		selector.activate(command, Global.SelectorConfig.get(command.opcode))
-		
-# process local config commands
-func _process_local_config(command: Dictionary) -> void:
-	
-	match command.opcode:
-		
-		Global.OpCode.CONFIG_TRANSPARENT_TREES:
-			world_objects.set_trees_transparent()	
+
 	
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary) -> void:

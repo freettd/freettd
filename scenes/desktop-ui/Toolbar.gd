@@ -1,7 +1,5 @@
 extends PanelContainer
 
-signal command_issued(command)
-
 onready var game_button = $HBoxContainer/GameButton
 onready var options_button = $HBoxContainer/OptionsButton
 
@@ -65,6 +63,6 @@ func _ready() -> void:
 	popup.connect("id_pressed", self, "_on_item_pressed")	
 
 func _on_item_pressed(id: int) -> void:
-	emit_signal("command_issued", {
+	EventBus.emit_signal("command_issued", {
 		opcode = id
 	})

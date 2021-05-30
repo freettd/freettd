@@ -11,6 +11,8 @@
 [node name="World" type="Node"]
 script = ExtResource( 6 )
 
+[node name="WorldTime" type="Timer" parent="."]
+
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true

@@ -43,6 +43,9 @@ texture = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="SimpleHQ"]
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SimpleHQ/Area2D"]
+polygon = PoolVector2Array( -129.667, 52.6734, 20.9614, -37.9964, 88.2325, -6.31076, 88.2325, 24.8875, 133.08, 50.236, 135.03, 63.8852, 1.46249, 132.619, -129.18, 67.785 )
+
 [node name="SimpleHQ2" type="Node2D" parent="."]
 visible = false
 
@@ -72,3 +75,5 @@ position = Vector2( -10, 55 )
 texture = ExtResource( 9 )
 
 [node name="Area2D" type="Area2D" parent="SimpleHQ2"]
+
+[connection signal="input_event" from="SimpleHQ/Area2D" to="." method="_on_Area2D_input_event"]
