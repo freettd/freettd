@@ -38,7 +38,7 @@ run/main_scene="res://scenes/Main.tscn"
 
 [autoload]
 
-EventBus="*res://global/EventBus.gd"
+EventBus="*res://scenes/EventBus.gd"
 
 [debug]
 

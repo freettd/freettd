@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/world/Terrain.gd" type="Script" id=1]
 [ext_resource path="res://scenes/desktop-ui/DesktopUI.gd" type="Script" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://scenes/world/MainCamera.gd" type="Script" id=8]
 [ext_resource path="res://resources/tilemaps/selector.res" type="TileSet" id=9]
 [ext_resource path="res://scenes/world/Selector.gd" type="Script" id=10]
-[ext_resource path="res://scenes/desktop-ui/windows/StartMenu.gd" type="Script" id=11]
 [ext_resource path="res://scenes/desktop-ui/Windows.gd" type="Script" id=12]
 [ext_resource path="res://resources/tilemaps/terrain.res" type="TileSet" id=13]
 [ext_resource path="res://scenes/desktop-ui/windows/StartMenu.tscn" type="PackedScene" id=14]
@@ -141,20 +140,7 @@ margin_bottom = 20.0
 focus_mode = 2
 text = "Help"
 
-[node name="StartMenu" type="WindowDialog" parent="DesktopUI" instance=ExtResource( 14 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -101.0
-margin_top = -100.5
-margin_right = 101.0
-margin_bottom = 100.5
-window_title = "Start Menu"
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="StartMenu" parent="DesktopUI" instance=ExtResource( 14 )]
 
 [node name="Windows" type="Node" parent="DesktopUI"]
 script = ExtResource( 12 )
