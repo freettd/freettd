@@ -77,7 +77,6 @@ const SelectorConfig: Dictionary = {
 		on_slope = true,
 	},
 	
-	
 	Action.BUILD_ROAD_DEPOT: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.LINE90,

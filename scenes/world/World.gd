@@ -1,17 +1,5 @@
 extends Node
 
-# game signals
-signal newworld_progress(status, percentage)
-signal savegame_progress(status, percentage)
-signal loadgame_progress(status, percentage)
-
-signal hq_selected(company)
-signal local_company_updated(company)
-signal depot_selected(depot)
-
-# error signal
-signal error(msg)
-
 # Default autosave filename
 const AUTOSAVE_FILENAME: String = "autosave.sav"
 

@@ -1,7 +1,5 @@
 extends Node2D
 
-signal selected()
-
 export (String) var depot_suffix = "Depot"
 export var can_rotate: bool = false
 
@@ -47,7 +45,6 @@ func rotate_face() -> void:
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		EventBus.emit_signal("depot_selected", self)
-		emit_signal("selected")
 
 func set_default_name(name: String) -> void:
 	depot_name = name + " " + depot_suffix

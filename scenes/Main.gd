@@ -11,9 +11,6 @@ func _ready() -> void:
 
 func _on_command_issued(cmd: Dictionary) -> void:
 	
-	# special op codes
-	match cmd.action:
-			
-		Command.Action.EXIT_APP:
-			get_tree().quit()
+	if cmd.action == Command.Action.EXIT_APP:
+		get_tree().quit()
 			
