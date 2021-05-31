@@ -213,4 +213,3 @@ text = "$1,000,000"
 
 [connection signal="error" from="World/Selector" to="World" method="_on_Selector_error"]
 [connection signal="tile_selected" from="World/Selector" to="World" method="_on_Selector_tile_selected"]
-[connection signal="hq_selected" from="World/WorldObjects" to="World" method="_on_WorldObjects_hq_selected"]
