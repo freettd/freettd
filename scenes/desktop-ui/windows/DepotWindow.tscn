@@ -3,6 +3,7 @@
 [ext_resource path="res://scenes/desktop-ui/windows/DepotWindow.gd" type="Script" id=1]
 
 [node name="DepotWindow" type="WindowDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -50,12 +51,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Sell"
 
-[node name="StartButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="SellAllButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 158.0
 margin_right = 234.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Start"
+text = "Sell All"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/BuyButton" to="." method="_on_BuyButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SellAllButton" to="." method="_on_SellAllButton_pressed"]

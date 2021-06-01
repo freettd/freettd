@@ -15,6 +15,8 @@ onready var south_face = $SouthFace
 onready var west_face = $WestFace
 
 var cellv: Vector2 = Vector2.ZERO
+var vehicle_list: Array = []
+
 var current_face = 0
 var faces: Array
 
