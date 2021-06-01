@@ -62,9 +62,7 @@ func _process_local_command(cmd) -> void:
 			world_objects.set_trees_transparent()
 			
 		Command.Action.BUY_VEHICLE:
-			print("buy vehicle")
-			
-			
+			world_objects.add_vehicle_in_depot("modern_bus", cmd.parameters.depot, roadnav)
 
 	
 	if Command.SelectorConfig.has(cmd.action):
@@ -161,13 +159,6 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 		Command.Action.PLANT_TREE:
 			record_expense(tree_res.cost, box.get_area())
 			world_objects.plant_tree(command.selection.box)
-			
-		
-		
-
-
-func _on_Selector_error(msg) -> void:
-	emit_signal("error", msg)
 
 
 ################################################################################

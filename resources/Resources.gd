@@ -32,3 +32,15 @@ const trees = {
 		]
 	}
 }
+
+const vehicles = {
+	modern_bus = {
+		src = "res://resources/roadvehicles/modern/Bus.tscn",
+		cost = 1000,
+		max_speed = 50,
+		tags = ["vehicle", "road_vehicle", "bus"],
+		capacity = {
+			pax = 25
+		}
+	}
+}

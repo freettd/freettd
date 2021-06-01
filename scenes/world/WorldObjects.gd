@@ -80,10 +80,34 @@ func clear_land(area: Rect2) -> void:
 
 			# remove entry from registry to save memory
 			land_registry.erase(cellv)
-
+	
 
 ################################################################################
 ## ADD OBJECTS TO WORLD
+
+func add_vehicle_in_depot(key: String, depot: Node2D, nav: AStar2D) -> Node2D:
+	
+	# Get data for object
+	var vdata: Dictionary = Resources.vehicles[key]
+	
+	# create scene
+	var vehicle: Node2D = load(vdata.src).instance()
+	
+	# set position
+	vehicle.position = terrain.map_to_world(depot.cellv)
+	
+	# add groups
+	for tag in vdata.tags:
+		vehicle.add_to_group(tag)
+		
+	# set navigation
+	vehicle.navigation = nav
+	
+	# add scene to world
+	add_child(vehicle)
+	
+	# return scene
+	return vehicle
 
 # add object to world
 func add_object(res_key: String, cellv: Vector2, owner = null) -> Node2D:
@@ -95,6 +119,7 @@ func add_object(res_key: String, cellv: Vector2, owner = null) -> Node2D:
 	var scene: Node2D = load(obj.src).instance()
 
 	# set position
+	scene.cellv = cellv
 	scene.position = terrain.map_to_world(cellv)
 
 	# add scene to world

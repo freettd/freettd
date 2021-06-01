@@ -1,7 +1,6 @@
 extends "res://scenes/world/LayeredTilemap.gd"
 
 signal tile_selected(command)
-signal error(msg)	
 
 export (NodePath) var world_terrain
 onready var terrain: Node2D = get_node(world_terrain)

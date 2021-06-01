@@ -58,7 +58,7 @@ func _ready() -> void:
 	popup.add_item("Build Cargo Terminal", Command.Action.BUILD_TRUCK_TERMINAL)
 	popup.add_item("Build Cargo Stop", Command.Action.BUILD_TRUCK_STOP)
 	popup.add_separator()
-	popup.add_item("View Vehicles", Command.Action.BUILD_ROAD)
+	popup.add_item("View Road Vehicles", Command.Action.SHOW_ROAD_VEHICLE_LIST)
 	popup.connect("id_pressed", self, "_on_item_pressed")	
 	
 	# Road Menu
