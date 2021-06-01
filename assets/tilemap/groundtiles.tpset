@@ -1,0 +1,93 @@
+{
+	"textures": [
+		{
+			"image": "groundtiles.png",
+			"size": {
+				"w": 650,
+				"h": 67
+			},
+			"sprites": [
+				{
+					"filename": "concrete/128_0001.png",
+					"region": {
+						"x": 1,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "concrete/128_0002.png",
+					"region": {
+						"x": 131,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "concrete/128_0003.png",
+					"region": {
+						"x": 261,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "concrete/128_0004.png",
+					"region": {
+						"x": 391,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "industry/128_0001.png",
+					"region": {
+						"x": 521,
+						"y": 1,
+						"w": 128,
+						"h": 65
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:f763523a2cd6c251e75a7738535c043e:6ebc638e1bf6541bbfddfc5520a06bc3:be0fead444153a0bc3878ceaadd748aa$"
+	}
+}

@@ -15,6 +15,8 @@ var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	rng.randomize()
+	
+	
 
 
 ################################################################################
@@ -52,10 +54,11 @@ func get_save_data() -> Dictionary:
 	return land_registry
 
 func load_data(load_data: Dictionary, company_register: Array) -> void:
+	pass
 
 	# add HQs
-	for hq in load_data.hq:
-		add_hq(hq.key, hq.cellv, company_register[hq.company])
+#	for hq in load_data.hq:
+#		_add_object(hq.key, hq.cellv, company_register[hq.company])
 
 ################################################################################
 ## CLEAR LAND
@@ -82,21 +85,8 @@ func clear_land(area: Rect2) -> void:
 ################################################################################
 ## ADD OBJECTS TO WORLD
 
-# add company HQ to the world
-func add_hq(res_key: String, cellv: Vector2, company: Company) -> void:
-
-	# add scene to world
-	var scene: Node2D = _add_object(res_key, cellv)
-
-	# connect signal
-	scene.connect("selected", self, "_on_hq_selected", [company])
-
-# when the company HQ is selected
-func _on_hq_selected(company: Company) -> void:
-	emit_signal("hq_selected", company)
-
 # add object to world
-func _add_object(res_key: String, cellv: Vector2) -> Node2D:
+func add_object(res_key: String, cellv: Vector2, owner = null) -> Node2D:
 
 	# Get data for object
 	var obj: Dictionary = Resources.buildings[res_key]

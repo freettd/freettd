@@ -7,6 +7,7 @@ signal loadgame_progress(status, percentage)
 
 signal hq_selected(company)
 signal local_company_updated(company)
+signal depot_selected(depot)
 
 # error signal
 signal error(msg)
@@ -35,31 +36,39 @@ var company_register: Array = []
 
 func _ready() -> void:
 	
-	EventBus.connect("command_issued", self, "_process_command")
+	EventBus.connect("command_issued", self, "_process_local_command")
 
 
-# process local commands from UI
-func _process_command(command: Dictionary) -> void:
+func _process_local_command(cmd) -> void:
 	
-	match (command.opcode):
-		
-		Global.OpCode.NEW_GAME:
-			new_game(command.parameters)
-
-		Global.OpCode.NEW_SCENARIO:
-			new_editor(command.parameters)
-
-		
-		Global.OpCode.CONFIG_TRANSPARENT_TREES:
-			world_objects.set_trees_transparent()	
+	match (cmd.action):
+	
+		Command.Action.NEW_GAME:
+			new_game(cmd.parameters)
+			
+		Command.Action.NEW_SCENARIO:
+			new_editor(cmd.parameters)
+			
+		Command.Action.SAVE_GAME:
+			save_game()
+			
+		Command.Action.LOAD_GAME:
+			load_game()
+			
+		Command.Action.EXIT_GAME:
+			reset()
+			
+		Command.Action.CONFIG_TRANSPARENT_TREES:
+			world_objects.set_trees_transparent()
+			
+		Command.Action.BUY_VEHICLE:
+			print("buy vehicle")
+			
 			
 
-	if Global.SelectorConfig.has(command.opcode):
-		selector.activate(command, Global.SelectorConfig.get(command.opcode))
-		
-
-		
-
+	
+	if Command.SelectorConfig.has(cmd.action):
+		selector.activate(cmd, Command.SelectorConfig.get(cmd.action))
 
 
 ################################################################################
@@ -91,12 +100,12 @@ func new_world(editor_mode: int, parameters: Dictionary) -> void:
 	
 	# place random trees	 across map
 	emit_signal("newworld_progress", "planting trees", 50)
-	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
-		min_density = 0, 
-		max_density = 3, 
-		start_frame = -1,
-		scattered = 8
-	})
+#	world_objects.plant_tree(Rect2(0, 0, mapsize.x, mapsize.y), { 
+#		min_density = 0, 
+#		max_density = 3, 
+#		start_frame = -1,
+#		scattered = 8
+#	})
 		
 	# complete
 	emit_signal("newworld_progress", "new world complete", 100)
@@ -117,8 +126,6 @@ func reset() -> void:
 
 ################################################################################
 ## LOCAL COMMANDS
-
-
 	
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary) -> void:
@@ -132,40 +139,45 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 	
 	var expense: int = 0
 	
-	match command.opcode:
+	match command.action:
 		
-		Global.OpCode.BUILD_ROAD:
-			expense = tm_resources.road.cost * box.get_area()
+		Command.Action.BUILD_ROAD:
+			record_expense(tm_resources.road.cost, box.get_area())
 			world_objects.clear_land(command.selection.box)	
 			terrain.build_road(command, roadnav)
 		
-		Global.OpCode.BUILD_COMPANY_HQ:
-			expense = bld_resources.company_hq_large.cost
-			world_objects.add_hq("company_hq_large", command.selection.position, local_company)
+		Command.Action.BUILD_COMPANY_HQ:
+			record_expense(bld_resources.company_hq.cost)
+			world_objects.add_object("company_hq", command.selection.position, local_company)
 
-		Global.OpCode.CLEAR_LAND:
-			expense = 10 * box.get_area()
+		Command.Action.BUILD_ROAD_DEPOT:
+			record_expense(bld_resources.road_depot.cost)
+			world_objects.add_object("road_depot", command.selection.position, local_company)
+
+		Command.Action.CLEAR_LAND:
+			record_expense(10, box.get_area())
 			world_objects.clear_land(command.selection.box)
 
-		Global.OpCode.PLANT_TREE:
-			expense = tree_res.cost * box.get_area()
+		Command.Action.PLANT_TREE:
+			record_expense(tree_res.cost, box.get_area())
 			world_objects.plant_tree(command.selection.box)
-		
 			
-	# if in play mode then update company
-	if editor_mode == EditorMode.PLAY:
-		local_company.add_expense(expense)
-		emit_signal("local_company_updated", local_company)
+		
+		
 
 
 func _on_Selector_error(msg) -> void:
 	emit_signal("error", msg)
 
 
-func _on_WorldObjects_hq_selected(company: Company):
-	if not selector.visible:
-		emit_signal("hq_selected", company)
-		
+################################################################################
+## Economy
+
+func record_expense(expense: int, qty = 1) -> void:
+	if editor_mode == EditorMode.PLAY:
+		local_company.add_expense(expense)
+		emit_signal("local_company_updated", local_company)
+
 
 ################################################################################
 ## SAVE & LOAD GAME
@@ -239,4 +251,3 @@ func save_game(filename: String = AUTOSAVE_FILENAME) -> void:
 	# signal completion
 	file.close()	
 	emit_signal("savegame_progress", "saved", 100)
-

@@ -7,9 +7,13 @@ const tilemaps = {
 }
 
 const buildings = {
-	company_hq_large = {
+	company_hq = {
 		cost = 1000000,
 		src = "res://resources/hq/CompanyHQ.tscn"
+	},
+	road_depot = {
+		cost = 1000,
+		src = "res://resources/depot/RoadDepot.tscn"
 	}
 }
 

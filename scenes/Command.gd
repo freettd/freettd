@@ -1,8 +1,8 @@
-class_name Global
+class_name Command
 
 const GROUP_TREE: String = "GROUP_TREE"
 
-enum OpCode {
+enum Action {
 	
 	START_APP,
 	
@@ -15,14 +15,22 @@ enum OpCode {
 	EXIT_APP,
 	EXIT_GAME,
 	
-	
 	TILE_QUERY,
 	
 	BUILD_ROAD,
 	BUILD_RAIL,
 	BUILD_WORLD_OBJECT,
 	
+	BUILD_ROAD_DEPOT,
+	BUILD_TRUCK_TERMINAL,
+	BUILD_PAX_TERMINAL,
+	BUILD_TRUCK_STOP,
+	BUILD_PAX_STOP,
+	
 	BUILD_COMPANY_HQ,
+	
+	BUY_VEHICLE,
+	SELL_VEHICLE,
 	
 	CLEAR_LAND,
 	PLANT_TREE,
@@ -31,7 +39,7 @@ enum OpCode {
 	
 }
 
-const ConfigCommands: Array = [ OpCode.CONFIG_TRANSPARENT_TREES ]
+const ConfigCommands: Array = [ Action.CONFIG_TRANSPARENT_TREES ]
 
 enum SelectMode {
 	
@@ -51,7 +59,7 @@ enum SelectMode {
 
 const SelectorConfig: Dictionary = {
 	
-	OpCode.TILE_QUERY: {
+	Action.TILE_QUERY: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.FIXED,
 		repeat = true,
@@ -59,7 +67,7 @@ const SelectorConfig: Dictionary = {
 		on_slope = true,
 	},
 	
-	OpCode.BUILD_ROAD: {
+	Action.BUILD_ROAD: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.LINE90,
 		repeat = true,
@@ -67,7 +75,16 @@ const SelectorConfig: Dictionary = {
 		on_slope = true,
 	},
 	
-	OpCode.BUILD_RAIL: {
+	
+	Action.BUILD_ROAD_DEPOT: {
+		dimension = Vector2.ONE,
+		mode = SelectMode.LINE90,
+		repeat = true,
+		on_water = false,
+		on_slope = false,
+	},
+	
+	Action.BUILD_RAIL: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.LINE45,
 		repeat = true,
@@ -75,7 +92,7 @@ const SelectorConfig: Dictionary = {
 		on_slope = true,
 	},
 	
-	OpCode.BUILD_COMPANY_HQ: {
+	Action.BUILD_COMPANY_HQ: {
 		dimension = Vector2(2, 2),
 		mode = SelectMode.FIXED,
 		repeat = false,
@@ -83,7 +100,7 @@ const SelectorConfig: Dictionary = {
 		on_slope = false,
 	},
 	
-	OpCode.CLEAR_LAND: {
+	Action.CLEAR_LAND: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.DRAG,
 		repeat = true,
@@ -91,7 +108,7 @@ const SelectorConfig: Dictionary = {
 		on_slope = true,	
 	},
 	
-	OpCode.PLANT_TREE: {
+	Action.PLANT_TREE: {
 		dimension = Vector2.ONE,
 		mode = SelectMode.DRAG,
 		repeat = true,

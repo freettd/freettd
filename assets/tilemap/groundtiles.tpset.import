@@ -1,0 +1,15 @@
+[remap]
+
+importer="codeandweb.texturepacker_import_tileset"
+type="Resource"
+path="res://.import/groundtiles.tpset-de52fb6d87f6c54472833280756db57c.res"
+
+[deps]
+
+files=[ "groundtiles.png", "res://assets/tilemap/groundtiles.res" ]
+
+source_file="res://assets/tilemap/groundtiles.tpset"
+dest_files=[ "res://.import/groundtiles.tpset-de52fb6d87f6c54472833280756db57c.res", "groundtiles.png", "res://assets/tilemap/groundtiles.res" ]
+
+[params]
+

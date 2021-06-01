@@ -9,11 +9,11 @@ func _ready() -> void:
 
 # UI EVENTS
 
-func _on_command_issued(command: Dictionary) -> void:
+func _on_command_issued(cmd: Dictionary) -> void:
 	
 	# special op codes
-	match command.opcode:
+	match cmd.action:
 			
-		Global.OpCode.EXIT_APP:
+		Command.Action.EXIT_APP:
 			get_tree().quit()
 			

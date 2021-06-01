@@ -6,7 +6,7 @@ onready var land_toggle: CheckBox = $VBoxContainer/GenerateLandToggle
 
 func _on_NewGameButton_pressed():
 	EventBus.emit_signal("command_issued", {
-		opcode = Global.OpCode.NEW_GAME,
+		action = Command.Action.NEW_GAME,
 		parameters = {
 			generate_land = land_toggle.is_pressed(),
 			map_size = Vector2(x_param.value, y_param.value)
@@ -16,7 +16,7 @@ func _on_NewGameButton_pressed():
 
 func _on_NewScenarioButton_pressed():
 	EventBus.emit_signal("command_issued", {
-		opcode = Global.OpCode.NEW_SCENARIO,
+		action = Command.Action.NEW_SCENARIO,
 		parameters = {
 			generate_land = land_toggle.is_pressed(),
 			map_size = Vector2(x_param.value, y_param.value)

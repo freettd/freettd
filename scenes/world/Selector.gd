@@ -93,7 +93,7 @@ func _handle_button_click(event) -> void:
 	# button clicked
 	if event.pressed:
 				
-		if config.mode != Global.SelectMode.FIXED:
+		if config.mode != Command.SelectMode.FIXED:
 			drag_enabled = true
 			selected_tile = current_tile
 			
@@ -136,13 +136,13 @@ func _handle_mouse_move() -> void:
 	# use selection mode
 	match config.mode:
 		
-		Global.SelectMode.FIXED:
+		Command.SelectMode.FIXED:
 			_draw_boxed_area()
 			
-		Global.SelectMode.DRAG:
+		Command.SelectMode.DRAG:
 			_draw_boxed_area()
 
-		Global.SelectMode.LINE45, Global.SelectMode.LINE90:
+		Command.SelectMode.LINE45, Command.SelectMode.LINE90:
 			if drag_enabled:
 				tileset_type = TIDX_RAILTILE
 				_draw_direct_path()
@@ -171,7 +171,7 @@ func _draw_direct_path() -> void:
 		_draw_boxed_area()	
 	
 	# draw 45 angle if selection mode allows it
-	elif config.mode == Global.SelectMode.LINE45:
+	elif config.mode == Command.SelectMode.LINE45:
 	
 		var increment: int
 

@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-signal command_issued(command)
-
 onready var toolbar = $Toolbar
 onready var statusbar = $Statusbar
 
@@ -12,21 +10,25 @@ onready var startmenu = $StartMenu
 
 func _ready() -> void:
 	
-	EventBus.connect("command_issued", self, "_process_command")
-		
-		
-func _process_command(command) -> void:
+	EventBus.connect("command_issued", self, "_process_local_command")
 	
-	match (command.opcode):
+
+func _process_local_command(cmd: Dictionary):
+	
+	match (cmd.action):
 		
-		Global.OpCode.NEW_GAME:
+		Command.Action.START_APP:
+			set_start_ui()
+	
+		Command.Action.NEW_GAME:
 			set_game_ui()
 			
-		Global.OpCode.NEW_SCENARIO:
+		Command.Action.NEW_SCENARIO:
 			set_scenario_ui()
 			
-		Global.OpCode.EXIT_GAME:
+		Command.Action.EXIT_GAME:
 			set_start_ui()
+
 
 func set_start_ui() -> void:
 	toolbar.hide()
