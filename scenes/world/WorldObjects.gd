@@ -16,8 +16,6 @@ var rng = RandomNumberGenerator.new()
 func _ready() -> void:
 	rng.randomize()
 	
-	
-
 
 ################################################################################
 ## WORLD OBJECTS
@@ -103,11 +101,11 @@ func add_vehicle_in_depot(key: String, depot: Node2D, nav: AStar2D) -> Node2D:
 	# set navigation
 	vehicle.navigation = nav
 	
-	# add vehicle to depot
-	depot.vehicle_list.append(vehicle)
-	
 	# add scene to world
 	add_child(vehicle)
+	
+	# add vehicle to depot
+	depot.add_vehicle(vehicle)
 	
 	# return scene
 	return vehicle

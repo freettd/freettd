@@ -51,7 +51,7 @@ func _process_local_command(cmd) -> void:
 			
 		Command.Action.BUY_VEHICLE:
 			world_objects.add_vehicle_in_depot("modern_bus", cmd.parameters.depot, roadnav)
-			
+					
 		Command.Action.SELL_ALL_VEHICLES_IN_DEPOT:
 			for vehicle in cmd.parameters.depot.vehicle_list:
 				vehicle.queue_free()

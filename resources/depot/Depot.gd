@@ -44,6 +44,11 @@ func rotate_face() -> void:
 	
 	faces[current_face].visible = true
 
+func add_vehicle(vehicle) -> void:
+	
+	vehicle_list.append(vehicle);
+	EventBus.emit_signal("depot_vehicle_list_updated", self, vehicle_list)
+
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		EventBus.emit_signal("depot_selected", self)

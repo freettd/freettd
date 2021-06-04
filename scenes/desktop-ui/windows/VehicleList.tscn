@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/desktop-ui/windows/VehicleList.gd" type="Script" id=1]
+
+[node name="VehicleList" type="WindowDialog"]
+margin_right = 48.0
+margin_bottom = 40.0
+script = ExtResource( 1 )

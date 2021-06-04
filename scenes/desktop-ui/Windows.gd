@@ -22,7 +22,8 @@ func show_company_profile_window(hq) -> void:
 	_show_window(hq, company_profile_window)
 	
 func show_depot_window(depot) -> void:
-	_show_window(depot, depot_window)
+	var dw = _show_window(depot, depot_window)
+	dw.depot = depot
 
 func _on_command_received(command) -> void:
 	
@@ -31,17 +32,19 @@ func _on_command_received(command) -> void:
 		Command.Action.SHOW_ROAD_VEHICLE_LIST:
 			print(get_tree().get_nodes_in_group("road_vehicle"))
 	
-func _show_window(src, window_scene) -> void:	
+func _show_window(id, window_scene) -> WindowDialog:	
+	
+	var window
 
-	if not windows.has(src):
-		var wnd = window_scene.instance()
-		wnd.src = src
-		add_child(wnd)
-		windows[src] = wnd
-		
-	# show window
-	var wnd = windows.get(src)
+	if not windows.has(id):
+		window = window_scene.instance()
+		add_child(window)
+		windows[id] = window
+	else:
+		window = windows.get(id)
 	
 	
-	wnd.raise()
-	wnd.show()
+	window.raise()
+	window.show()
+	
+	return window

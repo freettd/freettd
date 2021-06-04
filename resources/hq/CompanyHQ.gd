@@ -4,6 +4,7 @@ var level: int = 1
 onready var current_sprite: Node2D = $SimpleHQ
 
 var company
+var cellv: Vector2
 
 func upgrade() -> void:
 	
