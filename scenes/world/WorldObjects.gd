@@ -99,7 +99,7 @@ func _on_hq_selected(company: Company) -> void:
 func _add_object(res_key: String, cellv: Vector2) -> Node2D:
 
 	# Get data for object
-	var obj: Dictionary = Resources.buildings[res_key]
+	var obj: Dictionary = DefaultDataset.buildings[res_key]
 
 	# create scene
 	var scene: Node2D = load(obj.src).instance()
@@ -126,7 +126,7 @@ func plant_tree(area: Rect2, options: Dictionary = {}) -> void:
 	var scattered: int = options.get("scattered", 10)
 
 	var trees: Array = []
-	for tree_scn in Resources.trees.src.temperate:
+	for tree_scn in DefaultDataset.trees.src.temperate:
 		trees.append(load(tree_scn))
 	
 	# loop vars

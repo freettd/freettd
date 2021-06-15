@@ -8,10 +8,10 @@
 [ext_resource path="res://scenes/desktop-ui/Statusbar.gd" type="Script" id=6]
 [ext_resource path="res://scenes/world/World.gd" type="Script" id=7]
 [ext_resource path="res://scenes/world/MainCamera.gd" type="Script" id=8]
-[ext_resource path="res://resources/tilemaps/selector.res" type="TileSet" id=9]
+[ext_resource path="res://data/tilemaps/selector.res" type="TileSet" id=9]
 [ext_resource path="res://scenes/world/Selector.gd" type="Script" id=10]
 [ext_resource path="res://scenes/desktop-ui/Windows.gd" type="Script" id=12]
-[ext_resource path="res://resources/tilemaps/terrain.res" type="TileSet" id=13]
+[ext_resource path="res://data/tilemaps/terrain.res" type="TileSet" id=13]
 [ext_resource path="res://scenes/desktop-ui/windows/StartMenu.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/desktop-ui/windows/CompanyWindow.tscn" type="PackedScene" id=15]
 

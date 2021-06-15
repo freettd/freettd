@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/trees/temp6/128_0002.png" type="Texture" id=2]
 [ext_resource path="res://assets/trees/temp6/128_0003.png" type="Texture" id=3]
 [ext_resource path="res://assets/trees/temp6/128_0004.png" type="Texture" id=4]
-[ext_resource path="res://resources/trees/Tree.tscn" type="PackedScene" id=5]
+[ext_resource path="res://data/trees/Tree.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {

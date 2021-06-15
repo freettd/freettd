@@ -123,9 +123,9 @@ func reset() -> void:
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary) -> void:
 	
-	var tm_resources: Dictionary = Resources.tilemaps
-	var bld_resources: Dictionary = Resources.buildings
-	var tree_res: Dictionary = Resources.trees
+	var tm_resources: Dictionary = DefaultDataset.tilemaps
+	var bld_resources: Dictionary = DefaultDataset.buildings
+	var tree_res: Dictionary = DefaultDataset.trees
 
 	var dimension: Vector2 = command.selection.dimension
 	var box: Rect2 = command.selection.box
