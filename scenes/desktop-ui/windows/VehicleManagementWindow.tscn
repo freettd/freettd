@@ -1,0 +1,176 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/desktop-ui/windows/VehicleManagementWindow.gd" type="Script" id=1]
+[ext_resource path="res://scenes/desktop-ui/windows/Fleet.gd" type="Script" id=2]
+
+[node name="VehicleManagementWindow" type="WindowDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -271.0
+margin_top = -158.0
+margin_right = 270.0
+margin_bottom = 158.0
+window_title = "Vehicle Management"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fleet" type="HBoxContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 2 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Fleet"]
+margin_right = 129.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VehicleList" type="ItemList" parent="TabContainer/Fleet/VBoxContainer2"]
+margin_right = 129.0
+margin_bottom = 246.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Fleet/VBoxContainer2"]
+margin_top = 250.0
+margin_right = 129.0
+margin_bottom = 270.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddGroupButton" type="Button" parent="TabContainer/Fleet/VBoxContainer2/HBoxContainer"]
+margin_left = 88.0
+margin_right = 108.0
+margin_bottom = 20.0
+text = "+"
+
+[node name="RemoveGroupButton" type="Button" parent="TabContainer/Fleet/VBoxContainer2/HBoxContainer"]
+margin_left = 112.0
+margin_right = 129.0
+margin_bottom = 20.0
+text = "-"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Fleet"]
+margin_left = 133.0
+margin_right = 523.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Tree" type="Tree" parent="TabContainer/Fleet/VBoxContainer"]
+margin_right = 390.0
+margin_bottom = 246.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Fleet/VBoxContainer"]
+margin_top = 250.0
+margin_right = 390.0
+margin_bottom = 270.0
+alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Fleet/VBoxContainer/HBoxContainer"]
+margin_left = 314.0
+margin_right = 351.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="Button2" type="Button" parent="TabContainer/Fleet/VBoxContainer/HBoxContainer"]
+margin_left = 355.0
+margin_right = 390.0
+margin_bottom = 20.0
+text = "Sell"
+
+[node name="Routes" type="HBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Routes"]
+margin_right = 129.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="TabContainer/Routes/VBoxContainer"]
+margin_right = 129.0
+margin_bottom = 246.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Routes/VBoxContainer"]
+margin_top = 250.0
+margin_right = 129.0
+margin_bottom = 270.0
+alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Routes/VBoxContainer/HBoxContainer"]
+margin_left = 88.0
+margin_right = 108.0
+margin_bottom = 20.0
+text = "+"
+
+[node name="Button2" type="Button" parent="TabContainer/Routes/VBoxContainer/HBoxContainer"]
+margin_left = 112.0
+margin_right = 129.0
+margin_bottom = 20.0
+text = "-"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Routes"]
+margin_left = 133.0
+margin_right = 523.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Tree" type="Tree" parent="TabContainer/Routes/VBoxContainer2"]
+margin_right = 390.0
+margin_bottom = 246.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Routes/VBoxContainer2"]
+margin_top = 250.0
+margin_right = 390.0
+margin_bottom = 270.0
+alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Routes/VBoxContainer2/HBoxContainer"]
+margin_left = 285.0
+margin_right = 322.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="Button2" type="Button" parent="TabContainer/Routes/VBoxContainer2/HBoxContainer"]
+margin_left = 326.0
+margin_right = 390.0
+margin_bottom = 20.0
+text = "Remove"

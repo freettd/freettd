@@ -1,29 +1,43 @@
 extends WindowDialog
 
-onready var vgrid: GridContainer = $VBoxContainer/ScrollContainer/VBoxContainer
+export var vehicle_item: Resource
+
+onready var vlist = $TabContainer/Vehicles/ScrollContainer/VehicleList
+onready var buylist: ItemList = $TabContainer/Buy/VehicleBuyList
 
 var depot: Node2D
 
 func _ready() -> void:
-	
 	EventBus.connect("depot_vehicle_list_updated", self, "_on_vehicle_list_updated")
+	visible = true
+	
+func set_depot(depot) -> void:
+	
+	self.depot = depot
 
-func _on_vehicle_list_updated(updated_depot, vehicle_list) -> void:
+	var vehicles = DefaultDataset.dataset.vehicles
+	
+	for key in vehicles:
+		if vehicles[key].transport_type == depot.transport_type:
+			buylist.add_item(vehicles[key].name)
+
+func _on_vehicle_list_updated(updated_depot) -> void:
 	
 	if depot != updated_depot:
 		return
+		
+	var vehicle_list: Array = updated_depot.vehicle_list
 	
-	for n in vgrid.get_children():
+	for n in vlist.get_children():
 		n.queue_free()
 
 	for 	vehicle in vehicle_list:
+		
+		var vitem = vehicle_item.instance()
+		vlist.add_child(vitem)
 
-		var vimg: TextureRect = TextureRect.new()
-		vimg.texture = vehicle.animated_sprite.frames.get_frame("default", 0)
+		vitem.set_vehicle(vehicle)
 
-		vgrid.add_child(vimg)
-	
-	
 
 func _on_BuyButton_pressed():
 	EventBus.emit_signal("command_issued", {
@@ -42,3 +56,6 @@ func _on_SellAllButton_pressed():
 			depot = depot
 		}
 	})
+
+func _on_VehicleBuyList_item_selected(index):
+	print(index)

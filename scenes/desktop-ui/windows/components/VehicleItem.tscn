@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/desktop-ui/windows/components/VehicleItem.gd" type="Script" id=1]
+
+[node name="VehicleItem" type="HBoxContainer"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="."]
+margin_right = 24.0
+margin_bottom = 24.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 28.0
+margin_right = 28.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LinkButton" type="LinkButton" parent="."]
+margin_left = 32.0
+margin_right = 118.0
+margin_bottom = 24.0
+text = "I AM VEHICLE"
+
+[connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]

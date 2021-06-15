@@ -1,69 +1,105 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/desktop-ui/windows/DepotWindow.gd" type="Script" id=1]
+[ext_resource path="res://scenes/desktop-ui/windows/components/VehicleItem.tscn" type="PackedScene" id=2]
 
 [node name="DepotWindow" type="WindowDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -117.0
-margin_top = -132.0
-margin_right = 117.0
-margin_bottom = 132.0
+margin_left = -124.0
+margin_top = -165.0
+margin_right = 124.0
+margin_bottom = 162.0
 window_title = "Depot"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+vehicle_item = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_right = 234.0
-margin_bottom = 240.0
+[node name="Vehicles" type="VBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Vehicles"]
+margin_right = 230.0
+margin_bottom = 257.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
-margin_right = 234.0
-margin_bottom = 240.0
+[node name="VehicleList" type="VBoxContainer" parent="TabContainer/Vehicles/ScrollContainer"]
+margin_right = 230.0
+margin_bottom = 257.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 244.0
-margin_right = 234.0
-margin_bottom = 264.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Vehicles"]
+margin_top = 261.0
+margin_right = 230.0
+margin_bottom = 281.0
+alignment = 2
 
-[node name="BuyButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_right = 75.0
+[node name="SellButton" type="Button" parent="TabContainer/Vehicles/HBoxContainer"]
+margin_left = 135.0
+margin_right = 170.0
 margin_bottom = 20.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Buy"
-
-[node name="SellButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 79.0
-margin_right = 154.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 text = "Sell"
 
-[node name="SellAllButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 158.0
-margin_right = 234.0
+[node name="SellAllButton" type="Button" parent="TabContainer/Vehicles/HBoxContainer"]
+margin_left = 174.0
+margin_right = 230.0
 margin_bottom = 20.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 text = "Sell All"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/BuyButton" to="." method="_on_BuyButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SellAllButton" to="." method="_on_SellAllButton_pressed"]
+[node name="Buy" type="VBoxContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VehicleBuyList" type="ItemList" parent="TabContainer/Buy"]
+margin_right = 230.0
+margin_bottom = 257.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+select_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Buy"]
+margin_top = 261.0
+margin_right = 230.0
+margin_bottom = 281.0
+alignment = 2
+
+[node name="BuyButton" type="Button" parent="TabContainer/Buy/HBoxContainer"]
+margin_left = 194.0
+margin_right = 230.0
+margin_bottom = 20.0
+text = "Buy"
+
+[connection signal="pressed" from="TabContainer/Vehicles/HBoxContainer/SellAllButton" to="." method="_on_SellAllButton_pressed"]
+[connection signal="item_selected" from="TabContainer/Buy/VehicleBuyList" to="." method="_on_VehicleBuyList_item_selected"]
+[connection signal="pressed" from="TabContainer/Buy/HBoxContainer/BuyButton" to="." method="_on_BuyButton_pressed"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://resources/roadvehicles/RoadVehicle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://data/roadvehicles/RoadVehicle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/road/vehicles/bus/128_0001.png" type="Texture" id=2]
 [ext_resource path="res://assets/road/vehicles/bus/128_0002.png" type="Texture" id=3]
 [ext_resource path="res://assets/road/vehicles/bus/128_0003.png" type="Texture" id=4]

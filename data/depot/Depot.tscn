@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://data/depot/Depot.gd" type="Script" id=1]
+[ext_resource path="res://data/WorldObjectLabel.tscn" type="PackedScene" id=2]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="WorldObjectLabel" parent="." instance=ExtResource( 2 )]
+
+[node name="TileMap" type="TileMap" parent="."]
+mode = 1
+cell_size = Vector2( 128, 64 )
+format = 1
+
+[node name="NorthFace" type="Node2D" parent="."]
+
+[node name="EastFace" type="Node2D" parent="."]
+
+[node name="SouthFace" type="Node2D" parent="."]
+
+[node name="WestFace" type="Node2D" parent="."]

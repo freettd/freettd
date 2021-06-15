@@ -24,10 +24,10 @@ var company_register: Array = []
 
 func _ready() -> void:
 	
-	EventBus.connect("command_issued", self, "_process_local_command")
+	EventBus.connect("command_issued", self, "_process_command")
 
 
-func _process_local_command(cmd) -> void:
+func _process_command(cmd) -> void:
 	
 	match (cmd.action):
 	
@@ -51,17 +51,21 @@ func _process_local_command(cmd) -> void:
 			
 		Command.Action.BUY_VEHICLE:
 			world_objects.add_vehicle_in_depot("modern_bus", cmd.parameters.depot, roadnav)
+			_on_depot_vehicle_list_changed(cmd.parameters.depot)
 					
 		Command.Action.SELL_ALL_VEHICLES_IN_DEPOT:
 			for vehicle in cmd.parameters.depot.vehicle_list:
 				vehicle.queue_free()
 				
 			cmd.parameters.depot.vehicle_list.clear()
+			_on_depot_vehicle_list_changed(cmd.parameters.depot)
 
 	
 	if Command.SelectorConfig.has(cmd.action):
 		selector.activate(cmd, Command.SelectorConfig.get(cmd.action))
 
+func _on_depot_vehicle_list_changed(depot) -> void:
+	EventBus.emit_signal("depot_vehicle_list_updated", depot)
 
 ################################################################################
 ## NEW WORLD
@@ -122,9 +126,7 @@ func reset() -> void:
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary) -> void:
 	
-	var tm_resources: Dictionary = Resources.tilemaps
-	var bld_resources: Dictionary = Resources.buildings
-	var tree_res: Dictionary = Resources.trees
+	var dataset = DefaultDataset.dataset
 
 	var dimension: Vector2 = command.selection.dimension
 	var box: Rect2 = command.selection.box
@@ -134,26 +136,35 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 	match command.action:
 		
 		Command.Action.BUILD_ROAD:
-			record_expense(tm_resources.road.cost, box.get_area())
+			record_expense(dataset.tilemaps.road.cost, box.get_area())
 			world_objects.clear_land(command.selection.box)	
 			terrain.build_road(command, roadnav)
 		
 		Command.Action.BUILD_COMPANY_HQ:
-			record_expense(bld_resources.company_hq.cost)
-			world_objects.add_object("company_hq", command.selection.position, local_company)
+			record_expense(dataset.buildings.company_hq.cost)
+			var hq = world_objects.add_object("company_hq", command.selection.position, local_company)
+			hq.connect("selected", self, "_on_hq_selected", [hq])
 
 		Command.Action.BUILD_ROAD_DEPOT:
-			record_expense(bld_resources.road_depot.cost)
-			world_objects.add_object("road_depot", command.selection.position, local_company)
+			record_expense(dataset.buildings.road_depot.cost)
+			var depot = world_objects.add_object("road_depot", command.selection.position, local_company)
+			depot.connect("selected", self, "_on_depot_selected", [depot])
 
 		Command.Action.CLEAR_LAND:
 			record_expense(10, box.get_area())
 			world_objects.clear_land(command.selection.box)
 
 		Command.Action.PLANT_TREE:
-			record_expense(tree_res.cost, box.get_area())
+			record_expense(dataset.trees.cost, box.get_area())
 			world_objects.plant_tree(command.selection.box)
 
+func _on_depot_selected(depot) -> void:
+	if not selector.visible:
+		EventBus.emit_signal("depot_selected", depot)
+		
+func _on_hq_selected(hq) -> void:
+	if not selector.visible:
+		EventBus.emit_signal("hq_selected", hq)
 
 ################################################################################
 ## Economy

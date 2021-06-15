@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/desktop-ui/windows/VehicleInfoWindow.gd" type="Script" id=1]
+
+[node name="VehicleInfoWindow" type="WindowDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.0
+margin_top = -76.0
+margin_right = 202.0
+margin_bottom = 121.0
+window_title = "Vehicle"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Orders" type="VBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="OrderList" type="Tree" parent="TabContainer/Orders"]
+margin_right = 396.0
+margin_bottom = 137.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+hide_root = true
+select_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Orders"]
+margin_top = 141.0
+margin_right = 396.0
+margin_bottom = 161.0
+alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Orders/HBoxContainer"]
+margin_left = 300.0
+margin_right = 337.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="Button2" type="Button" parent="TabContainer/Orders/HBoxContainer"]
+margin_left = 341.0
+margin_right = 396.0
+margin_bottom = 20.0
+text = "Delete"
+
+[node name="View" type="VBoxContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ViewportContainer" type="ViewportContainer" parent="TabContainer/View"]
+margin_right = 396.0
+margin_bottom = 137.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="TabContainer/View"]
+margin_top = 141.0
+margin_right = 396.0
+margin_bottom = 161.0
+text = "Start"

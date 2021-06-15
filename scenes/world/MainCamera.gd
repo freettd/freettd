@@ -1,4 +1,5 @@
 # Copyright (c) 2020 William Batista Costa	
+# Copyright (c) 2021 Peter Richmond
 # MIT License
 # source: https://github.com/williambcosta/godot-touch-camera-2d
 
@@ -59,7 +60,7 @@ var limit_target := position
 # If the camera is set to continue moving off limit, the original limits of
 # the camera will be set to maximum possible and this will hold the
 # original limits
-var base_limits:= Rect2(limit_left, limit_top, limit_right, limit_bottom)
+var base_limits : Rect2 = Rect2(limit_left, limit_top, limit_right, limit_bottom)
 
 
 # Connects the viewport signal

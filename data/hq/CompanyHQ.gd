@@ -1,5 +1,7 @@
 extends Node2D
 
+signal selected()
+
 var level: int = 1
 onready var current_sprite: Node2D = $SimpleHQ
 
@@ -25,4 +27,4 @@ func upgrade() -> void:
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		EventBus.emit_signal("hq_selected", self)
+		emit_signal("selected")

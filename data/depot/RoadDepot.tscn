@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/road/depot/128_0004.png" type="Texture" id=1]
+[ext_resource path="res://assets/road/depot/128_0005.png" type="Texture" id=2]
+[ext_resource path="res://assets/tilemap/groundtiles.res" type="TileSet" id=3]
+[ext_resource path="res://assets/road/depot/128_0001.png" type="Texture" id=4]
+[ext_resource path="res://assets/road/depot/128_0002.png" type="Texture" id=5]
+[ext_resource path="res://data/depot/Depot.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/road/depot/128_0006.png" type="Texture" id=7]
+[ext_resource path="res://assets/road/depot/128_0003.png" type="Texture" id=8]
+
+[node name="RoadDepot" instance=ExtResource( 6 )]
+
+[node name="WorldObjectLabel" parent="." index="0"]
+position = Vector2( -22.4002, -71.1536 )
+
+[node name="TileMap" parent="." index="1"]
+tile_set = ExtResource( 3 )
+tile_data = PoolIntArray( 0, 0, 0 )
+
+[node name="NorthFace" parent="." index="2"]
+visible = false
+
+[node name="128_0001" type="Sprite" parent="NorthFace" index="0"]
+position = Vector2( 0, 17 )
+texture = ExtResource( 4 )
+
+[node name="EastFace" parent="." index="3"]
+visible = false
+
+[node name="128_0006" type="Sprite" parent="EastFace" index="0"]
+position = Vector2( 0, 15 )
+texture = ExtResource( 7 )
+
+[node name="128_0002" type="Sprite" parent="EastFace" index="1"]
+position = Vector2( -1, 17 )
+texture = ExtResource( 5 )
+
+[node name="128_0005" type="Sprite" parent="SouthFace" index="0"]
+position = Vector2( -14, 16 )
+texture = ExtResource( 2 )
+
+[node name="128_0003" type="Sprite" parent="SouthFace" index="1"]
+position = Vector2( 1, 17 )
+z_index = 1
+texture = ExtResource( 8 )
+
+[node name="WestFace" parent="." index="5"]
+visible = false
+
+[node name="128_0004" type="Sprite" parent="WestFace" index="0"]
+position = Vector2( -1, 17 )
+texture = ExtResource( 1 )
+
+[connection signal="selected" from="WorldObjectLabel" to="." method="_on_WorldObjectLabel_selected"]

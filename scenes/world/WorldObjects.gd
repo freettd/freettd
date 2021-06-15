@@ -81,42 +81,56 @@ func clear_land(area: Rect2) -> void:
 	
 
 ################################################################################
-## ADD OBJECTS TO WORLD
+## ADD VEHICLE TO WORLD
 
 func add_vehicle_in_depot(key: String, depot: Node2D, nav: AStar2D) -> Node2D:
 	
-	# Get data for object
-	var vdata: Dictionary = Resources.vehicles[key]
-	
-	# create scene
-	var vehicle: Node2D = load(vdata.src).instance()
-	
-	# set position
-	vehicle.position = terrain.map_to_world(depot.cellv)
-	
-	# add groups
-	for tag in vdata.tags:
-		vehicle.add_to_group(tag)
-		
-	# set navigation
-	vehicle.navigation = nav
-	
-	# add scene to world
-	add_child(vehicle)
+	var pos: Vector2 = terrain.map_to_world(depot.cellv)
+
+	var vehicle = add_vehicle_to_world(key, pos, nav)
 	
 	# add vehicle to depot
 	depot.add_vehicle(vehicle)
 	
 	# return scene
 	return vehicle
+	
+func add_vehicle_to_world(key: String, pos: Vector2, nav: AStar2D) -> Node2D:
+	
+	# Get data for object
+	print(DefaultDataset.dataset.vehicles)
+	var vdata: Dictionary = DefaultDataset.dataset.vehicles[key]
+	
+	# create scene
+	var vehicle: Node2D = load(vdata.src).instance()
+	
+	# set position
+	vehicle.position = pos
+	
+	# add groups
+	for tag in vdata.tags:
+		vehicle.add_to_group(tag)	
+		
+	# set navigation
+	vehicle.navigation = nav
+	
+	# add scene to world
+	add_child(vehicle)	
+	
+	return vehicle
+	
+
+################################################################################
+## ADD OBJECTS TO WORLD	
 
 # add object to world
 func add_object(res_key: String, cellv: Vector2, owner = null) -> Node2D:
 
 	# Get data for object
-	var obj: Dictionary = Resources.buildings[res_key]
+	var obj: Dictionary = DefaultDataset.dataset.buildings[res_key]
 
 	# create scene
+	print(obj.src)
 	var scene: Node2D = load(obj.src).instance()
 
 	# set position
@@ -142,7 +156,7 @@ func plant_tree(area: Rect2, options: Dictionary = {}) -> void:
 	var scattered: int = options.get("scattered", 10)
 
 	var trees: Array = []
-	for tree_scn in Resources.trees.src.temperate:
+	for tree_scn in DefaultDataset.dataset.trees.src.temperate:
 		trees.append(load(tree_scn))
 	
 	# loop vars

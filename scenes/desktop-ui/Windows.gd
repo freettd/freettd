@@ -4,12 +4,14 @@ var windows: Dictionary = {}
 
 export var company_profile_window: Resource
 export var depot_window: Resource
+export var vehicle_info_window: Resource
 
 func _ready() -> void:
 	
 	EventBus.connect("command_issued", self, "_on_command_received")
 	EventBus.connect("depot_selected", self, "show_depot_window")
 	EventBus.connect("hq_selected", self, "_on_hq_selected")
+	EventBus.connect("vehicle_selected", self, "_on_vehicle_selected")
 	
 func _on_hq_selected(hq) -> void:
 	show_company_profile_window(hq)
@@ -23,7 +25,7 @@ func show_company_profile_window(hq) -> void:
 	
 func show_depot_window(depot) -> void:
 	var dw = _show_window(depot, depot_window)
-	dw.depot = depot
+	dw.set_depot(depot)
 
 func _on_command_received(command) -> void:
 	
@@ -31,6 +33,9 @@ func _on_command_received(command) -> void:
 		
 		Command.Action.SHOW_ROAD_VEHICLE_LIST:
 			print(get_tree().get_nodes_in_group("road_vehicle"))
+	
+func _on_vehicle_selected(vehicle) -> void:
+	var vinfo = _show_window(vehicle ,vehicle_info_window)
 	
 func _show_window(id, window_scene) -> WindowDialog:	
 	
@@ -42,7 +47,6 @@ func _show_window(id, window_scene) -> WindowDialog:
 		windows[id] = window
 	else:
 		window = windows.get(id)
-	
 	
 	window.raise()
 	window.show()

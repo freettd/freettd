@@ -20,14 +20,14 @@ _global_script_classes=[ {
 "path": "res://scenes/world/player/Company.gd"
 }, {
 "base": "Reference",
-"class": "Resources",
+"class": "DefaultDataset",
 "language": "GDScript",
-"path": "res://resources/Resources.gd"
+"path": "res://data/DefaultDataset.gd"
 } ]
 _global_script_class_icons={
 "Command": "",
 "Company": "",
-"Resources": ""
+"DefaultDataset": ""
 }
 
 [application]
@@ -47,10 +47,6 @@ settings/fps/force_fps=60
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/codeandweb.texturepacker/plugin.cfg" )
-
-[physics]
-
-common/enable_pause_aware_picking=true
 
 [rendering]
 

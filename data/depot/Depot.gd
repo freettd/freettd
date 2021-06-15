@@ -1,13 +1,12 @@
 extends Node2D
 
+signal selected()
+signal vehicle_list_changed()
+
 export (String) var depot_suffix = "Depot"
 export var can_rotate: bool = false
 
-export var buy_road_vehicles: bool = false
-export var buy_trains: bool = false
-export var buy_ships: bool = false
-export var buy_airplanes: bool = false
-export var buy_helicopters: bool = false
+const transport_type = DefaultDataset.TransportType.ROAD
 
 onready var north_face = $NorthFace
 onready var east_face = $EastFace
@@ -26,9 +25,9 @@ var depot_name: String = ""
 func _ready() -> void:
 	faces = [north_face, east_face, south_face, west_face]	
 	
-	faces[0].visible = true
+#	faces[0].visible = true
 	
-	print(current_face)
+#	print(current_face)
 
 func rotate_face() -> void:
 	
@@ -45,13 +44,16 @@ func rotate_face() -> void:
 	faces[current_face].visible = true
 
 func add_vehicle(vehicle) -> void:
-	
 	vehicle_list.append(vehicle);
-	EventBus.emit_signal("depot_vehicle_list_updated", self, vehicle_list)
+	emit_signal("vehicle_list_changed")
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		EventBus.emit_signal("depot_selected", self)
+		emit_signal("selected")
 
 func set_default_name(name: String) -> void:
 	depot_name = name + " " + depot_suffix
+
+
+func _on_WorldObjectLabel_selected():
+	emit_signal("selected")
