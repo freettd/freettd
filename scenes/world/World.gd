@@ -126,8 +126,6 @@ func reset() -> void:
 # process commands after tiles selected
 func _on_Selector_tile_selected(command: Dictionary) -> void:
 	
-	var dataset = DefaultDataset.dataset
-
 	var dimension: Vector2 = command.selection.dimension
 	var box: Rect2 = command.selection.box
 	
@@ -136,17 +134,17 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 	match command.action:
 		
 		Command.Action.BUILD_ROAD:
-			record_expense(dataset.tilemaps.road.cost, box.get_area())
+			record_expense(Dataset.tilemaps.road.cost, box.get_area())
 			world_objects.clear_land(command.selection.box)	
 			terrain.build_road(command, roadnav)
 		
 		Command.Action.BUILD_COMPANY_HQ:
-			record_expense(dataset.buildings.company_hq.cost)
+			record_expense(Dataset.buildings.company_hq.cost)
 			var hq = world_objects.add_object("company_hq", command.selection.position, local_company)
 			hq.connect("selected", self, "_on_hq_selected", [hq])
 
 		Command.Action.BUILD_ROAD_DEPOT:
-			record_expense(dataset.buildings.road_depot.cost)
+			record_expense(Dataset.buildings.road_depot.cost)
 			var depot = world_objects.add_object("road_depot", command.selection.position, local_company)
 			depot.connect("selected", self, "_on_depot_selected", [depot])
 
@@ -155,7 +153,7 @@ func _on_Selector_tile_selected(command: Dictionary) -> void:
 			world_objects.clear_land(command.selection.box)
 
 		Command.Action.PLANT_TREE:
-			record_expense(dataset.trees.cost, box.get_area())
+			record_expense(Dataset.trees.cost, box.get_area())
 			world_objects.plant_tree(command.selection.box)
 
 func _on_depot_selected(depot) -> void:

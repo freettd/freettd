@@ -15,7 +15,7 @@ func set_depot(depot) -> void:
 	
 	self.depot = depot
 
-	var vehicles = DefaultDataset.dataset.vehicles
+	var vehicles = Dataset.vehicles
 	
 	for key in vehicles:
 		if vehicles[key].transport_type == depot.transport_type:

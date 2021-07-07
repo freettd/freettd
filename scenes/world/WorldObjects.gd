@@ -98,8 +98,7 @@ func add_vehicle_in_depot(key: String, depot: Node2D, nav: AStar2D) -> Node2D:
 func add_vehicle_to_world(key: String, pos: Vector2, nav: AStar2D) -> Node2D:
 	
 	# Get data for object
-	print(DefaultDataset.dataset.vehicles)
-	var vdata: Dictionary = DefaultDataset.dataset.vehicles[key]
+	var vdata: Dictionary = Dataset.vehicles[key]
 	
 	# create scene
 	var vehicle: Node2D = load(vdata.src).instance()
@@ -127,7 +126,7 @@ func add_vehicle_to_world(key: String, pos: Vector2, nav: AStar2D) -> Node2D:
 func add_object(res_key: String, cellv: Vector2, owner = null) -> Node2D:
 
 	# Get data for object
-	var obj: Dictionary = DefaultDataset.dataset.buildings[res_key]
+	var obj: Dictionary = Dataset.buildings[res_key]
 
 	# create scene
 	print(obj.src)
@@ -156,7 +155,7 @@ func plant_tree(area: Rect2, options: Dictionary = {}) -> void:
 	var scattered: int = options.get("scattered", 10)
 
 	var trees: Array = []
-	for tree_scn in DefaultDataset.dataset.trees.src.temperate:
+	for tree_scn in Dataset.dataset.trees.src.temperate:
 		trees.append(load(tree_scn))
 	
 	# loop vars

@@ -20,14 +20,14 @@ _global_script_classes=[ {
 "path": "res://scenes/world/player/Company.gd"
 }, {
 "base": "Reference",
-"class": "DefaultDataset",
+"class": "Dataset",
 "language": "GDScript",
-"path": "res://data/DefaultDataset.gd"
+"path": "res://data/Dataset.gd"
 } ]
 _global_script_class_icons={
 "Command": "",
 "Company": "",
-"DefaultDataset": ""
+"Dataset": ""
 }
 
 [application]

@@ -6,7 +6,7 @@ signal vehicle_list_changed()
 export (String) var depot_suffix = "Depot"
 export var can_rotate: bool = false
 
-const transport_type = DefaultDataset.TransportType.ROAD
+const transport_type = Dataset.TransportType.ROAD
 
 onready var north_face = $NorthFace
 onready var east_face = $EastFace
