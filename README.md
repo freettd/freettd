@@ -1,6 +1,6 @@
 # freettd
 
-![alt text](game.png "Title")
+![alt text](docs/game.png "Title")
 
 # License
 * GD Scripts & Other Godot Files - MIT License

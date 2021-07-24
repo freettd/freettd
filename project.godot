@@ -10,35 +10,35 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "AssetData",
+"language": "GDScript",
+"path": "res://assets/AssetData.gd"
+}, {
+"base": "Reference",
+"class": "Command",
+"language": "GDScript",
+"path": "res://core/Command.gd"
+}, {
+"base": "Reference",
 "class": "Company",
 "language": "GDScript",
-"path": "res://scenes/world/player/Company.gd"
-}, {
-"base": "Reference",
-"class": "DefaultDataset",
-"language": "GDScript",
-"path": "res://data/DefaultDataset.gd"
-}, {
-"base": "Reference",
-"class": "Global",
-"language": "GDScript",
-"path": "res://scenes/Global.gd"
+"path": "res://core/world/player/Company.gd"
 } ]
 _global_script_class_icons={
-"Company": "",
-"DefaultDataset": "",
-"Global": ""
+"AssetData": "",
+"Command": "",
+"Company": ""
 }
 
 [application]
 
 config/name="FreeTTD"
 config/description="Open Source Remake of Transport Tycoon Deluxe"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://core/Main.tscn"
 
 [autoload]
 
-EventBus="*res://scenes/EventBus.gd"
+EventBus="*res://core/EventBus.gd"
 
 [debug]
 

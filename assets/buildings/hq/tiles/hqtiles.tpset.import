@@ -1,0 +1,15 @@
+[remap]
+
+importer="codeandweb.texturepacker_import_tileset"
+type="Resource"
+path="res://.import/hqtiles.tpset-a2f325c99b75a5f983e2e20624086040.res"
+
+[deps]
+
+files=[ "hqtiles.png", "res://assets/buildings/hq/tiles/hqtiles.res" ]
+
+source_file="res://assets/buildings/hq/tiles/hqtiles.tpset"
+dest_files=[ "res://.import/hqtiles.tpset-a2f325c99b75a5f983e2e20624086040.res", "hqtiles.png", "res://assets/buildings/hq/tiles/hqtiles.res" ]
+
+[params]
+
