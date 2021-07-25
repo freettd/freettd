@@ -1,5 +1,14 @@
 class_name AssetData
 
+const Airports = {
+}
+
+const Heliports = {
+	TALL_HELIPORT = {
+		label = "Heliport"
+	}
+}
+
 const tilemaps = {
 	road = {
 		cost = 10000

@@ -57,6 +57,13 @@ func _ready() -> void:
 	popup.add_item("Build Rail", Command.ID.BUILD_RAIL)
 	popup.connect("id_pressed", self, "_on_item_pressed")
 
+	# Air Menu
+	popup = air_button.get_popup()
+	popup.add_item("Build Helistation", Command.ID.BUILD_HELISTATION)
+	popup.add_separator()
+	popup.add_item("View Aircraft")
+	popup.connect("id_pressed", self, "_on_item_pressed")
+
 	# Help Menu
 	popup = help_button.get_popup()
 	popup.add_item("Query", Command.ID.TILE_QUERY)
